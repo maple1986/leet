@@ -7,7 +7,11 @@ using namespace std;
 class StringRel
 {
 public:
-    StringRel();
+    StringRel()
+    {
+
+    }
+    static void test();
     string multiply(string num1, string num2) {
         if(num1.empty() || num2.empty())
         {

@@ -1,8 +1,27 @@
 #include "NumofOnes.h"
 #include <iostream>
+#include <string.h>
 using namespace std;
 NumofOnes::NumofOnes()
 {
+
+}
+
+void NumofOnes::test()
+{
+    char* test[]= {"100", "1", "10", "11", "111",
+                   "10000", "1111", "10110", "110011", "110011001"};
+    int test_num = 10;
+    int len = 0, i = 0, total=0;
+    NumofOnes num;
+    for (i = 0; i < test_num; i++)
+    {
+        len = strlen(test[i]);
+        total = num.calc1(test[i], len);
+
+        cout << test[i] << ":  result=" << total << endl;
+        cout << "\n\n =========================\n" << endl;
+    }
 
 }
 

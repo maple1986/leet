@@ -11,6 +11,7 @@ class backtrack
 {
 public:
     backtrack();
+    static void test();
     /*
     char mapping[9][5] =
     {
@@ -25,16 +26,13 @@ public:
     };
     */
     vector<string> mapping1 =
-    {
-        "ABC",
-        "DEF",
+    {"ABC","DEF",
         "GHI",
         "JKL",
         "MNO",
         "PQRS",
         "TUV",
-        "WXYZ",
-    };
+        "WXYZ"};
 
 
     vector<string> letterCombinations(string digits) {
