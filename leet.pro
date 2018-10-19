@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     MinStack.cpp \
     sortalg.cpp \
     hashrel.cpp \
-    binarysearchrel.cpp
+    binarysearchrel.cpp \
+    easy.cpp \
+    mathrel.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -41,4 +43,6 @@ HEADERS += \
     MinStack.h \
     sortalg.h \
     hashrel.h \
-    binarysearchrel.h
+    binarysearchrel.h \
+    easy.h \
+    mathrel.h

@@ -6,4 +6,6 @@ void StringRel::test()
     string num2("9");
     StringRel str;
     str.multiply(num1, num2);
+    printf("res=[%d]\n",str.canPermutePalindrome("abcc"));
+    printf("res=[%s]\n",str.shortestPalindrome("aaabbbb").c_str());
 }

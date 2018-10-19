@@ -4,6 +4,7 @@
 #include <vector>
 #include <set>
 #include <stack>
+#include <algorithm>
 using namespace std;
 //Definition for singly-linked list.
 struct ListNode {
@@ -207,28 +208,64 @@ public:
 
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
     {
-        ListNode *rA = reverseList(headA);
-        ListNode *rB = reverseList(headB);
-        ListNode *res = nullptr;
-        ListNode *rAHead = rA;
-        ListNode *rBHead = rB;
-        while(rA && rB)
+        int m = 0;
+        ListNode *pA = headA;
+        while(pA)
         {
-            if(rA == rB)
-            {
-                res = rA;
-            }
-            else
-            {
-                return rA;
-            }
-            rA = rA->next;
-            rB = rB->next;
+            pA = pA->next;
+            m++;
         }
-        reverseList(rAHead);
-        reverseList(rBHead);
+
+        int n = 0;
+        ListNode *pB = headB;
+        while(pB)
+        {
+            pB = pB->next;
+            n++;
+        }
+
+        if(m > n)
+        {
+            ListNode *tmp = headA;
+            headA = headB;
+            headB = tmp;
+        }
+        int i = abs(m-n);
+        pB = headB;
+        while(i)
+        {
+            pB = pB->next;
+            --i;
+        }
+
+        i = m;
+        while(i)
+        {
+            if(headA == pB)
+            {
+                return pB;
+            }
+            headA = headA->next;
+            pB = pB->next;
+            --i;
+        }
         return nullptr;
     }
+
+    ListNode *getIntersectionNode_genius(ListNode *headA, ListNode *headB)
+    {
+        //List A + List B = List A + inserction + B + (will be meet there)intersection;
+        //List B + List A = List B + inserction + A + (will be meet there)intersection;
+        ListNode *p1 = headA;
+        ListNode *p2 = headB;
+        while(p1 != p2)
+        {
+            p1 = p1==nullptr?headB:p1->next;
+            p2 = p2==nullptr?headA:p2->next;
+        }
+        return p1;
+    }
+
 
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         int c = 0;
