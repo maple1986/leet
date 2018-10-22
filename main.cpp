@@ -16,6 +16,7 @@
 #include <listsolutions.h>
 #include <binarysearchrel.h>
 #include <mathrel.h>
+#include <greedy.h>
 using namespace std;
 
 int main()
@@ -35,7 +36,8 @@ int main()
     */
     //ListSolutions::test();
     //MathRel::test();
-    sortrel::test();
+    //sortrel::test();
+    greedy::test();
     return 0;
 }
 

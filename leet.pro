@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     hashrel.cpp \
     binarysearchrel.cpp \
     easy.cpp \
-    mathrel.cpp
+    mathrel.cpp \
+    greedy.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -45,4 +46,5 @@ HEADERS += \
     hashrel.h \
     binarysearchrel.h \
     easy.h \
-    mathrel.h
+    mathrel.h \
+    greedy.h
