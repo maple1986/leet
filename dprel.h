@@ -119,6 +119,21 @@ public:
         }
         return res>0?res:*max_element(nums.begin(), nums.end());
     }
+
+    int maxProfit_cooldown(vector<int>& prices)
+    {
+        if(prices.empty()) return 0;
+        vector<int> dp(prices.size(), 0);
+        int i=1;
+        for(; i<prices.size(); ++i)
+        {
+            if(i == 1)
+                dp[i] = prices[i] - prices[i-1];
+            else
+                dp[i] = max(dp[i-2]+ prices[i]-prices[i-1], dp[i-1]);
+        }
+        return dp[i-1]>0?dp[i-1]:0;
+    }
 };
 
 #endif // DPREL_H
