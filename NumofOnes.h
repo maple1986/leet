@@ -6,6 +6,7 @@ class NumofOnes
 {
 public:
     NumofOnes();
+    static void test();
     int calc1(char* binary, int len);
 };
 
