@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include <set>
 #include "balancetree.h"
 using namespace std;
 
@@ -62,6 +63,26 @@ public:
 
         if (root->right != nullptr)
             dfs(root->right, path + "->" + to_string((long long)root->right->val), res);
+    }
+
+    bool canVisitAllRooms(vector<vector<int>>& rooms)
+    {
+        set<int> traveled;
+        stack<int> s;
+        for(int i=0; i<rooms.size(); ++i)
+        {
+            for(int j=0; j<rooms[i].size(); ++j)
+            {
+
+            }
+        }
+
+        return traveled.size() == rooms.size();
+    }
+
+    void dfs(vector<vector<int>>& rooms, set<int>& traveled)
+    {
+
     }
 };
 

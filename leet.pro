@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     easy.cpp \
     mathrel.cpp \
     greedy.cpp \
-    dprel.cpp
+    dprel.cpp \
+    nsum.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -49,4 +50,5 @@ HEADERS += \
     easy.h \
     mathrel.h \
     greedy.h \
-    dprel.h
+    dprel.h \
+    nsum.h
