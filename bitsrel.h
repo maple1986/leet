@@ -30,6 +30,11 @@ public:
     {
 
     }
+
+    int getSum(int a, int b)
+    {
+
+    }
 /*
     int is_a_solution(int a[],int k, data input)
     {

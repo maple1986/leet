@@ -26,6 +26,7 @@ SOURCES += main.cpp \
     mathrel.cpp \
     greedy.cpp \
     dprel.cpp \
+    divideandconquer.cpp \
     nsum.cpp
 
 HEADERS += \
@@ -51,4 +52,5 @@ HEADERS += \
     mathrel.h \
     greedy.h \
     dprel.h \
+    divideandconquer.h \
     nsum.h

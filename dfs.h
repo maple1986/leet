@@ -5,6 +5,7 @@
 #include <queue>
 #include <string>
 #include <set>
+#include <unordered_map>
 #include "balancetree.h"
 using namespace std;
 
@@ -83,6 +84,55 @@ public:
     void dfs(vector<vector<int>>& rooms, set<int>& traveled)
     {
 
+    }
+
+    bool findTarget(TreeNode* root, int k)
+    {
+        if(!root) return false;
+        vector<int> nums;
+        dfs(root, nums);
+        int left = 0, right = nums.size()-1;
+        while(left < right)
+        {
+            int sum = nums[left] + nums[right];
+            if(sum > k) right--;
+            else if(sum < k) left++;
+            else return true;
+        }
+        return false;
+    }
+
+    void dfs(TreeNode* cur, vector<int>& nums)
+    {
+        if(!cur)return;
+        if(cur->left) dfs(cur->left, nums);
+        nums.push_back(cur->val);
+        if(cur->right) dfs(cur->right, nums);
+        return;
+    }
+
+    bool findTarget2(TreeNode* root, int k) {
+        if (!root) return false;
+        unordered_map<int, int> m;
+        queue<TreeNode*> q;
+        q.push(root);
+        while (!q.empty()) {
+            TreeNode* t = q.front();
+            q.pop();
+            if (m.count(k - t->val) > 0) return true;
+            m[t->val]++;
+            if (t->right) q.push(t->right);
+            if (t->left) q.push(t->left);
+        }
+        return false;
+    }
+
+    bool findTarget3(TreeNode* root, int k)
+    {
+        if (!root) return false;
+        unordered_map<int, int> m;
+        queue<TreeNode*> q;
+        q.push(root);
     }
 };
 

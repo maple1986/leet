@@ -18,7 +18,7 @@
 #include <mathrel.h>
 #include <greedy.h>
 #include <dprel.h>
-
+#include <nsum.h>
 using namespace std;
 
 int main()
@@ -40,7 +40,8 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    DPRel::test();
+    //DPRel::test();
+    NSum::test();
     return 0;
 }
 
