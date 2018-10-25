@@ -23,10 +23,11 @@ using namespace std;
 
 int main()
 {
-    /*
+
     binarySearchRel::test();
-    NumofOnes::test();
-    */
+
+    //NumofOnes::test();
+
     //StringRel::test();
     /*
     PowerofN::test();
@@ -41,7 +42,7 @@ int main()
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
-    NSum::test();
+    //NSum::test();
     return 0;
 }
 

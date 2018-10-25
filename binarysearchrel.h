@@ -93,6 +93,30 @@ public:
         return true;
     }
 
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.empty()) return vector<int> {-1, -1};
+        int left  = 0;
+        int right = nums.size()-1;
+        while(left <= right)
+        {
+            int mid = left + (right-left)/2;
+            if(nums[mid] < target)
+            {
+                left = mid+1;
+            }
+            else if(nums[mid] >= target)
+            {
+                right = mid-1;
+            }
+        }
+        if(nums[left] != target) return vector<int> {-1, -1};
+        int start = left, end = left;
+        while(start > 0 && nums[start] == nums[start-1]) start--;
+        while(end < nums.size()-1 && nums[end] == nums[end+1]) end++;
+        return vector<int> {start, end};
+
+    }
+
 };
 
 #endif // BINARYSEARCHREL_H

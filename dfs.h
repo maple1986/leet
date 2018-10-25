@@ -69,20 +69,23 @@ public:
     bool canVisitAllRooms(vector<vector<int>>& rooms)
     {
         set<int> traveled;
-        stack<int> s;
-        for(int i=0; i<rooms.size(); ++i)
-        {
-            for(int j=0; j<rooms[i].size(); ++j)
-            {
+        //stack<int> s;
+        //for(int i=0; i<rooms.size(); ++i)
+        //{
+        dfs(rooms, 0, traveled);
 
-            }
-        }
 
         return traveled.size() == rooms.size();
     }
 
-    void dfs(vector<vector<int>>& rooms, set<int>& traveled)
+    void dfs(vector<vector<int>>& rooms, int cur, set<int>& traveled)
     {
+        if(traveled.count(cur)) return;
+        traveled.insert(cur);
+        for(int i=0; i<rooms[cur].size(); ++i)
+        {
+            dfs(rooms, rooms[cur][i], traveled);
+        }
 
     }
 

@@ -14,4 +14,8 @@ void binarySearchRel::test()
     matrix.push_back(line1);
     matrix.push_back(line2);
     bs.kthSmallest(matrix, 7);
+
+    vector<int> v1 = {5,7,7,8,8,10};
+    vector<int> v2 = {-1};
+    bs.searchRange(v2, 0);
 }
