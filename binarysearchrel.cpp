@@ -17,5 +17,5 @@ void binarySearchRel::test()
 
     vector<int> v1 = {5,7,7,8,8,10};
     vector<int> v2 = {-1};
-    bs.searchRange(v2, 0);
+    bs.searchRange(v1, 8);
 }
