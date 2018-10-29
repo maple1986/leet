@@ -269,7 +269,7 @@ public:
                 {
                     total.push_back(num);
                 }
-                num = 1;
+                num = 2;
             }
             pre_delta = delta;
         }
@@ -289,6 +289,65 @@ public:
         }
 
         return res;
+    }
+
+    int numberOfArithmeticSlices2(vector<int>& A)
+    {
+        int count = 0;
+        for (int i = 0; i < A.size(); i++)
+        {
+            int diff = A[i] - A[i+1];
+            for (int j = i+2; j < A.size(); j++)
+            {
+                if (diff == A[j-1] - A[j])
+                    count++;
+                else
+                    break;
+            }
+        }
+        return count;
+    }
+
+    int numberOfArithmeticSlices3(vector<int>& A) {
+        int n = A.size();
+
+        //base case
+        if(n <= 2)
+            return 0;
+
+        if(n == 3){
+            if(A[2] - A[1] == A[1] - A[0])
+                return 1;
+            else
+                return 0;
+        }
+
+        int total = 0;
+        int count = 0;
+
+        bool asEnd = false, asStart = false;
+        for(int i = 2; i < n; i++){
+            //find arithmetic series
+            if( (A[i] - A[i - 1]) == (A[i - 1] - A[i - 2])){
+                count++;
+                if(!asStart)
+                    asStart = true;
+            }
+            else{
+                asEnd = true;
+            }
+
+            //count no. of sub arithmetic series
+            if(asStart && asEnd){
+                total += (count*(count + 1))/2;
+                asStart = false;
+                asEnd = false;
+                count = 0;   //reset count
+            }
+        }
+        if(asStart)
+            total += (count*(count + 1))/2;
+        return total;
     }
 
 private:
