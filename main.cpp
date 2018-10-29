@@ -24,7 +24,7 @@ using namespace std;
 int main()
 {
 
-    binarySearchRel::test();
+    //binarySearchRel::test();
 
     //NumofOnes::test();
 
@@ -41,7 +41,7 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
+    DPRel::test();
     //NSum::test();
     return 0;
 }

@@ -60,6 +60,11 @@ public:
         return 0;
     }
 
+    int deleteAndEarn2(vector<int>& nums)
+    {
+
+    }
+
     int maxProfit(vector<int>& prices)
     {
         if(prices.empty()) return 0;
@@ -134,6 +139,160 @@ public:
         }
         return dp[i-1]>0?dp[i-1]:0;
     }
+
+    int climbstairs(int n)
+    {
+        if(n<=2) return n;
+        vector<int> dp(n+1, 0);
+        dp[0] = 0;
+        dp[1] = 1;
+        dp[2] = 2;
+        for(int i= 3; i<n+1; ++i)
+        {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+
+    int climbstairs2(int n)
+    {
+        if(n<=2) return n;
+        //vector<int> dp(n+1, 0);
+        //int dp0 = 0;
+        int dp0 = 1;
+        int dp1 = 2;
+        for(int i= 3; i<n+1; ++i)
+        {
+            //dp[i] = dp[i-1] + dp[i-2];
+            int dp2 = dp0 + dp1;
+            dp0 = dp1;
+            dp1 = dp2;
+        }
+        return dp1;
+    }
+
+    int climbstairs3(int n)
+    {
+        if(n <= 2)
+        {
+            return n;
+        }
+        return climbstairs3(n-1) + climbstairs3(n-2);
+    }
+
+
+    int minCostClimbingStairs(vector<int>& cost)
+    {
+        int n = cost.size();
+//        if(n == 0) return 0;
+        if(n == 1) return cost[0];
+//        if(n == 2) return cost[0];
+        vector<int> min_Cost(n+1, 0);
+        for(int i=2; i<=n; ++i)
+        {
+            min_Cost[i] = min((cost[i-1]+min_Cost[i-1]), (cost[i-2]+min_Cost[i-2]));
+        }
+        return min_Cost[n];
+        //return min(min_Cost[n-1], min_Cost[n-2]);
+    }
+
+    void NumArray(vector<int> nums)
+    {
+        _sums.assign(nums.size()+1, 0);
+        for(int i=0; i<nums.size(); ++i)
+        {
+            _sums[i+1] = _sums[i] + nums[i];
+        }
+    }
+
+    int sumRange(int i, int j)
+    {
+        return _sums[j+1] - _sums[i];
+    }
+
+
+    int numWays(int n, int k)
+    {
+        if (n == 0) return 0;
+        int same = 0, diff = k;
+        for (int i = 2; i <= n; ++i) {
+            int t = diff;
+            diff = (same + diff) * (k - 1);
+            same = t;
+        }
+        return same + diff;
+    }
+
+    int numWays1(int n, int k)
+    {
+        if (n == 0) return 0;
+        if (n == 1) return k;
+        vector<int> dp(n+1, 0);
+        dp[1] = k;
+        dp[2] = k*k;
+        for (int i = 3; i <= n; ++i)
+        {
+            dp[i] = (dp[i-1] + dp[i-2])*(k-1);
+        }
+        return dp[n];
+    }
+
+    bool stoneGame(vector<int>& piles)
+    {
+        if(piles.size() == 2) return true;
+        vector<int> dp(piles.size()/2, 0);
+        return true;
+        //for(int)
+    }
+
+
+    int numberOfArithmeticSlices(vector<int>& A)
+    {
+        if(A.size() < 3) return 0;
+        int pre_delta = A[1] - A[0];
+        int num = 2;
+        vector<int> total;
+        for(int i=2; i<A.size(); ++i)
+        {
+            int delta = A[i] - A[i-1];
+            if(delta == pre_delta)
+            {
+                num++;
+                if(i == A.size()-1 && num >= 3)
+                {
+                    total.push_back(num);
+                }
+            }
+            else
+            {
+                if(num >= 3)
+                {
+                    total.push_back(num);
+                }
+                num = 1;
+            }
+            pre_delta = delta;
+        }
+        if(total.empty()) return 0;
+        int max = *max_element(total.begin(), total.end());
+        vector<int> dp(max+1, 0);
+        //dp[3] = 1;
+        for(int i=3; i<=max; ++i)
+        {
+            dp[i] = dp[i-1]+ i-2;
+        }
+
+        int res = 0;
+        for(auto& i: total)
+        {
+            res += dp[i];
+        }
+
+        return res;
+    }
+
+private:
+    vector<int> _sums;
 };
 
 #endif // DPREL_H
