@@ -298,6 +298,42 @@ public:
         return root;
     }
 
+    ListNode* swapPairs(ListNode* head)
+    {
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* cur = &dummy;
+        while(cur && cur->next && cur->next)
+        {
+            //do swap
+            ListNode* p1 = cur;
+            ListNode* p2 = cur->next;
+            head = p2->next;
+            p1->next = head;
+            p2->next = p1;
+        }
+        return dummy.next;
+    }
+    /*
+    ListNode* swapPairs(ListNode *head)
+    {
+        ListNode* dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode* cur = dummy;
+        while (cur != null && cur.next != null && cur.next.next != null)
+        {
+            cur.next = swap(cur.next, cur.next.next);
+            cur = cur.next.next;
+        }
+        return dummy.next;
+    }
+
+    ListNode* swap(ListNode* next1, ListNode* next2)
+    {
+        next1.next = next2.next; next2.next = next1;
+        return next2;
+    }
+    */
 };
 
 #endif // LISTSOLUTIONS_H

@@ -16,4 +16,12 @@ void DPRel::test()
     dprel.maxProfit_cooldown(nums2);
     //dprel.longestPalindromeSubseq("bbbab");
     dprel.minFlipsMonoIncr2("00110");
+
+    vector<int> num3 = {0,1,1,0};
+    dprel.minCostClimbingStairs(num3);
+
+    printf("num of ways = [%d]\n", dprel.numWays(3, 1) == dprel.numWays1(3, 1));
+
+    vector<int> num4 = {1, 2, 3, 8, 9, 10};
+    dprel.numberOfArithmeticSlices(num4);
 }

@@ -97,23 +97,85 @@ public:
         if(nums.empty()) return vector<int> {-1, -1};
         int left  = 0;
         int right = nums.size()-1;
+        //find lower bound
         while(left <= right)
         {
             int mid = left + (right-left)/2;
-            if(nums[mid] < target)
+            if(nums[mid] >= target)
             {
-                left = mid+1;
+                right = mid - 1;
             }
-            else if(nums[mid] >= target)
+            else if(nums[mid] < target)
+            {
+                left = mid + 1;
+            }
+        }
+        if(left > nums.size()-1 || nums[left] != target) return vector<int> {-1, -1};
+        int start = left;
+        right = nums.size()-1;
+        while(left <= right)
+        {
+            int mid = left + (right-left)/2;
+            if(nums[mid] > target)
+            {
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+
+        return vector<int> {start, left-1};
+    }
+
+    bool isBadVersion(int version)
+    {
+        return true;
+    }
+
+    int firstBadVersion(int n) {
+        if(n == 0) return 0;
+        int left  = 1;
+        int right = n;
+        //find lower bound
+        while(left <= right)
+        {
+            int mid = left + (right-left)/2;
+            if(isBadVersion(mid))
+            {
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+        return isBadVersion(left)?left:0;
+    }
+
+    int searchInsert(vector<int>& nums, int target)
+    {
+        if(nums.empty()) return 0;
+        int left = 0;
+        int right = nums.size()-1;
+        while(left <= right)
+        {
+            int mid = left + (right-left)/2;
+            if(nums[mid] >= target)
             {
                 right = mid-1;
             }
+            else
+            {
+                left  = mid+1;
+            }
         }
-        if(nums[left] != target) return vector<int> {-1, -1};
-        int start = left, end = left;
-        while(start > 0 && nums[start] == nums[start-1]) start--;
-        while(end < nums.size()-1 && nums[end] == nums[end+1]) end++;
-        return vector<int> {start, end};
+        return left;
+    }
+
+    char nextGreatestLetter(vector<char>& letters, char target)
+    {
 
     }
 
