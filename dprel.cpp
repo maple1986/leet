@@ -14,4 +14,6 @@ void DPRel::test()
 
     vector<int> nums2 = {1,2,3,0,2};
     dprel.maxProfit_cooldown(nums2);
+    //dprel.longestPalindromeSubseq("bbbab");
+    dprel.minFlipsMonoIncr2("00110");
 }
