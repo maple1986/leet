@@ -24,4 +24,6 @@ void DPRel::test()
 
     vector<int> num4 = {1, 2, 3, 8, 9, 10};
     dprel.numberOfArithmeticSlices(num4);
+
+    dprel.countSubstrings1("aaa");
 }

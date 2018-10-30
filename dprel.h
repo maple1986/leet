@@ -433,6 +433,106 @@ public:
         return total;
     }
 
+    int countSubstrings(string s)
+    {
+        /*
+        int n = s.size();
+        if(n <= 1) return n;
+        int count = 0;
+        for(int st=0; st<n; ++st)
+        {
+            for(int e=st; e<n; ++e)
+            {
+                if(isPalin(s.substr(s, e+1)))
+                    count++;
+            }
+        }
+
+        return count;
+        */
+        return 0;
+    }
+
+    int countSubstrings1(string s)
+    {
+        int n = s.size();
+        if(n <= 1) return n;
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        int count = 0;
+        for(int i=0; i<n; ++i)
+        {
+            dp[1][i] = 1;
+        }
+        count += n;
+        for(int i=0; i<n-1; ++i)
+        {
+            if(s[i] == s[i+1])
+            {
+                dp[2][i] = 1;
+                count++;
+            }
+        }
+        for(int l=3; l<=n; ++l)
+        {
+            for(int i=0; i<n-l+1; ++i)
+            {
+                if((s[i] == s[i+l-1]) && dp[l-2][i+1])
+                {
+                    dp[l][i] = 1;
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    int minimumDeleteSum(string s1, string s2)
+    {
+
+        return 0;
+    }
+
+    int minDistance(string word1, string word2)
+    {
+        if(word1.empty() || word2.empty())
+        {
+            return word1.empty()?word2.size():word1.size();
+        }
+    }
+
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs)
+    {
+
+        return 0;
+    }
+
+    int shoppingOffers_rec(vector<int>& price, vector<vector<int>>& special, vector<int>& needs)
+    {
+        vector<int> tmp = needs;
+        for(auto & item: tmp)
+        {
+            //ifitem
+        }
+        return 0;
+    }
+
+    int findLongestChain(vector<vector<int>>& pairs)
+    {
+        if(pairs.empty()) return 0;
+        vector<vector<int>> relations(n, vector<int>(n, 0));
+        for(int i=0; i<pairs.size(); ++i)
+        {
+            for(int j=0; j<pairs.size(); ++j)
+            {
+                if(j == i) continue;
+                if(pairs[j][0] > pairs[i][1])
+                {
+                    relations[i][j] = 1;
+                }
+            }
+        }
+    }
+
 private:
     vector<int> _sums;
 };

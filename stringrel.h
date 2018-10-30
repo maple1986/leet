@@ -4,6 +4,7 @@
 #include <vector>
 #include <bitset>
 #include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -107,18 +108,6 @@ public:
         return bs.count() < 2;
     }
 
-    string countOfAtoms(string formula)
-    {
-        map<string, int> res;
-        string ans;
-        countOfAtoms(res, formula, 0);
-        for(auto& v : res)
-        {
-            ans += v->first + ":" + to_string(v->second);
-        }
-        return ans;
-    }
-
     void countOfAtoms(map<string, int>& res, string& formula, int& i)
     {
 
@@ -134,6 +123,22 @@ public:
             }
         }
     }
+
+    string countOfAtoms(string formula)
+    {
+        map<string, int> res;
+        string ans;
+        /*
+        countOfAtoms(res, formula, 0);
+        for(auto v : res)
+        {
+            ans += v->first + ":" + to_string(v->second);
+        }
+        */
+        return ans;
+    }
+
+
 
     /*
    Sunday(T, P)
