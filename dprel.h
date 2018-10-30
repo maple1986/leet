@@ -488,9 +488,18 @@ public:
 
     int minimumDeleteSum(string s1, string s2)
     {
-
-        return 0;
+        int l1 = s1.length();
+        int l2 = s2.length();
+        m_ = vector<vector<int>>(l1+1, vector<int>(l2+1, 0));
+        return dp(s1, l1, s2, l2);
     }
+
+    int dp(const string& s1, int i, const string& s2, int j)
+    {
+        if(i == 0 && j ==0) return 0;
+
+    }
+
 
     int minDistance(string word1, string word2)
     {

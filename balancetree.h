@@ -149,7 +149,27 @@ private:
            if(tmp->left) q.push(tmp->left);
            if(tmp->right) q.push(tmp->right);
         }
+    }
 
+    int getMinimumDifference(TreeNode* root)
+    {
+        if(!root) return 0;
+        vector<int> nums;
+        inorder(root, nums);
+        int min_diff = INT_MAX;
+        for(int i=0; i<nums.size()-1; ++i)
+        {
+            min_diff = min(min_diff, abs(nums[i] - nums[i+1]));
+        }
+        return min_diff;
+    }
+
+    void inorder(TreeNode* root, vector<int>& nums)
+    {
+        if(!root) return;
+        if(root->left) inorder(root->left, nums);
+        nums.push_back(root->val);
+        if(root->right) inorder(root->right, nums);
     }
 };
 
