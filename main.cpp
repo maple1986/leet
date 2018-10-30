@@ -19,11 +19,13 @@
 #include <greedy.h>
 #include <dprel.h>
 #include <nsum.h>
+#include <twopointer.h>
 using namespace std;
 
 int main()
 {
 
+    //TwoPointer::test();
     //binarySearchRel::test();
 
     //NumofOnes::test();

@@ -107,6 +107,34 @@ public:
         return bs.count() < 2;
     }
 
+    string countOfAtoms(string formula)
+    {
+        map<string, int> res;
+        string ans;
+        countOfAtoms(res, formula, 0);
+        for(auto& v : res)
+        {
+            ans += v->first + ":" + to_string(v->second);
+        }
+        return ans;
+    }
+
+    void countOfAtoms(map<string, int>& res, string& formula, int& i)
+    {
+
+        while(i < formula.size())
+        {
+            if(formula[i] == '(')
+            {
+                countOfAtoms(res, formula, ++i);
+            }
+            else if(formula[i] == ')')
+            {
+
+            }
+        }
+    }
+
     /*
    Sunday(T, P)
 01 n <- the length of T

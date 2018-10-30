@@ -140,6 +140,89 @@ public:
         return dp[i-1]>0?dp[i-1]:0;
     }
 
+    int longestPalindromeSubseq(string s)
+    {
+        int n = s.size();
+        if(n <= 1) return n;
+        vector<vector<int>> dp(n, vector<int>(n, 0));
+        for(int l = 1; l <= n; ++l)
+        {
+            for(int i=0; i<=n-l; ++i)
+            {
+                int j = l + i - 1;
+                if(i == j)
+                {
+                    dp[i][j] = 1;
+                    continue;
+                }
+                if(s[i] == s[j])
+                {
+                    dp[i][j] = dp[i+1][j-1] + 2;
+                }
+                else
+                {
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[0][n-1];
+    }
+
+    int minFlipsMonoIncr(string S)
+    {
+        int n = S.size();
+        if(n<2) return 0;
+        int min_flip = 20001;
+        for(int i=-1; i<n; ++i)
+        {
+            int flip = 0;
+             for(int j=0; j<=i; ++j)
+            {
+                if(S[j] != '0')
+                {
+                    flip++;
+                }
+            }
+            for(int k=i+1; k<n; ++k)
+            {
+                if(S[k] != '1')
+                {
+                    flip++;
+                }
+            }
+            min_flip = min(min_flip, flip);
+        }
+        return min_flip;
+    }
+
+    int minFlipsMonoIncr2(string S)
+    {
+        int n = S.size();
+        if(n<2) return 0;
+        int min_flip = 20001;
+        vector<int> l(n, 0);
+        vector<int> r(n, 0);
+        l[0] = S[0] - '0';
+        r[n-1] = '1' - S[n-1];
+        for(int i=1; i<n; ++i)
+        {
+            l[i] = l[i-1] + S[i] - '0';
+        }
+
+        for(int i=n-2; i>=0; --i)
+        {
+            r[i] = r[i+1] + 1 - S[i];
+        }
+
+        for(int i=0; i<n; ++i)
+        {
+            min_flip = min(min_flip, l[i]+r[i+1]);
+        }
+        //min_flip = min(min_flip, l[n-1]);
+        //min_flip = min(min_flip, r[0]);
+        return min_flip;
+    }
+
     int climbstairs(int n)
     {
         if(n<=2) return n;
