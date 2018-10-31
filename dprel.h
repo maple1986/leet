@@ -490,14 +490,68 @@ public:
     {
         int l1 = s1.length();
         int l2 = s2.length();
-        m_ = vector<vector<int>>(l1+1, vector<int>(l2+1, 0));
+        m_ = vector<vector<int>>(l1+1, vector<int>(l2+1, INT_MAX));
         return dp(s1, l1, s2, l2);
     }
 
     int dp(const string& s1, int i, const string& s2, int j)
     {
         if(i == 0 && j ==0) return 0;
+        if(m_[i][j] !=INT_MAX)
+        {
+            return m_[i][j];
+        }
+        if(i == 0)
+        {
+            m_[i][j] = dp(s1, i, s2, j-1) + s2[j-1];
+            return m_[i][j];
+        }
+        if(j == 0)
+        {
+            m_[i][j] = dp(s1, i-1, s2, j) + s1[i-1];
+            return m_[i][j];
+        }
+        if(s1[i-1] == s2[j-1])
+        {
+            m_[i][j] = dp(s1, i-1, s2, j-1);
+            return m_[i][j];
+        }
+        else
+        {
+            m_[i][j] =  min(dp(s1, i, s2, j-1)+s2[j-1], dp(s1, i-1, s2, j)+s1[i-1]);
+            return m_[i][j];
+        }
+    }
 
+    int minimumDeleteSum_dp(string s1, string s2)
+    {
+        int l1 = s1.length();
+        int l2 = s2.length();
+        vector<vector<int>> dp(l1+1, vector<int>(l2+1, 0));
+        dp[0][0] = 0;
+        for(int i=1; i<=l1; ++i)
+        {
+            dp[i][0] = s1[i-1];
+        }
+        for(int i=1; i<=l2; ++i)
+        {
+            dp[0][i] = s2[i-1];
+        }
+        for(int i=1; i<=l1; ++i)
+        {
+            for(int j=1; j<=l2; ++j)
+            {
+                if(s1[i-1] == s2[j-1])
+                {
+                    dp[i][j] = dp[i-1][j-1];
+                }
+                else
+                {
+                    dp[i][j] = dp[i][j-1]+s2[j-1];
+                }
+            }
+        }
+        return dp[l1][l2];
     }
 
 
@@ -506,6 +560,39 @@ public:
         if(word1.empty() || word2.empty())
         {
             return word1.empty()?word2.size():word1.size();
+        }
+        int l1 = word1.length();
+        int l2 = word2.length();
+        m_ = vector<vector<int>>(l1+1, vector<int>(l2+1, INT_MAX));
+        return dp1(word1, l1, word2, l2);
+    }
+
+    int dp1(const string& s1, int i, const string& s2, int j)
+    {
+        if(i == 0 && j ==0) return 0;
+        if(m_[i][j] !=INT_MAX)
+        {
+            return m_[i][j];
+        }
+        if(i == 0)
+        {
+            m_[i][j] = j;
+            return m_[i][j];
+        }
+        if(j == 0)
+        {
+            m_[i][j] = i;
+            return m_[i][j];
+        }
+        if(s1[i-1] == s2[j-1])
+        {
+            m_[i][j] = dp1(s1, i-1, s2, j-1);
+            return m_[i][j];
+        }
+        else
+        {
+            m_[i][j] =  min(dp1(s1, i, s2, j-1)+1, dp1(s1, i-1, s2, j)+1);
+            return m_[i][j];
         }
     }
 
@@ -528,6 +615,7 @@ public:
     int findLongestChain(vector<vector<int>>& pairs)
     {
         if(pairs.empty()) return 0;
+        int n = pairs.size();
         vector<vector<int>> relations(n, vector<int>(n, 0));
         for(int i=0; i<pairs.size(); ++i)
         {
@@ -542,8 +630,15 @@ public:
         }
     }
 
+    int maxSubarry(string s1, string s2)
+    {
+
+        return 0;
+    }
+
 private:
     vector<int> _sums;
+    vector<vector<int>> m_;
 };
 
 #endif // DPREL_H

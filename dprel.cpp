@@ -26,4 +26,8 @@ void DPRel::test()
     dprel.numberOfArithmeticSlices(num4);
 
     dprel.countSubstrings1("aaa");
+
+    int i = dprel.minimumDeleteSum_dp("delete", "leet");
+    i = dprel.minDistance("eat", "sea");
+    i = i+1;
 }
