@@ -29,5 +29,11 @@ void DPRel::test()
 
     int i = dprel.minimumDeleteSum_dp("delete", "leet");
     i = dprel.minDistance("eat", "sea");
+
+    vector<int> nums5 = {1,2,3,2,1};
+    vector<int> nums6 = {3,2,1,4,7};
+    i = dprel.findLength(nums5, nums6);
+    vector<int> num7 = {1,2,3,1};
+    i = dprel.rob2(num7);
     i = i+1;
 }

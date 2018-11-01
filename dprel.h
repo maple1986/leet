@@ -529,13 +529,16 @@ public:
         int l2 = s2.length();
         vector<vector<int>> dp(l1+1, vector<int>(l2+1, 0));
         dp[0][0] = 0;
+        int sum1 = 0, sum2 = 0;
         for(int i=1; i<=l1; ++i)
         {
-            dp[i][0] = s1[i-1];
+            dp[i][0] = 0;
+            sum1 += s1[i-1];
         }
         for(int i=1; i<=l2; ++i)
         {
-            dp[0][i] = s2[i-1];
+            dp[0][i] = 0;
+            sum2 += s2[i-1];
         }
         for(int i=1; i<=l1; ++i)
         {
@@ -543,15 +546,15 @@ public:
             {
                 if(s1[i-1] == s2[j-1])
                 {
-                    dp[i][j] = dp[i-1][j-1];
+                    dp[i][j] = dp[i-1][j-1] + 2*s1[i-1];
                 }
                 else
                 {
-                    dp[i][j] = dp[i][j-1]+s2[j-1];
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
                 }
             }
         }
-        return dp[l1][l2];
+        return sum1 + sum2 - dp[l1][l2];
     }
 
 
@@ -630,10 +633,138 @@ public:
         }
     }
 
+    int depth_len(int i, int& depth, vector<vector<int>>& relations)
+    {
+        for(int k=0; k<relations[i].size(); ++k)
+        {
+
+        }
+        return 0;
+    }
+
+     int findLength(vector<int>& A, vector<int>& B)
+     {
+         int len1 = A.size();
+         int len2 = B.size();
+
+         vector<vector<int>> dp(len1+1, vector<int>(len2+1, 0));
+         dp[len1][len2] = 0;
+         for(int i=0; i<len1; ++i)
+         {
+             for(int j=0; j<len2; ++j)
+             {
+                 if(A[len1-i-1] == B[len2-j-1])
+                 {
+                     dp[i][j] = dp[i+1][j+1]+1;
+                 }
+                 else
+                 {
+                     dp[i][j] = max(dp[i][j+1], dp[i+1][j]);
+                 }
+             }
+         }
+         int max_elem = 0;
+         for(int i=0; i<=len1; ++i)
+         {
+             max_elem = max(max_elem, *max_element(dp[i].begin(), dp[i].end()));
+         }
+         return max_elem;
+     }
+
     int maxSubarry(string s1, string s2)
     {
+        int len1 = s1.length();
+        int len2 = s2.length();
 
-        return 0;
+        vector<vector<int>> dp(len1+1, vector<int>(len2+1, 0));
+        dp[len1][len2] = 0;
+        for(int i=0; i<len1; ++i)
+        {
+            for(int j=0; j<len2; ++j)
+            {
+                if(s1[len1-i-1] == s2[len2-j-1])
+                {
+                    dp[i][j] = dp[i+1][j+1]+1;
+                }
+                else
+                {
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        int max_elem = 0;
+        for(int i=0; i<=len1; ++i)
+        {
+            max_elem = max(max_elem, *max_element(dp[0].begin(), dp[0].end()));
+        }
+        return max_elem;
+    }
+
+    void dp2()
+    {
+
+    }
+
+    int step[2][2] = {{0,1},{1,0}};
+    int minPathSum(vector<vector<int>>& grid)
+    {
+        int m = grid.size();
+        if(!m) return 0;
+        int n = grid[0].size();
+        if(!n) return 0;
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+        dp[0][0] = grid[0][0];
+        for(int i=1; i<m; ++i)
+        {
+            dp[i][0] = dp[i-1][0]+grid[i][0];
+        }
+        for(int j=1; j<n; ++j)
+        {
+            dp[0][j] = dp[0][j-1]+grid[0][j];
+        }
+
+        for(int i=1; i<m; ++i)
+        {
+            for(int j=1; j<n; ++j)
+            {
+                dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]);
+                //dp[i][j] = min(dp[i][j-1]+grid[0][j];
+            }
+        }
+
+        return dp[m-1][n-1];
+    }
+
+    int integerBreak(int n) {
+
+    }
+
+    int countNumbersWithUniqueDigits(int n)
+    {
+
+    }
+    //[1,2,3,1]
+    int rob2(vector<int>& nums)
+    {
+        if(nums.empty()) return 0;
+        int n = nums.size();
+        if(n == 1) return nums[0];
+
+        int pre1 = 0, cur1 = 0;
+        for(int i=0; i<nums.size()-1; ++i)
+        {
+            int temp = pre1;
+            pre1 = cur1;
+            cur1 = max(temp + nums[i], pre1);
+        }
+        int pre2 = 0, cur2 = 0;
+        for(int i=1; i<nums.size(); ++i)
+        {
+            int temp = pre2;
+            pre2 = cur2;
+            cur2 = max(temp + nums[i], pre2);
+        }
+        return max(cur1, cur2);
     }
 
 private:
