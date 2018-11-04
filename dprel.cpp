@@ -35,5 +35,9 @@ void DPRel::test()
     i = dprel.findLength(nums5, nums6);
     vector<int> num7 = {1,2,3,1};
     i = dprel.rob2(num7);
+    vector<int> num8 = {4,10,4,3,8,9};
+    i = dprel.lengthOfLIS(num8);
+    vector<int> num9 = {1,1,1,1,1};
+    i = dprel.findTargetSumWays494(num9, 3);
     i = i+1;
 }

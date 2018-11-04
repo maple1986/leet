@@ -4,6 +4,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <unordered_set>
 
 using namespace std;
 class DPRel
@@ -765,6 +766,77 @@ public:
             cur2 = max(temp + nums[i], pre2);
         }
         return max(cur1, cur2);
+    }
+
+
+    int lengthOfLIS(vector<int>& nums)
+    {
+        if(nums.empty()) return 0;
+        int n = nums.size();
+        vector<int> dp(n, 1);
+        dp[0] = 1;
+        int ans = 1;
+        for(int i=1; i<n; ++i)
+        {
+            for(int j=0; j<i; ++j)
+            {
+                if(nums[i]>nums[j])
+                {
+                    dp[i] = max(dp[i], dp[j]+1);
+                }
+            }
+            ans = max(ans, dp[i]);
+        }
+        return ans;
+    }
+
+    int findTargetSumWays494(vector<int>& nums, int S) {
+        int n = nums.size();
+        if(!n) return 0;
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if(S > sum || S < -sum) return 0;
+        vector<vector<int>> dp(n+1, vector<int>(2*sum+1, 0));
+        dp[0][sum] = 1;
+        for(int i=0; i<n; ++i)
+        {
+            int cur = nums[i];
+            for(int j=0; j<2*sum+1; ++j)
+            {
+                if(dp[i][j])
+                {
+                    dp[i+1][j+cur] += dp[i][j];
+                    dp[i+1][j-cur] += dp[i][j];
+                }
+            }
+        }
+        return dp[n][S+sum];
+    }
+
+    int lenLongestFibSubseq873(vector<int>& A)
+    {
+        if(A.size() < 3) return 0;
+        int res = 0;
+        unordered_set<int> m(A.begin(), A.end());
+
+        for(int i=0; i<A.size(); ++i)
+        {
+            for(int j=i+1; j<A.size(); ++j)
+            {
+                int a = A[i];
+                int b = A[j];
+                int c = a+b;
+                int l = 2;
+                while(m.count(c))
+                {
+                    a = b;
+                    b = c;
+                    c = a+b;
+                    l++;
+                }
+                res = max(res, l);
+            }
+        }
+        return res;
     }
 
 private:

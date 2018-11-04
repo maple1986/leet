@@ -138,6 +138,10 @@ public:
         return ans;
     }
 
+    bool isStrobogrammatic(string num)
+    {
+        return true;
+    }
 
 
     /*
