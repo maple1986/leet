@@ -887,32 +887,29 @@ public:
 
     int findSubstringInWraproundString1(string p)
     {
-        /*
         int n = p.size();
         if(n <= 1) return n;
-        set<char> m;
-        m.insert(p[0]);
+        vector<int> m(26, 0);
         int res = 0;
-        for(int i=1; i<n;)
+        int curLen = 1;
+        for(int i=0; i<n; ++i)
         {
-            int end = i+1;
-            m.insert(p[end]);
-            int len = 1;
-            while(p[end] - p[end-1] == 1 || p[end] == 'a' && p[end-1] == 'z')
+            if(i > 0 && (p[i] - p[i-1] == 1 || p[i] == 'a' && p[i-1] == 'z'))
             {
-                if(end >= n)
-                {
-                    break;
-                }
-                m.insert(p[end]);
-                ++len;
-                ++end;
+                ++curLen;
             }
-            if(len > 1)
-                //res +=
-            i = end;
+            else
+            {
+                curLen = 1;
+            }
+            m[p[i]-'a'] = max(m[p[i]-'a'], curLen);
         }
-        */
+
+        for(int i: m)
+        {
+            res += i;
+        }
+        return res;
     }
 
 private:
