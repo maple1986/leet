@@ -39,5 +39,7 @@ void DPRel::test()
     i = dprel.lengthOfLIS(num8);
     vector<int> num9 = {1,1,1,1,1};
     i = dprel.findTargetSumWays494(num9, 3);
+    i = dprel.findSubstringInWraproundString("zadcd");
+
     i = i+1;
 }

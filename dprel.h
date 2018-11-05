@@ -839,6 +839,82 @@ public:
         return res;
     }
 
+    int findSubstringInWraproundString(string p)
+    {
+        int n = p.size();
+        if(n <= 1) return n;
+        set<char> m;
+        int res = 0;
+        vector<int> dp(n);
+        for(int len=1; len<=n; ++len)
+        {
+            m.clear();
+            for(int start=0; start<=n-len; ++start)
+            {
+                int end = start+len-1;
+                if(1==len)
+                {
+                    dp[start] = 1;
+                    if(!m.count(p[start]))
+                    {
+                        m.insert(p[start]);
+                        res++;
+                    }
+                }
+                else
+                {
+                    if(dp[start])
+                    {
+                        if((p[end-1] == 'z' && p[end] == 'a') || p[end]-p[end-1] == 1)
+                        {
+                            dp[start] = 1;
+                            if(!m.count(p[start]))
+                            {
+                                m.insert(p[start]);
+                                res++;
+                            }
+                        }
+                        else
+                        {
+                            dp[start] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    int findSubstringInWraproundString1(string p)
+    {
+        /*
+        int n = p.size();
+        if(n <= 1) return n;
+        set<char> m;
+        m.insert(p[0]);
+        int res = 0;
+        for(int i=1; i<n;)
+        {
+            int end = i+1;
+            m.insert(p[end]);
+            int len = 1;
+            while(p[end] - p[end-1] == 1 || p[end] == 'a' && p[end-1] == 'z')
+            {
+                if(end >= n)
+                {
+                    break;
+                }
+                m.insert(p[end]);
+                ++len;
+                ++end;
+            }
+            if(len > 1)
+                //res +=
+            i = end;
+        }
+        */
+    }
+
 private:
     vector<int> _sums;
     vector<vector<int>> m_;
