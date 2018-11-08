@@ -912,6 +912,86 @@ public:
         return res;
     }
 
+    int maxSubArray53(vector<int>& nums)
+    {
+        if(nums.empty()) return 0;
+        vector<int> dp(nums.size(), 0);
+        dp[0] = nums[0];
+        int maxSum = dp[0];
+        for(int i=1; i < nums.size(); ++i)
+        {
+            dp[i] = dp[i-1]>0?nums[i]+dp[i-1]:nums[i];
+            maxSum = max(maxSum, dp[i]);
+        }
+        return maxSum;
+    }
+
+    int maxProduct152(vector<int>& nums)
+    {
+        int n = nums.size();
+        if(n == 0) return 0;
+        vector<int> positive(n, 0);
+        vector<int> negative(n, 0);
+        positive[0] = nums[0];
+        negative[0] = nums[0];
+        int ans = nums[0];
+        for(int i=1; i<nums.size(); ++i)
+        {
+            positive[i] = max(max(positive[i-1]*nums[i], nums[i]), negative[i-1] * nums[i]);
+            negative[i] = min(min(positive[i-1]*nums[i], nums[i]), negative[i-1] * nums[i]);
+            ans = max(positive[i], ans);
+        }
+        return ans;
+    }
+
+    int numSubarrayProductLessThanK713(vector<int>& nums, int k)
+    {
+        if(nums.empty()) return 0;
+        if( k == 0) return 0;
+        vector<int> dp(nums.size(), -1);
+        int cur_product = 1;
+        if(nums[0] < k)
+        {
+            dp[0] = 0;
+            cur_product = nums[0];
+        }
+        for(int i=1; i<nums.size(); ++i)
+        {
+            if(dp[i-1] < 0)
+            {
+                if(nums[i] < k)
+                {
+                    dp[i] = i;
+                    cur_product = nums[i];
+                }
+                else
+                {
+                    cur_product = 1;
+                }
+            }
+            else
+            {
+                cur_product *= nums[i];
+                if(cur_product < k)
+                {
+                    dp[i] = dp[i-1];
+                }
+                else
+                {
+                    int j = dp[i-1];
+                    while(cur_product/nums[j] >= k)
+                    {
+                        j++;
+                    }
+                    if(j < i)
+                    {
+                        dp[i] = -1;
+                    }
+                }
+            }
+        }
+    }
+
 private:
     vector<int> _sums;
     vector<vector<int>> m_;
