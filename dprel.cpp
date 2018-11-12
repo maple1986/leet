@@ -40,6 +40,7 @@ void DPRel::test()
     vector<int> num9 = {1,1,1,1,1};
     i = dprel.findTargetSumWays494(num9, 3);
     i = dprel.findSubstringInWraproundString("zadcd");
-
+    vector<int> num10 = {2, 4, 5, 10};
+    i = dprel.numFactoredBinaryTrees(num10);
     i = i+1;
 }

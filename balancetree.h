@@ -171,6 +171,51 @@ private:
         nums.push_back(root->val);
         if(root->right) inorder(root->right, nums);
     }
+
+    TreeNode* deleteNode(TreeNode* root, int key)
+    {
+        if(root->val == key)
+        {
+            return doDelete(root);
+        }
+        else if(root->val > key)
+        {
+            root->left = deleteNode(root->left, key);
+        }
+        else// if(root->val < key)
+        {
+            root->right = deleteNode(root->right, key);
+        }
+    }
+
+    TreeNode* doDelete(TreeNode* root)
+    {
+        if(isLeaf(root))
+        {
+            return NULL;
+        }
+        else if(leftOnly(root))
+        {
+            return root->left;
+        }
+        else if(RightOnly(root))
+        {
+            return root->right;
+        }
+        else //Both childrens
+        {
+            TreeNode* toDel = root;
+            root = root->right;
+            TreeNode* pre = root->right;
+            while(root->left)
+            {
+                pre  = root;
+                root = root->left;
+            }
+            pre->left = NULL;
+            return;
+        }
+    }
 };
 
 #endif // BALANCETREE_H

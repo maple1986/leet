@@ -5,6 +5,7 @@
 #include <set>
 #include <algorithm>
 #include <unordered_set>
+#include <map>
 
 using namespace std;
 class DPRel
@@ -990,6 +991,35 @@ public:
                 }
             }
         }
+    }
+
+    int numFactoredBinaryTrees(vector<int>& A)
+    {
+        if(A.size() < 2) return A.size();
+        sort(A.begin(), A.end());
+        map<int, int> m;
+        for(int i=0; i<A.size(); ++i)
+        {
+            m.insert(make_pair(A[i], i));
+        }
+        vector<int> dp(A.size(), 1);
+        for(int i=1; i<A.size(); ++i)
+        {
+            for(int j=0; j<i; ++j)
+            {
+                if(A[i]%A[j] == 0)
+                {
+                     int key = A[i]/A[j];
+                     auto it = m.find(key);
+                     if(it != m.end())
+                     {
+                        dp[i] += dp[j]*dp[it->second];
+                     }
+
+                }
+            }
+        }
+        return accumulate(dp.begin(), dp.end(), 0);
     }
 
 private:

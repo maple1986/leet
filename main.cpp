@@ -43,9 +43,9 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
+    DPRel::test();
     //NSum::test();
-    backtrack::test();
+    //backtrack::test();
     return 0;
 }
 
