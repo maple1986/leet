@@ -46,7 +46,8 @@ int main()
     //DPRel::test();
     //NSum::test();
     //backtrack::test();
-    DFS::test();
+    //DFS::test();
+    BalanceTree::test();
     return 0;
 }
 
