@@ -44,7 +44,7 @@ void BalanceTree::test()
     }
     vector<int> num1({3,2,1,6,0,5});
     TreeNode* t = bt.constructMaximumBinaryTree(num1);
-    printf("ptr = [%p]", t);
+    //printf("ptr = [%p]", t);
     int i = 0;
 }
 

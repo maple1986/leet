@@ -190,7 +190,7 @@ private:
     {
         if(root->val == key)
         {
-            return doDelete(root);
+            return NULL;//doDelete(root);
         }
         else if(root->val > key)
         {
@@ -201,7 +201,7 @@ private:
             root->right = deleteNode(root->right, key);
         }
     }
-
+/*
     TreeNode* doDelete(TreeNode* root)
     {
         if(isLeaf(root))
@@ -229,6 +229,7 @@ private:
             pre->left = NULL;
             return;
         }
+*/
     vector<double> averageOfLevels(TreeNode* root)
     {
         vector<double> res;
