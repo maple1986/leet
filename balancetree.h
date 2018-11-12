@@ -87,6 +87,7 @@ public:
 #include <string>
 #include <queue>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -103,6 +104,19 @@ struct StringTreeNode {
     StringTreeNode *brother;
     StringTreeNode *child;
     StringTreeNode(string x) : val(x), brother(nullptr), child(nullptr) {}
+};
+
+class NAryNode {
+public:
+    int val;
+    vector<NAryNode*> children;
+
+    NAryNode() {}
+
+    NAryNode(int _val, vector<NAryNode*> _children) {
+        val = _val;
+        children = _children;
+    }
 };
 
 class BalanceTree
@@ -215,6 +229,258 @@ private:
             pre->left = NULL;
             return;
         }
+    vector<double> averageOfLevels(TreeNode* root)
+    {
+        vector<double> res;
+        if(!root) return res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            double avg=0;
+
+            for(int i=0; i<size; ++i)
+            {
+                TreeNode* tmp = q.front();
+                q.pop();
+                avg+=(tmp->val-avg)/size;
+                if(tmp->left) q.push(tmp->left);
+                if(tmp->right) q.push(tmp->right);
+            }
+            res.push_back(avg);
+        }
+        return res;
+    }
+
+
+    TreeNode* pruneTree1(TreeNode* root)
+    {
+        if(!root) return NULL;
+        if(containingall0s(root->left) && containingall0s(root->right) && root->val == 0)
+        {
+            return NULL;
+        }
+        pruneTree1(root->left);
+        pruneTree1(root->right);
+        return root;
+    }
+
+    bool containingall0s(TreeNode* root)
+    {
+
+    }
+    TreeNode* pruneTree2(TreeNode* root){
+        return go(root) ? root : nullptr;
+    }
+    int go(TreeNode* node){
+        if (node==nullptr) return 0;
+        int l=go(node->left),r=go(node->right);
+        if (l==0) node->left=nullptr;
+        if (r==0) node->right=nullptr;
+        return l+r+node->val;
+    }
+
+    TreeNode* pruneTree3(TreeNode* root) {
+        if (!root) return NULL;
+        root->left = pruneTree3(root->left);
+        root->right = pruneTree3(root->right);
+        if (!root->left && !root->right && root->val == 0) return NULL;
+        return root;
+    }
+
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums)
+    {
+        if(nums.empty()) return NULL;
+        return constructMaximumHelper(nums, 0, nums.size()-1);
+    }
+    TreeNode* constructMaximumHelper(vector<int>& nums, int begin, int end)
+    {
+        if(begin > end)
+        {
+            return NULL;
+        }
+        else if(begin == end)
+        {
+            return new TreeNode(nums[begin]);
+        }
+        int index = max_elementIndex(nums, begin, end);
+        TreeNode* root = new TreeNode(nums[index]);
+        root->left = constructMaximumHelper(nums, begin, index-1);
+        root->right = constructMaximumHelper(nums, index+1, end);
+        return root;
+    }
+
+    int max_elementIndex(vector<int>& nums, int begin, int end)
+    {
+        int index = begin;
+        int maxnum= nums[begin];
+        for(; begin <= end; ++begin)
+        {
+            if(nums[begin] > maxnum)
+            {
+                index = begin;
+                maxnum= nums[begin];
+            }
+        }
+        return index;
+    }
+
+
+    TreeNode* constructMaximumBinaryTree1(vector<int>& nums)
+    {
+        if(nums.empty()) return NULL;
+        return constructMaximumHelper1(nums, 0, nums.size()-1);
+    }
+    TreeNode* constructMaximumHelper1(vector<int>& nums, int begin, int end)
+    {
+        if(begin > end)
+        {
+            return NULL;
+        }
+        else if(begin == end)
+        {
+            return new TreeNode(nums[begin]);
+        }
+        auto it = max_element(nums.begin()+begin, nums.begin()+end+1);
+        TreeNode* root = new TreeNode(*it);
+        root->left = constructMaximumHelper1(nums, begin, distance(nums.begin(), it)-1);
+        root->right = constructMaximumHelper1(nums, distance(nums.begin(), it)+1, end);
+        return root;
+    }
+    TreeNode* constructMaximumBinaryTree2(vector<int>& nums)
+    {
+        vector<TreeNode *> stks;
+        for (auto& num : nums) {
+            TreeNode * node = new TreeNode(num);
+            while (!stks.empty() && stks.back()->val < num) {
+                node->left = stks.back();
+                stks.pop_back();
+            }
+            if (!stks.empty()) {
+                stks.back()->right = node;
+            }
+            stks.push_back(node);
+        }
+        return stks[0];
+    }
+
+    TreeNode* insertIntoBST(TreeNode* root, int val)
+    {
+        if(!root) return new TreeNode(val);
+        if(root->val == val) return root;
+        if(root->val > val)
+        {
+            root->left = insertIntoBST(root->left, val);
+            return root;
+        }
+        if(root->val < val)
+        {
+            root->right = insertIntoBST(root->right, val);
+            return root;
+        }
+    }
+
+    TreeNode* insertIntoBST2(TreeNode* root, int val) {
+        TreeNode* prev = root;
+        TreeNode* tmp = root;
+        while (root!=NULL){
+            if (root->val < val){
+              prev = root;
+              root = root->right;
+            }else{
+                prev = root;
+                root = root->left;
+            }
+        }
+        TreeNode *root1 = new TreeNode(val);
+        root1->val = val;
+        root1->right = NULL;
+        root1->left = NULL;
+        if (prev->val < val) prev->right = root1;
+        else prev->left = root1;
+        return tmp;
+    }
+
+    vector<int> largestValues(TreeNode* root)
+    {
+        if(!root) return {};
+        vector<int> res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            int maxInRow = q.front()->val;
+            for(int i=0; i<size; ++i)
+            {
+                TreeNode* cur = q.front();
+                maxInRow = max(maxInRow, cur->val);
+                q.pop();
+                //Insert Children
+                if(cur->left)
+                    q.push(cur->left);
+                if(cur->right)
+                    q.push(cur->right);
+            }
+            res.push_back(maxInRow);
+        }
+        return res;
+    }
+
+
+    int leftmostValues(TreeNode* root)
+    {
+        int res = 0;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            res = q.front()->val;
+            for(int i=0; i<size; ++i)
+            {
+                TreeNode* cur = q.front();
+                q.pop();
+                //Insert Children
+                if(cur->left)
+                    q.push(cur->left);
+                if(cur->right)
+                    q.push(cur->right);
+            }
+        }
+        return res;
+    }
+
+    TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post)
+    {
+
+    }
+
+    TreeNode* constructFromPrePostHelper(vector<int>& pre, int& left, vector<int>& post)
+    {
+        if(left >= pre.size())
+        {
+            return NULL;
+        }
+        auto it = std::find(post.begin(), post.end(), pre[left]);
+        int mid = distance(it, post.end());
+        TreeNode* root = new TreeNode(pre[left]);
+        /*
+        if(pre[left] == post[right])
+        {
+            root = new TreeNode(pre[left]);
+            left++;
+            right--;
+            constructFromPrePostHelper(pre, left, post, right);
+        }
+        */
+        //else
+        //{
+
+        //}
+        return NULL;
+
     }
 };
 

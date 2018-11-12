@@ -37,7 +37,7 @@ int main()
     MyAtoi::test();
     SortAlg::test();
 
-    DFS::test();
+
     */
     //ListSolutions::test();
     //MathRel::test();
@@ -46,6 +46,8 @@ int main()
     DPRel::test();
     //NSum::test();
     //backtrack::test();
+    //DFS::test();
+    BalanceTree::test();
     return 0;
 }
 
