@@ -137,6 +137,40 @@ public:
         queue<TreeNode*> q;
         q.push(root);
     }
+
+    int maxDepth(NAryNode* root)
+    {
+        int max_depth = 0;
+        int cur = 0;
+        dfs(root, cur, max_depth);
+        return max_depth;
+    }
+
+    void dfs(NAryNode* root, int cur, int& max_depth)
+    {
+        if(!root) return;
+        cur++;
+        max_depth = max(cur, max_depth);
+        for(int i=0; i<root->children.size(); ++i)
+        {
+            dfs(root->children[i], cur, max_depth);
+        }
+    }
+
+    TreeNode* invertTree226(TreeNode* root)
+    {
+        if(!root) return NULL;
+        TreeNode* tmp = root->left;
+        if(root->right)
+            root->left = invertTree226(root->right);
+        else
+            root->left = NULL;
+        if(tmp)
+            root->right = invertTree226(tmp);
+        else
+            root->right = NULL;
+        return root;
+    }
 };
 
 #endif // DFS_H

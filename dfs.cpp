@@ -14,6 +14,8 @@ void DFS::test()
     TreeNode* tree = bt.generateTree(str);
     vector<string> res = dfs.binaryTreePaths(tree);
 
+    dfs.invertTree226(tree);
+
     vector<string>::iterator it = res.begin();
     while(it != res.end())
     {

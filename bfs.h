@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-
+#include <balancetree.h>
 using namespace std;
 
 class BFS
@@ -49,6 +49,31 @@ public:
         }
         return res;
     }
+
+    vector<vector<int>> levelOrder(NAryNode* root)
+    {
+        vector<vector<int>> res;
+        if(!root) return res;
+        queue<NAryNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            vector<int> tmp;
+            for(int i=0; i<size; ++i)
+            {
+                NAryNode* cur = q.front();
+                q.pop();
+                tmp.push_back(cur->val);
+                for(auto i : cur->children)
+                {
+                    q.push(i);
+                }
+            }
+        }
+        return res;
+    }
+
 };
 
 #endif // BFS_H

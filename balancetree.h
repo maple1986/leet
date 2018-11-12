@@ -105,6 +105,19 @@ struct StringTreeNode {
     StringTreeNode(string x) : val(x), brother(nullptr), child(nullptr) {}
 };
 
+class NAryNode {
+public:
+    int val;
+    vector<NAryNode*> children;
+
+    NAryNode() {}
+
+    NAryNode(int _val, vector<NAryNode*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+
 class BalanceTree
 {
 public:
@@ -171,6 +184,31 @@ private:
         nums.push_back(root->val);
         if(root->right) inorder(root->right, nums);
     }
+
+    vector<double> averageOfLevels(TreeNode* root)
+    {
+        vector<double> res;
+        if(!root) return res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            double avg=0;
+
+            for(int i=0; i<size; ++i)
+            {
+                TreeNode* tmp = q.front();
+                q.pop();
+                avg+=(tmp->val-avg)/size;
+                if(tmp->left) q.push(tmp->left);
+                if(tmp->right) q.push(tmp->right);
+            }
+            res.push_back(avg);
+        }
+        return res;
+    }
+
 };
 
 #endif // BALANCETREE_H
