@@ -455,6 +455,26 @@ private:
 
     TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post)
     {
+        int n = pre.size();
+        if(0 == n) return NULL;
+        vector<TreeNode*> treenodes;
+        treenodes.push_back(new TreeNode(pre[0]));
+        for(int i=1, j=pre.size()-2; i<pre.size(); ++i)
+        {
+            TreeNode* tmp = new TreeNode[pre[i]];
+            while(pre[i] == post[j])
+            {
+                i++;
+                j--;
+            }
+
+        }
+        return NULL;
+    }
+
+
+    TreeNode* constructFromPrePost2(vector<int>& pre, vector<int>& post)
+    {
 
     }
 
@@ -464,8 +484,8 @@ private:
         {
             return NULL;
         }
-        auto it = std::find(post.begin(), post.end(), pre[left]);
-        int mid = distance(it, post.end());
+
+
         TreeNode* root = new TreeNode(pre[left]);
         /*
         if(pre[left] == post[right])
@@ -481,7 +501,93 @@ private:
 
         //}
         return NULL;
+    }
 
+    vector<vector<int>> pathSumII(TreeNode* root, int sum)
+    {
+        vector<vector<int>> res;
+        if(!root) return res;
+        stack<TreeNode*> stk;
+        stk.push(root);
+        vector<int> path;
+        while(!stk.empty())
+        {
+            TreeNode* pCur = stk.top();
+            stk.pop();
+            path.push_back(pCur->val);
+            sum -= pCur->val;
+            if(!pCur->left && !pCur->right)
+            {
+                if(0 == sum)
+                {
+                    res.push_back(path);
+                }
+                sum += pCur->val;
+                path.pop_back();
+            }
+            if(pCur->left) stk.push(pCur->left);
+            if(pCur->right) stk.push(pCur->right);
+        }
+        return res;
+    }
+
+    vector<vector<int>> pathSumIIrec(TreeNode* root, int sum)
+    {
+        vector<vector<int>> res;
+        vector<int> path;
+        dfs(root, sum, path, res);
+        return res;
+    }
+
+    void dfs(TreeNode* root, int sum, vector<int>& path, vector<vector<int>>& res)
+    {
+        if(!root) return;
+        path.push_back(root->val);
+        if(!root->left && !root->right && root->val == sum)
+        {
+            res.push_back(path);
+            path.pop_back();
+            return;
+        }
+        dfs(root->left, sum-root->val, path, res);
+        dfs(root->right, sum-root->val, path, res);
+        path.pop_back();
+    }
+    /*
+    int pathSumIII(TreeNode* root, int sum) {
+        if(!root) return 0;
+        int num=0;
+        pathSumIII_dfs(root, sum, num);
+        num += pathSumIII_dfs(root->left, sum)+pathSumIII_dfs(root->right, sum);
+        return num;
+    }
+
+    void pathSumIII_dfs(TreeNode* root, int sum, int& num) {
+        if(!root) return;
+        if(root->val==sum) ++num;
+        dfs(root->left, sum-root->val, num);
+        dfs(root->right, sum-root->val, num);
+    }
+    */
+
+    int kthSmallest(TreeNode* root, int k)
+    {
+        int lchild_count = NumofChildren(root->left);
+        if(lchild_count >= k)
+        {
+            return kthSmallest(root->left, k);
+        }
+        else if(lchild_count+1 < k)
+        {
+            return kthSmallest(root->right, k-lchild_count-1);
+        }
+        return root->val;
+    }
+
+    int NumofChildren(TreeNode* root)
+    {
+        if(!root) return 0;
+        return NumofChildren(root->left)+NumofChildren(root->right)+1;
     }
 };
 

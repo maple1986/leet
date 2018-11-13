@@ -44,8 +44,11 @@ void BalanceTree::test()
     }
     vector<int> num1({3,2,1,6,0,5});
     TreeNode* t = bt.constructMaximumBinaryTree(num1);
+    char* str2 = "[3,1,4,null,2]";
+    TreeNode* tree2 = bt.generateTree(str2);
+    int i = bt.kthSmallest(tree2, 1);
     //printf("ptr = [%p]", t);
-    int i = 0;
+    i = 0;
 }
 
 static int isdigit(const char c)
