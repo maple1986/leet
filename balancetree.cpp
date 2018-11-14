@@ -48,6 +48,10 @@ void BalanceTree::test()
     TreeNode* tree2 = bt.generateTree(str2);
     int i = bt.kthSmallest(tree2, 1);
     //printf("ptr = [%p]", t);
+
+    char* str4 = "[1,3,2,5,3,null,9]";
+    TreeNode* tree4 = bt.generateTree(str4);
+    i = bt.widthOfBinaryTree(tree4);
     i = 0;
 }
 

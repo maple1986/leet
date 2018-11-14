@@ -88,6 +88,7 @@ public:
 #include <queue>
 #include <stack>
 #include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -589,6 +590,157 @@ private:
         if(!root) return 0;
         return NumofChildren(root->left)+NumofChildren(root->right)+1;
     }
+
+
+    vector<int> findFrequentTreeSum(TreeNode* root) {
+        map<TreeNode*, int> m;
+        map<int, vector<TreeNode*>> sums;
+        TreeSum(root, m, sums);
+        vector<int> res;
+        int mostFrequent = 0;
+        for(auto it : sums)
+        {
+            int size = it.second.size();
+            if(size > mostFrequent)
+            {
+                mostFrequent = size;
+                res.clear();
+                res.push_back(it.first);
+            }
+            else if( size == mostFrequent)
+            {
+                res.push_back(it.first);
+            }
+        }
+        return res;
+    }
+
+
+    int TreeSum(TreeNode* root, map<TreeNode*, int>& m, map<int, vector<TreeNode*>>& sums)
+    {
+        if(!root) return 0;
+        if(m.count(root)) return m[root];
+        int sum = root->val + TreeSum(root->left, m, sums) + TreeSum(root->right, m, sums);
+        sums[sum].push_back(root);
+        return sum;
+    }
+
+/*
+    vector<int> findFrequentTreeSum2(TreeNode* root) {
+        vector<int> res;
+        unordered_map<int, int> m;
+        int cnt = 0;
+        postorder(root, m, cnt, res);
+        return res;
+    }
+    int postorder(TreeNode* node, unordered_map<int, int>& m, int& cnt, vector<int>& res) {
+        if (!node) return 0;
+        int left = postorder(node->left, m, cnt, res);
+        int right = postorder(node->right, m, cnt, res);
+        int sum = left + right + node->val;
+        ++m[sum];
+        if (m[sum] >= cnt) {
+            if (m[sum] > cnt) res.clear();
+            res.push_back(sum);
+            cnt = m[sum];
+        }
+        return sum;
+    }
+*/
+    int sumNumbers(TreeNode* root)
+    {
+        if(!root) return 0;
+        int presum = 0, total = 0;
+        dfs_sumNumbers(root, presum, total);
+        return total;
+    }
+
+    void dfs_sumNumbers(TreeNode* root, int presum, int& total)
+    {
+        if(!root) return;
+        presum = presum*10 + root->val;
+        if(!root->left && !root->right)
+        {
+            total += presum;
+            return;
+        }
+        //presum = presum*10 + root->val;
+        if(root->left)
+        {
+            dfs_sumNumbers(root->left, presum, total);
+        }
+        if(root->right)
+        {
+            dfs_sumNumbers(root->right, presum, total);
+        }
+        return;
+    }
+
+    int sumNumbers_useString(TreeNode* root)
+    {
+        if(!root) return 0;
+        int res = 0;
+        dfs_sumNumbers2(root, "", res);
+        return res;
+    }
+
+    void dfs_sumNumbers2(TreeNode* root, string s, int& res)
+    {
+        if(!root) return;
+        s += to_string(root->val);
+        if(!root->left && !root->right)
+        {
+            res += stoi(s);
+            return;
+        }
+        if(root->left) dfs_sumNumbers2(root->left, s, res);
+        if(root->right) dfs_sumNumbers2(root->right, s, res);
+    }
+
+    int widthOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        queue<pair<TreeNode*, int>> q;
+        q.push(make_pair(root, 1));
+        int max_wid = 1;
+        while(!q.empty())
+        {
+            int size = q.size();
+            int cur_wid  = 0;
+            int start_index = 0;
+            int end_index = 0;
+            for(int i=0; i<size; ++i)
+            {
+                pair<TreeNode*, int> tmp = q.front();
+                q.pop();
+                if(i == 0)
+                {
+                    start_index = tmp.second;
+                    cur_wid = 1;
+                }
+                if(i == size-1)
+                {
+                    end_index = tmp.second;
+                    cur_wid = end_index - start_index + 1;
+                    max_wid = max(max_wid, cur_wid);
+                }
+
+                if(tmp.first->left)
+                    q.push(make_pair(tmp.first->left, tmp.second*2));
+                if(tmp.first->right)
+                    q.push(make_pair(tmp.first->right, tmp.second*2+1));
+            }
+        }
+        return max_wid;
+    }
+
+    vector<int> sumOfDistancesInTree(int N, vector<vector<int>>& edges)
+    {
+        if(N == 1) return 0;
+        map<int, vector<int>> graph;
+    }
+
+
+
 };
 
 #endif // BALANCETREE_H
