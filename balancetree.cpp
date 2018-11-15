@@ -52,6 +52,10 @@ void BalanceTree::test()
     TreeNode* tree3 = bt.generateTree(str3);
     bt.distanceK(tree3, tree3->left, 2);
 
+
+    char* str4 = "[1,3,2,5,3,null,9]";
+    TreeNode* tree4 = bt.generateTree(str4);
+    i = bt.widthOfBinaryTree(tree4);
     i = 0;
 }
 
