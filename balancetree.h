@@ -90,6 +90,7 @@ public:
 #include <algorithm>
 #include <map>
 #include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -787,6 +788,7 @@ private:
 
     void flatten(TreeNode* root)
     {
+        /*
         if(!root) return NULL;
         if(!root->left)
         {
@@ -802,6 +804,7 @@ private:
         {
 
         }
+        */
     }
 
     TreeNode* flatten_helper(TreeNode* root)
@@ -816,7 +819,7 @@ private:
         int cur = 0;
         int total = 0;
         dfs_SumOfNode(root, cur, total);
-        return res;
+        return total;
     }
 
     void dfs_SumOfNode(TreeNode* root, int cur, int& total)
@@ -979,11 +982,182 @@ private:
 
     vector<int> sumOfDistancesInTree(int N, vector<vector<int>>& edges)
     {
-        if(N == 1) return 0;
-        map<int, vector<int>> graph;
+        if(N == 1) return {0};
+        vector<int> res;
+        unordered_map<int, vector<int>> graph;
+        generateGraph(edges, graph);
+        vector<vector<int>> mem(N, vector<int>(N, -1));
+        unordered_set<int> visited;
+        //dfs(graph, visited, i, mem);
+        //accumulate
+        return res;
+    }
+
+    void generateGraph(vector<vector<int>>& edges, unordered_map<int, vector<int>>& graph)
+    {
+        for(int i=0; i<edges.size(); ++i)
+        {
+            graph[i].assign(edges[i].begin(), edges[i].end());
+            for(int j : edges[i])
+            {
+                graph[j].push_back(i);
+            }
+        }
     }
 
 
+    void recoverTreeO1(TreeNode* root)
+    {
+        if(!root) return;
+        TreeNode* preNode = NULL;
+        TreeNode* first   = NULL;
+        TreeNode* second  = NULL;
+        inoder(root, preNode, first, second);
+
+        int tmp = first->val;
+        second->val = first->val;
+        first->val  = tmp;
+    }
+
+    void inoder(TreeNode* root, TreeNode*& preNode, TreeNode*& first, TreeNode*& second)
+    {
+        if(!root) return;
+        inoder(root->left, preNode, first, second);
+        //do something
+        if(preNode && preNode->val > root->val)
+        {
+            if(!first)
+            {
+                first = preNode;
+            }
+            if(first)
+            {
+                second = root;
+            }
+        }
+        preNode = root;
+        inoder(root->right, preNode, first, second);
+    }
+
+
+
+    void recoverTree(TreeNode* root)
+    {
+        if(!root) return;
+        vector<pair<int, TreeNode*>> vInoder;
+        inorder(root, vInoder);
+        int disorder_count = 0;
+        int pos1 = 0, pos2 = 0;
+        for(int i=0; i <vInoder.size()-1; ++i)
+        {
+            if(vInoder[i].first > vInoder[i+1].first)
+            {
+                if(disorder_count)
+                {
+                    pos2 = i;
+                }
+                else
+                {
+                    pos1 = i;
+                }
+                disorder_count++;
+            }
+        }
+        if(disorder_count == 1)
+        {
+            pos2 = pos1+1;
+        }
+        else
+        {
+            pos2++;
+        }
+        vInoder[pos1].second->val = vInoder[pos2].first;
+        vInoder[pos2].second->val = vInoder[pos1].first;
+        return;
+    }
+
+    void inorder(TreeNode* root, vector<pair<int, TreeNode*>>& v)
+    {
+        if(!root)
+            return;
+        inorder(root->left, v);
+
+        v.push_back(make_pair(root->val, root));
+        inorder(root->right, v);
+    }
+
+    void recoverTree2(TreeNode* root) {
+        if (NULL == root)
+            return;
+
+        TreeNode* inorder = NULL;
+        TreeNode* first = NULL;
+        TreeNode* second = NULL;
+        findWrong(root, inorder, first, second);
+
+        int fval = first->val;
+        first->val = second->val;
+        second->val = fval;
+
+    }
+
+    void findWrong(TreeNode* root, TreeNode*& inorder, TreeNode*& first, TreeNode*& second)
+    {
+        if (NULL == root)
+            return;
+        findWrong(root->left, inorder, first, second);
+        //do something here
+        if (first == NULL && inorder != NULL && root->val < inorder->val)
+            first = inorder;
+        if (first != NULL && inorder != NULL && root->val < inorder->val)
+        {
+            second = root;
+        }
+        inorder=root;
+
+        findWrong(root->right, inorder, first, second);
+
+    }
+
+    int longestUnivaluePath(TreeNode* root)
+    {
+        if(!root) return 0;
+        vector<pair<TreeNode*, int>> dp;
+        int res = 1;
+        dfs(root, dp, res);
+
+        return res;
+    }
+
+    void dfs(TreeNode *root, vector<pair<TreeNode*, int>> &dp, int &res)
+    {
+        int tmp = 1;
+        if(!dp.empty() && root->val == dp.back().first->val)
+        {
+            tmp = dp.back().second+1;
+        }
+        dp.push_back(make_pair(root, tmp));
+
+        if(!root->left && !root->right)
+        {
+            for(auto i : dp)
+            {
+                res = max(res, i.second);
+            }
+            dp.pop_back();
+            return;
+        }
+        if(root->left) dfs(root->left, dp, res);
+        if(root->right) dfs(root->right, dp, res);
+        dp.pop_back();
+        return;
+    }
+
+    vector<int> findRedundantConnection(vector<vector<int>>& edges)
+    {
+        unordered_map<int, vector<int>> graph;
+        generateGraph(edges, graph);
+    }
 
 };
 

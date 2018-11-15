@@ -56,6 +56,10 @@ void BalanceTree::test()
     char* str4 = "[1,3,2,5,3,null,9]";
     TreeNode* tree4 = bt.generateTree(str4);
     i = bt.widthOfBinaryTree(tree4);
+
+    char* str5 = "[5,4,5,1,1,5]";
+    TreeNode* tree5 = bt.generateTree(str5);
+    i = bt.longestUnivaluePath(tree5);
     i = 0;
 }
 
