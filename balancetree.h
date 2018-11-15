@@ -988,7 +988,7 @@ private:
         generateGraph(edges, graph);
         vector<vector<int>> mem(N, vector<int>(N, -1));
         unordered_set<int> visited;
-        //dfs(graph, visited, i, mem);
+        dfs(graph, visited, i, mem);
         //accumulate
         return res;
     }
