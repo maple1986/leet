@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     dprel.cpp \
     divideandconquer.cpp \
     nsum.cpp \
-    twopointer.cpp
+    twopointer.cpp \
+    desgin.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -55,4 +56,5 @@ HEADERS += \
     dprel.h \
     divideandconquer.h \
     nsum.h \
-    twopointer.h
+    twopointer.h \
+    desgin.h

@@ -106,6 +106,48 @@ public:
         }
     }
 
+    vector<string> letterCasePermutation2(string S) {
+        vector<string> res;
+        if(S.empty())
+        {
+            res.push_back("");
+            return res;
+        }
+        dfs(S, 0, res);
+        return res;
+    }
+    void dfs(string& S, int s, vector<string>& res)
+    {
+        if(s == S.length())
+        {
+            res.push_back(S);
+            return;
+        }
+        dfs(S, s+1, res);
+        if(!isalpha(S[s])) return;
+        S[s] ^= (1 << 5);
+        dfs(S, s+1, res);
+        S[s] ^= (1 << 5);
+    }
+
+    vector<int> hours = {8, 4, 2, 1};
+    vector<int> minutes ={32, 16, 8, 4, 2, 1};
+    vector<string> readBinaryWatch(int num)
+    {
+        vector<string> res;
+        dfs(num, res, 0, 0);
+
+    }
+
+    void dfs(int num, vector<string>& res, int hr_num, int min_num)
+    {
+        if(num == 0)
+        {
+            //res.push_back(to_string(hr_num) + (min_num < 10 ?  ":0" : ":") + to_string(time.second));
+            return;
+        }
+        //for(int i = start_point; i < hou)
+    }
 
     int singleNumber(vector<int>& nums)
     {
