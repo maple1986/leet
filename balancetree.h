@@ -1123,7 +1123,7 @@ private:
     {
         if(!root) return 0;
         vector<pair<TreeNode*, int>> dp;
-        int res = 1;
+        int res = 0;
         dfs(root, dp, res);
 
         return res;
@@ -1131,7 +1131,7 @@ private:
 
     void dfs(TreeNode *root, vector<pair<TreeNode*, int>> &dp, int &res)
     {
-        int tmp = 1;
+        int tmp = 0;
         if(!dp.empty() && root->val == dp.back().first->val)
         {
             tmp = dp.back().second+1;
