@@ -48,6 +48,10 @@ void BalanceTree::test()
     TreeNode* tree2 = bt.generateTree(str2);
     int i = bt.kthSmallest(tree2, 1);
     //printf("ptr = [%p]", t);
+    char* str3 = "[3,5,1,6,2,0,8,null,null,7,4]";
+    TreeNode* tree3 = bt.generateTree(str3);
+    bt.distanceK(tree3, tree3->left, 2);
+
     i = 0;
 }
 

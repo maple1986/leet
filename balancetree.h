@@ -88,6 +88,8 @@ public:
 #include <queue>
 #include <stack>
 #include <algorithm>
+#include <map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -588,6 +590,250 @@ private:
     {
         if(!root) return 0;
         return NumofChildren(root->left)+NumofChildren(root->right)+1;
+    }
+
+    TreeNode* addOneRow(TreeNode* root, int v, int d)
+    {
+        if(!root) return NULL;
+        //root is leaf
+        if(d == 1)
+        {
+            TreeNode* newRoot = new TreeNode(v);
+            newRoot->left = root;
+            return newRoot;
+        }
+        int depth = 1;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            if(depth == d-1)
+            {
+                for(int i=0; i<size; ++i)
+                {
+                    TreeNode* cur = q.front();
+                    q.pop();
+                    TreeNode* left_node = new TreeNode(v);
+                    TreeNode* right_node = new TreeNode(v);
+                    TreeNode* tmp = cur->left;
+                    cur->left = left_node;
+                    left_node->left = tmp;
+
+                    tmp = cur->right;
+                    cur->right = right_node;
+                    right_node->right = tmp;
+                }
+                break;
+            }
+            else
+            {
+                for(int i=0; i<size; ++i)
+                {
+                    TreeNode* cur = q.front();
+                    q.pop();
+                    if(cur->left) q.push(cur->left);
+                    if(cur->right) q.push(cur->right);
+                }
+            }
+            depth++;
+        }
+        return root;
+    }
+
+    vector<int> rightSideView(TreeNode* root)
+    {
+        if(!root) return {};
+        queue<TreeNode*> q;
+        q.push(root);
+        vector<int> res;
+        while(!q.empty())
+        {
+            int size = q.size();
+            for(int i=0; i<size; ++i)
+            {
+                TreeNode* cur = q.front();
+                q.pop();
+                if(i == size-1)
+                {
+                    res.push_back(cur->val);
+                }
+                if(cur->left) q.push(cur->left);
+                if(cur->right) q.push(cur->right);
+            }
+        }
+        return res;
+    }
+
+
+    vector<int> rightSideView2(TreeNode* root) {
+        /*if (NULL == root)
+            return vector<int>();
+        TreeNode* curr = root;
+        vector<int> result;
+        result.push_back(root->val);
+        TreeNode* temp = root->left;
+        while(curr)
+        {
+            if (curr->right)
+            {
+                curr = curr->right;
+                result.push_back(curr->val);
+                if (curr->left)
+                    temp = curr->left;
+                else
+                {
+                    if (temp->right)
+                        temp = temp->right;
+                    else if (temp->left)
+                        temp = temp->left;
+                    else
+                        temp = NULL;
+                }
+            }
+            else
+            {
+                if (temp)
+                    result.push_back(temp->val);
+                curr = temp;
+            }
+        }
+
+        return result;*/
+        vector<int> result;
+        int level = 1;
+        findrightmost(root, level, result);
+        return result;
+    }
+
+    void findrightmost(TreeNode* root, int level, vector<int>& result)
+    {
+        if (NULL == root)
+            return;
+        if (result.size() < level)
+            result.push_back(root->val);
+        findrightmost(root->right, level+1, result);
+        findrightmost(root->left, level+1, result);
+    }
+
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int K)
+    {
+        vector<int> res;
+        if(K == 0)
+        {
+            res.push_back(target->val);
+            return res;
+        }
+        map<TreeNode*, vector<TreeNode*>> graph;
+        gernerateGraph(root, graph);
+        unordered_set<TreeNode*> visited;
+
+        queue<TreeNode*> q;
+        int depth = 0;
+        q.push(target);
+        visited.insert(target);
+        while(!q.empty())
+        {
+            int size = q.size();
+            for(int i=0; i<size; ++i)
+            {
+                TreeNode* cur = q.front();
+                q.pop();
+                for(auto con : graph[cur])
+                {
+                    if(visited.count(con))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        visited.insert(con);
+                        q.push(con);
+                    }
+                }
+            }
+            depth++;
+            if(depth == K)
+            {
+                size = q.size();
+                for(int i=0; i < size; ++i)
+                {
+                    TreeNode* cur = q.front();
+                    q.pop();
+                    res.push_back(cur->val);
+                }
+                break;
+            }
+        }
+        return res;
+    }
+
+    void gernerateGraph(TreeNode* root, map<TreeNode*, vector<TreeNode*>>& graph)
+    {
+        if(!root) return;
+        if(root->left)
+        {
+            graph[root].push_back(root->left);
+            graph[root->left].push_back(root);
+        }
+        if(root->right)
+        {
+            graph[root].push_back(root->right);
+            graph[root->right].push_back(root);
+        }
+        gernerateGraph(root->left, graph);
+        gernerateGraph(root->right, graph);
+    }
+
+    void flatten(TreeNode* root)
+    {
+        if(!root) return NULL;
+        if(!root->left)
+        {
+            flatten(root->right);
+        }
+        else if(!root->right)
+        {
+            root->right = root->left;
+            root->left = NULL;
+            flatten(root->right);
+        }
+        else // left and right
+        {
+
+        }
+    }
+
+    TreeNode* flatten_helper(TreeNode* root)
+    {
+        if(!root) return NULL;
+
+    }
+
+    int SumOfNode(TreeNode* root)
+    {
+        if(!root) return 0;
+        int cur = 0;
+        int total = 0;
+        dfs_SumOfNode(root, cur, total);
+        return res;
+    }
+
+    void dfs_SumOfNode(TreeNode* root, int cur, int& total)
+    {
+        if(!root) return;
+        if(!root->left && !root->right)
+        {
+            total = total + cur + root->val;
+        }
+        cur += root->val;
+
+
+    }
+
+    vector<int> postorderTraversal(TreeNode* root)
+    {
+
     }
 };
 
