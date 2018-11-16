@@ -135,18 +135,86 @@ public:
     vector<string> readBinaryWatch(int num)
     {
         vector<string> res;
-        dfs(num, res, 0, 0);
-
+        /*
+        for(int hr_num=0; hr_num <= hours.size(); ++hr_num)
+        {
+            int min_num = num - hr_num;
+            if(min_num > minutes.size() || min_num < 0)
+            {
+                continue;
+            }
+            dfs(res, hr_num, min_num);
+        }
+        */
+        dfs(num, 0, 0, 0, res);
+        return res;
     }
 
-    void dfs(int num, vector<string>& res, int hr_num, int min_num)
+    void dfs(int num, int pos, int hr_num, int min_num, vector<string>& res)
     {
-        if(num == 0)
+        if(pos == hours.size() + minutes.size() && num != 0)
         {
-            //res.push_back(to_string(hr_num) + (min_num < 10 ?  ":0" : ":") + to_string(time.second));
             return;
         }
-        //for(int i = start_point; i < hou)
+        if(num > hours.size() + minutes.size() - pos)
+        {
+            return;
+        }
+        if(num == 0)
+        {
+            res.push_back(to_string(hr_num) + (min_num < 10 ?  ":0" : ":") + to_string(min_num));
+            return;
+        }
+        dfs(num, pos+1, hr_num, min_num, res);
+
+        if(pos < hours.size())
+        {
+            hr_num += hours[pos];
+        }
+        else
+        {
+            min_num += minutes[pos-hours.size()];
+        }
+        if(min_num > 59 || hr_num > 11)
+        {
+            return;
+        }
+        dfs(num-1, pos+1, hr_num, min_num, res);
+        if(pos < hours.size())
+        {
+            hr_num -= hours[pos];
+        }
+        else
+        {
+            min_num -= minutes[pos-hours.size()];
+        }
+    }
+
+    vector<vector<int>> combine(int n, int k)
+    {
+        vector<vector<int>> res;
+        unordered_set<int> visited;
+        vector<int> tmp;
+        combine_bt(n, k, tmp, visited, res);
+        return res;
+    }
+
+    void combine_bt(int n, int k, vector<int>& tmp, unordered_set<int>& visited, vector<vector<int>>& res)
+    {
+        if(tmp.size() == k)
+        {
+            res.push_back(tmp);
+            return;
+        }
+        for(int i=1; i<=n; ++i)
+        {
+            if(visited.count(i)) continue;
+            tmp.push_back(i);
+            visited.insert(i);
+            combine_bt(n, k, tmp, visited, res);
+            tmp.erase(tmp.end()-1);
+            visited.erase(i);
+        }
     }
 
     int singleNumber(vector<int>& nums)
@@ -263,27 +331,6 @@ public:
         return b;
     }
 
-/*
-    public List<List<Integer>> permute(int[] nums) {
-       List<List<Integer>> list = new ArrayList<>();
-       backtracking(list, new ArrayList<>(), nums);
-       return list;
-    }
-
-    private void backtracking(List<List<Integer>> list, List<Integer> tempList, int [] nums){
-       if(tempList.size() == nums.length){  //已将全部数选出，满足条件加入结果集，结束递归
-          list.add(new ArrayList<>(tempList));
-       } else{
-          for(int i = 0; i < nums.length; i++){
-             if(tempList.contains(nums[i])) continue; // 已经选过的数不再选
-             tempList.add(nums[i]);  //选择当前节点
-             backtracking(list, tempList, nums);  //递归
-             tempList.remove(tempList.size() - 1); //回溯到上一步，去掉当前节点
-          }
-       }
-    }
-*/
-
     vector<vector<int>> permute(vector<int> nums)
     {
         vector<vector<int>> res;
@@ -309,27 +356,53 @@ public:
         }
     }
 
-    void fun(vector<int>& nums,int pos)
+    void fun(vector<int>& nums, vector<int>& tmp, unordered_set<int>& visited, vector<vector<int>>& res)
     {
-        int i;
-        int n=nums.size();
-        if(pos==n)
+        if(tmp.size() == nums.size())
         {
-            permute_res.push_back(nums);
+            res.push_back(tmp);
+
             return;
         }
-        for(i=pos;i<n;i++)
+        int last_element = INT_MIN;
+        for(int i=0;i<nums.size();++i)
         {
-            //if(nums[i] == nums[pos]) continue;
-            //swap(nums[i],nums[pos]);
-            fun(nums,pos+1);
+            if(visited.count(i)) continue;
+            if(last_element == nums[i]) continue; // 已经选过的数不再选
+            visited.insert(i);
+            tmp.push_back(nums[i]);  //选择当前节点
+            fun(nums, tmp, visited, res);  //递归
+            visited.erase(i);
+            last_element = tmp.back();
+            tmp.erase(tmp.end()-1);// (*last_element); //回溯到上一步，去掉当前节点
         }
     }
 
-    vector<vector<int>> permute1(vector<int>& nums) {
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
         sort(nums.begin(), nums.end());
-        fun(nums,0);
-        return permute_res;
+        vector<int> tmp;
+        unordered_set<int> visited;
+        fun(nums, tmp, visited, res);
+        return res;
+    }
+
+    void recursion(vector<int> num, int i, int j, vector<vector<int> > &res) {
+        if (i == j-1) {
+            res.push_back(num);
+            return;
+        }
+        for (int k = i; k < j; k++) {
+            if (i != k && num[i] == num[k]) continue;
+            swap(num[i], num[k]);
+            recursion(num, i+1, j, res);
+        }
+    }
+    vector<vector<int> > permuteUnique_Swap(vector<int> &num) {
+        sort(num.begin(), num.end());
+        vector<vector<int>>res;
+        recursion(num, 0, num.size(), res);
+        return res;
     }
 
     /*
@@ -477,8 +550,6 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
     }
 
 
-private:
-    vector<vector<int>> permute_res;
 };
 
 #endif // BACKTRACK_H
