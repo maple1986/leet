@@ -60,6 +60,14 @@ void BalanceTree::test()
     char* str5 = "[1,4,5,4,4,5]";
     TreeNode* tree5 = bt.generateTree(str5);
     i = bt.longestUnivaluePath(tree5);
+
+    char* str6 = "[5,3,6,2,4,null,8,1,null,null,null,7,9]";
+    TreeNode* tree6 = bt.generateTree(str6);
+    bt.increasingBST(tree6);
+    vector<vector<int>> relation = {{1,0,0,1},{0,1,1,0},{0,1,1,1},{1,0,1,1}};
+    //bt.findCircleNum(relation);
+    vector<vector<int>> relation1 = {{0,0,0},{0,1,0},{1,1,1}};
+    relation1 = bt.updateMatrix(relation1);
     i = 0;
 }
 

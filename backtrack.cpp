@@ -23,6 +23,21 @@ void backtrack::test()
     vector<vector<int>> res1 = bt.permuteUnique(v1);
     for(auto s1 : res1)
     {
-        bt.printVec(s1);
+        //bt.printVec(s1);
     }
+
+    res1.clear();
+    res1 = bt.combinationSum3(3, 7);
+    for(auto s1 : res1)
+    {
+        //bt.printVec(s1);
+    }
+
+    res1.clear();
+    vector<int> v2 = {2,3,6,7};
+    res1 = bt.combinationSum(v2, 7);
+    res1.clear();
+
+    v2 = bt.grayCode(2);
+    bt.printVec(v2);
 }

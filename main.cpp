@@ -45,9 +45,9 @@ int main()
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    backtrack::test();
+    //backtrack::test();
     //DFS::test();
-    //BalanceTree::test();
+    BalanceTree::test();
     return 0;
 }
 

@@ -1159,6 +1159,299 @@ private:
         generateGraph(edges, graph);
     }
 
+    TreeNode* increasingBST(TreeNode* root)
+    {
+        TreeNode dummy(0);
+        TreeNode* preNode = &dummy;
+        inorder(root, preNode);
+        return dummy.right;
+    }
+
+    void inorder(TreeNode* root, TreeNode*& preNode)
+    {
+        if(!root)
+        {
+            return;
+        }
+        inorder(root->left, preNode);
+        root->left = NULL;
+        preNode->right = root;
+        preNode = root;
+        inorder(root->right, preNode);
+    }
+    class Employee {
+    public:
+        // It's the unique ID of each node.
+        // unique id of this employee
+        int id;
+        // the importance value of this employee
+        int importance;
+        // the id of direct subordinates
+        vector<int> subordinates;
+    };
+
+    int getImportance(vector<Employee*> employees, int id)
+    {
+        unordered_map<int, Employee*> mappingTable;
+        for(auto employee : employees)
+        {
+            mappingTable[employee->id] = employee;
+        }
+        return getScore(id, mappingTable);
+    }
+
+    int getScore(int id, unordered_map<int, Employee*>& mappingTable)
+    {
+        Employee* cur = mappingTable[id];
+        if(!cur)
+        {
+            return 0;
+        }
+        int curScore = cur->importance;
+        for(auto sub : cur->subordinates)
+        {
+            curScore += getScore(sub, mappingTable);
+        }
+        return curScore;
+    }
+/*
+    vector<string> binaryTreePaths(TreeNode* root)
+    {
+        if(!root) return vector<string>("");
+        if(!root->left && !root->right) return vector<string>(1, to_string(root->val));
+        vector<string> left_res = binaryTreePaths(root->left);
+        vector<string> right_res = binaryTreePaths(root->right);
+        for(auto & str : left_res)
+        {
+            str = to_string(root->val) + "->" + str;
+        }
+        for(auto & str : right_res)
+        {
+            str = to_string(root->val) + "->" + str;
+        }
+
+    }
+*/
+
+    vector<string> binaryTreePaths1(TreeNode* root)
+    {
+
+    }
+
+    int numIslands(vector<vector<char>>& grid)
+    {
+        int n = grid.size();
+        if(0 == n) return 0;
+        int m = grid[0].size();
+        if(0 == m) return 0;
+        int res = 0;
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<m; ++j)
+            {
+                if(grid[i][j] != '1')
+                {
+                    continue;
+                }
+                else
+                {
+                    dfs(grid, i, j, m, n);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    vector<int> row =    {0, -1, 0, 1};
+    vector<int> column = {-1, 0, 1, 0};
+
+    void dfs(vector<vector<char>>& grid, int i, int j, int m, int n)
+    {
+        if(i < 0 || i >= n || j < 0 || j >= m || grid[i][j] != '1')
+        {
+            return;
+        }
+        grid[i][j] = '2';
+        for(int k=0; k<4; ++k)
+        {
+            dfs(grid, i+row[k], j+column[k], m, n);
+        }
+        return;
+    }
+
+    int findCircleNum(vector<vector<int>>& M) {
+        int n = M.size();
+        if(1 == n) return n;
+        int res = 0;
+        unordered_set<int> seen;
+        for(int i=0; i<n; ++i)
+        {
+            if(seen.count(i))
+            {
+                continue;
+            }
+            seen.insert(i);
+            dfs(M, i, n, seen);
+            res++;
+        }
+        return res;
+    }
+
+    void dfs(vector<vector<int>>& M, int i, int n, unordered_set<int>& seen)
+    {
+        if(i < 0 || i >= n)
+        {
+            return;
+        }
+        for(int j=0; j<n; ++j)
+        {
+            if(M[i][j] == 1)
+            {
+                seen.insert(j);
+                dfs(M, j, n, seen);
+            }
+        }
+        return;
+    }
+
+    int maxAreaOfIsland(vector<vector<int>>& grid)
+    {
+        int n = grid.size();
+        if(0 == n) return 0;
+        int m = grid[0].size();
+        if(0 == m) return 0;
+        int res = 0;
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<m; ++j)
+            {
+                if(grid[i][j] != 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    int cur = 1;
+                    dfs(grid, i, j, m, n, cur);
+                    res = max(res, cur);
+                }
+            }
+        }
+        return res;
+    }
+
+
+    void dfs(vector<vector<int>>& grid, int i, int j, int m, int n, int cur)
+    {
+        if(i < 0 || i >= n || j < 0 || j >= m || grid[i][j] != 1)
+        {
+            return;
+        }
+        grid[i][j] = 2;
+        for(int k=0; k<4; ++k)
+        {
+            dfs(grid, i+row[k], j+column[k], m, n, cur+1);
+        }
+        return;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
+    {
+        if(preorder.empty()) return NULL;
+        TreeNode* root = new TreeNode(preorder[0]);
+
+        vector<int>::iterator it = find(inorder.begin(), inorder.end(), preorder[0]);
+        int lefttree_size = distance(inorder.begin(), it);
+        int righttree_size = inorder.size()-lefttree_size-1;
+        /*
+        vector<int> leftInorder(inorder.begin(), it-1);
+        vector<int> Leftpreorder(preorder.begin()+1, preorder.begin()+leftInorder.size());
+        vector<int> RightPreorder(preorder.begin()+Leftpreorder.size(), preorder.end());
+        vector<int> RightInorder(it+1, inorder.end());
+        */
+        root->left = buildTreeHelper(preorder, inorder, 1, lefttree_size, 0, lefttree_size-1);
+        root->right = buildTreeHelper(preorder, inorder, lefttree_size, preorder.size()-1, lefttree_size+1, inorder.size()-1);
+        return root;
+    }
+
+    TreeNode* buildTreeHelper(vector<int>& preorder, vector<int>& inorder, int pre_begin, int pre_end, int in_begin, int in_end)
+    {
+        TreeNode* root = new TreeNode(preorder[pre_begin]);
+        if(pre_begin == pre_end)
+        {
+            return root;
+        }
+        vector<int>::iterator it = find(inorder.begin()+in_begin, inorder.begin()+in_end+1, preorder[pre_begin]);
+        int lefttree_size = distance(inorder.begin()+in_begin, it);
+
+        root->left = buildTreeHelper(preorder, inorder, ++pre_begin, lefttree_size, 0, lefttree_size-1);
+        root->right = buildTreeHelper(preorder, inorder, lefttree_size, pre_end, in_begin+lefttree_size+1, in_end);
+        return root;
+    }
+
+
+
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix)
+    {
+        int n = matrix.size();
+        if(0 == n) return matrix;
+        int m = matrix[0].size();
+        if(0 == m) return matrix;
+        vector<vector<int>> visited(n, vector<int>(m, 0));
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<m; ++j)
+            {
+                if(visited[i][j])
+                {
+                    continue;
+                }
+                visited[i][j] = 1;
+                if(matrix[i][j] != 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    int distance = dfs(matrix, i, j, m, n);
+                    matrix[i][j] = distance;
+                }
+            }
+        }
+        return matrix;
+    }
+
+
+    int dfs(vector<vector<int>>& matrix, int i, int j, int m, int n)
+    {
+        if(i < 0 || i >= n || j < 0 || j >= m)
+        {
+            return 0;
+        }
+        if(matrix[i][j] == 0)
+        {
+            return 1;
+        }
+        int min_distance  = 1;
+        for(int k=0; k<4; ++k)
+        {
+            min_distance = min(min_distance, dfs(matrix, i+row[k], j+column[k], m, n));
+        }
+        return min_distance;
+    }
+
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        return isMirror(root->left, root->right);
+    }
+
+    bool isMirror(TreeNode* root1, TreeNode* root2)
+    {
+        if(!root1 && !root2) return true;
+        if(!root1 || !root2) return false;
+        return root1->val == root2->val && isMirror(root1->left, root2->right) && isMirror(root1->right, root2->left);
+    }
 };
 
 #endif // BALANCETREE_H

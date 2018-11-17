@@ -7,6 +7,8 @@
 #include <set>
 #include <unordered_set>
 #include <iostream>
+#include <bitset>
+
 using namespace std;
 class backtrack
 {
@@ -195,23 +197,23 @@ public:
         vector<vector<int>> res;
         unordered_set<int> visited;
         vector<int> tmp;
-        combine_bt(n, k, tmp, visited, res);
+        combine_bt(n, k, 1, tmp, visited, res);
         return res;
     }
 
-    void combine_bt(int n, int k, vector<int>& tmp, unordered_set<int>& visited, vector<vector<int>>& res)
+    void combine_bt(int n, int k, int start, vector<int>& tmp, unordered_set<int>& visited, vector<vector<int>>& res)
     {
         if(tmp.size() == k)
         {
             res.push_back(tmp);
             return;
         }
-        for(int i=1; i<=n; ++i)
+        for(int i=start; i<=n; ++i)
         {
             if(visited.count(i)) continue;
             tmp.push_back(i);
             visited.insert(i);
-            combine_bt(n, k, tmp, visited, res);
+            combine_bt(n, k, i+1, tmp, visited, res);
             tmp.erase(tmp.end()-1);
             visited.erase(i);
         }
@@ -550,6 +552,153 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
     }
 
 
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        if(n > 45) return res;
+        vector<int> cur;
+        backtracking(k, n, 1, cur, res);
+        return res;
+    }
+
+
+    void backtracking(int k, int n, int start, vector<int>& cur, vector<vector<int>>& res)
+    {
+        if(cur.size() == k-1)
+        {
+            int sum = accumulate(cur.begin(), cur.end(), 0);
+            int toAdd = n - sum;
+            if(toAdd >= start && toAdd <=9)
+            {
+                cur.push_back(toAdd);
+                res.push_back(cur);
+                cur.pop_back();
+            }
+            return;
+        }
+
+        for(int i=start; i<=9; ++i)
+        {
+            cur.push_back(i);
+            backtracking(k, n, i+1, cur, res);
+            cur.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        if(target <= 0) return res;
+        sort(candidates.begin(), candidates.end());
+        vector<int> cur;
+        backtracking(candidates, target, candidates.size()-1, cur, res);
+        return res;
+    }
+
+    void backtracking(vector<int>& candidates, int toAdd, int startpoint, vector<int>& cur, vector<vector<int>>& res)
+    {
+        if(toAdd == 0)
+        {
+            res.push_back(cur);
+            return;
+        }
+        if(startpoint < 0)
+        {
+            return;
+        }
+
+        for(int i=startpoint; i>=0; --i)
+        {
+            if(candidates[i] > toAdd) continue;
+            cur.push_back(candidates[i]);
+            toAdd -= candidates[i];
+            backtracking(candidates, toAdd, i, cur, res);
+            cur.pop_back();
+            toAdd += candidates[i];
+        }
+    }
+
+    vector<int> grayCode(int n) {
+        if(!n) return {0};
+        vector<int> res;
+        bitset<32> bits= {0};
+        backtracking(bits, res, 0, n);
+        reverse(res.begin(), res.end());
+        return res;
+    }
+
+    void backtracking(bitset<32>& bits, vector<int>& res, int k, int n)
+    {
+        if(k == n)
+        {
+            res.push_back(bits.to_ulong());
+            return;
+        }
+        bits.flip(k);
+        backtracking(bits, res, k+1, n);
+        bits.flip(k);
+        backtracking(bits, res, k+1, n);
+    }
+
+    string getPermutation(int n, int k)
+    {
+        /*
+        if(n == 1) return "1";
+        string res("");
+        int total = 1;
+        set<int> candidates;
+        for(int i=1; i<=n; ++i)
+        {
+            total *= i;
+            candidates.insert(i);
+        }
+        while(total)
+        {
+            total = total/
+        }
+        */
+        return "";
+    }
+
+    vector<string> restoreIpAddresses(string s)
+    {
+        vector<string> res;
+        if(s.length() > 12) return res;
+        string cur;
+        recursion(s, 0, 1, cur, res);
+        return res;
+    }
+
+    void recursion(string& s, int start_point, int rec_depth, string& cur, vector<string>& res)
+    {
+        if(start_point >= s.length())
+        {
+            return;
+        }
+        //if(depth == 4 && s.)
+    }
+
+    vector<vector<string>> solveNQueens(int n)
+    {
+        vector<vector<string>> res;
+        if(n == 2 || n == 3) return res;
+
+    }
+
+    void helper(int n,int row, vector<string>& cur, vector<vector<string>>& res)
+    {
+        /*
+        if(row == n){
+            draw(pos);
+            return;
+        }
+        for(int i=0;i<n;i++){
+            if(isValid(row,i,pos)){
+                pos[row][i] = 1;
+                helper(n,row+1,pos);
+                pos[row][i] = 0;
+            }
+        }
+        */
+    }
 };
 
 #endif // BACKTRACK_H
