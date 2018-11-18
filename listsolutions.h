@@ -41,10 +41,7 @@ class ListSolutions
 public:
     ListSolutions();
     static void test();
-    ListNode* mergeKLists(vector<ListNode*>& lists)
-    {
-        return nullptr;
-    }
+
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
     {
         ListNode* res = nullptr;
@@ -83,6 +80,98 @@ public:
         }
         return res;
     }
+
+
+    ListNode* mergeTwoLists2(ListNode* l1, ListNode* l2) {
+        if(!l1) return l2;
+        if(!l2) return l1;
+        ListNode Dummy(0);
+        if(l1->val < l2->val)
+        {
+            Dummy.next = l1;
+            l1 = l1->next;
+        }
+        else
+        {
+            Dummy.next = l2;
+            l2 = l2->next;
+        }
+        ListNode* cur = Dummy.next;
+        while(l1 && l2)
+        {
+            if(l1->val < l2->val)
+            {
+                cur->next = l1;
+                l1 = l1->next;
+            }
+            else
+            {
+                cur->next = l2;
+                l2 = l2->next;
+            }
+            cur = cur->next;
+        }
+        if(l1)
+        {
+            cur->next = l1;
+        }
+        if(l2)
+        {
+            cur->next = l2;
+        }
+        return Dummy.next;
+    }
+
+    ListNode* mergeTwoLists3(ListNode* l1, ListNode* l2)
+    {
+        if(!l1) return l2;
+        if(!l2) return l1;
+        ListNode Dummy(0);
+        ListNode* tail = &Dummy;
+        while(l1 && l2)
+        {
+            if(l1->val > l2->val) swap(l1, l2);
+            tail->next = l1;
+            l1 = l1->next;
+            tail = tail->next;
+        }
+        if(l1) tail->next = l1;
+        if(l2) tail->next = l2;
+        return Dummy.next;
+    }
+
+    ListNode* mergeKLists(vector<ListNode*>& lists)
+    {
+        if(lists.empty()) return NULL;
+        if(lists.size() == 1) return lists[0];
+        ListNode* mergedList = mergeTwoLists(lists[0], lists[1]);
+        for(int i=2; i<lists.size(); ++i)
+        {
+            mergedList = mergeTwoLists(mergedList, lists[i]);
+        }
+        return mergedList;
+    }
+
+    ListNode* mergeKLists2(vector<ListNode*>& lists)
+    {
+        if(lists.empty()) return NULL;
+        if(lists.size() == 1) return lists[0];
+        int interval = 1;
+        while(interval < lists.size())
+        {
+            for(int i=0; i<lists.size(); i += interval+1)
+            {
+                if(i+interval < lists.size())
+                {
+                    lists[i] = mergeTwoLists(lists[i], lists[i+interval]);
+                }
+            }
+            interval *= 2;
+        }
+        return lists[0];
+    }
+
+
 
     RandomListNode *copyRandomList(RandomListNode *head)
     {

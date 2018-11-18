@@ -171,6 +171,72 @@ public:
             root->right = NULL;
         return root;
     }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
+    {
+        if(preorder.empty()) return NULL;
+        TreeNode* root = buildTreeHelper(preorder, inorder, 0, preorder.size()-1, 0, inorder.size()-1);
+        return root;
+    }
+
+    TreeNode* buildTreeHelper(vector<int>& preorder, vector<int>& inorder, int pre_begin, int pre_end, int in_begin, int in_end)
+    {
+        if(pre_begin > pre_end || in_begin > in_end)
+        {
+            return NULL;
+        }
+        TreeNode* root = new TreeNode(preorder[pre_begin]);
+        if(pre_begin == pre_end)
+        {
+            return root;
+        }
+        int mid = find(inorder, in_begin, in_end, preorder[pre_begin]);
+        int lefttree_size = mid - in_begin;
+
+        root->left = buildTreeHelper(preorder, inorder, pre_begin+1, pre_begin+lefttree_size, in_begin, mid-1);
+        root->right = buildTreeHelper(preorder, inorder, pre_begin+1+lefttree_size, pre_end, mid+1, in_end);
+        return root;
+    }
+
+    int find(vector<int>& v, int start, int end, int target)
+    {
+        for(; start <= end; ++start)
+        {
+            if(v[start] == target) break;
+        }
+        return start;
+    }
+
+    TreeNode* buildTree1(vector<int>& inorder, vector<int>& postorder) {
+        if(postorder.empty()) return NULL;
+        TreeNode* root = buildTreeHelper(postorder, 0, postorder.size(), inorder, 0, inorder.size());
+        return root;
+    }
+
+    TreeNode* buildTreeHelper(vector<int>& postorder, int postbegin, int postend, vector<int>& inorder, int inorderbegin, int inorederend)
+    {
+        if(postbegin >= postend || inorderbegin >= inorederend)
+        {
+            return NULL;
+        }
+        TreeNode* root = new TreeNode(postorder[postend-1]);
+        if(postbegin == postend-1)
+        {
+            return root;
+        }
+
+        auto it = std::find(inorder.begin()+inorderbegin, inorder.begin()+inorederend, postorder[postend-1]);
+        if(it == inorder.begin()+inorederend)
+        {
+            return NULL;
+        }
+        int leftTreeSize = distance(inorder.begin()+inorderbegin, it);
+
+        root->left =  buildTreeHelper(postorder, postbegin, postbegin+leftTreeSize, inorder, inorderbegin, inorderbegin+leftTreeSize);
+        root->right = buildTreeHelper(postorder, postbegin+leftTreeSize, postend-1, inorder, inorderbegin+leftTreeSize+1, inorederend);
+        return root;
+    }
+
 };
 
 #endif // DFS_H

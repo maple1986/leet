@@ -70,6 +70,53 @@ public:
         return res;
     }
 
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval)
+    {
+        if(intervals.empty())
+        {
+            intervals.push_back(newInterval);
+            return intervals;
+        }
+        auto it1 = std::lower_bound(intervals.begin(), intervals.end(), newInterval, sortrel::compareFn);
+        auto it2 = std::upper_bound(intervals.begin(), intervals.end(), newInterval, sortrel::compareFn);
+        if(it1 == it2)
+        {
+            if(newInterval.end >= it1->start)
+            {
+                it1->start = newInterval.start;
+            }
+            else
+            {
+                intervals.insert(it1, newInterval);
+            }
+        }
+        else
+        {
+            if(newInterval.end < it2->start)
+            {
+                it1->end = max(it1->end, newInterval.end);
+            }
+            else
+            {
+                while(it2 != intervals.end())
+                {
+                    if(newInterval.end > it2->start)
+                    {
+                        ++it2;
+                        intervals.erase(it2-1);
+                    }
+                    it2->end = max(newInterval.end, it2->end);
+                    return intervals;
+                }
+                it2--;
+                it2->end = newInterval.end;
+            }
+        }
+
+        return intervals;
+    }
+
+
     int maximumProduct628(vector<int>& nums)
     {
         int max1 = INT_MIN, max2 = INT_MIN, max3 = INT_MIN;

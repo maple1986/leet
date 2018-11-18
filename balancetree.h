@@ -138,7 +138,6 @@ public:
     int minDepth(TreeNode* root);
     bool SumPath(TreeNode* root, int sum);
     int  SumPathIII(TreeNode* root, int sum);
-    bool isSymmetric(TreeNode* root);
     vector<vector<int>> levelOrderBottom(TreeNode* root);
     vector<vector<int>> levelOrderBottom1(TreeNode* root);
     int ladderLength(string beginWord, string endWord, vector<string>& wordList);
@@ -1355,43 +1354,6 @@ private:
         }
         return;
     }
-
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
-    {
-        if(preorder.empty()) return NULL;
-        TreeNode* root = new TreeNode(preorder[0]);
-
-        vector<int>::iterator it = find(inorder.begin(), inorder.end(), preorder[0]);
-        int lefttree_size = distance(inorder.begin(), it);
-        int righttree_size = inorder.size()-lefttree_size-1;
-        /*
-        vector<int> leftInorder(inorder.begin(), it-1);
-        vector<int> Leftpreorder(preorder.begin()+1, preorder.begin()+leftInorder.size());
-        vector<int> RightPreorder(preorder.begin()+Leftpreorder.size(), preorder.end());
-        vector<int> RightInorder(it+1, inorder.end());
-        */
-        root->left = buildTreeHelper(preorder, inorder, 1, lefttree_size, 0, lefttree_size-1);
-        root->right = buildTreeHelper(preorder, inorder, lefttree_size, preorder.size()-1, lefttree_size+1, inorder.size()-1);
-        return root;
-    }
-
-    TreeNode* buildTreeHelper(vector<int>& preorder, vector<int>& inorder, int pre_begin, int pre_end, int in_begin, int in_end)
-    {
-        TreeNode* root = new TreeNode(preorder[pre_begin]);
-        if(pre_begin == pre_end)
-        {
-            return root;
-        }
-        vector<int>::iterator it = find(inorder.begin()+in_begin, inorder.begin()+in_end+1, preorder[pre_begin]);
-        int lefttree_size = distance(inorder.begin()+in_begin, it);
-
-        root->left = buildTreeHelper(preorder, inorder, ++pre_begin, lefttree_size, 0, lefttree_size-1);
-        root->right = buildTreeHelper(preorder, inorder, lefttree_size, pre_end, in_begin+lefttree_size+1, in_end);
-        return root;
-    }
-
-
-
     vector<vector<int>> updateMatrix(vector<vector<int>>& matrix)
     {
         int n = matrix.size();
