@@ -259,6 +259,45 @@ public:
         return 0;
     }
 
+    bool detectCapitalUse(string word)
+    {
+        if(word.size() == 1) return true;
+        bool initialCaptal = isupper(word[0]);
+        bool secondaryCaptal = isupper(word[1]);
+        for(int i=1; i<word.size(); ++i)
+        {
+            if(initialCaptal)
+            {
+                if(secondaryCaptal && islower(word[i]))
+                {
+                    return false;
+                }
+                if(!secondaryCaptal && isupper(word[i]))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if(!islower(word[i]))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool scan(string& word, int start)
+    {
+        bool initialCaptal = isupper(word[start]);
+        start++;
+        while(start < word.size() && word[start] != ' ')
+        {
+
+        }
+        return true;
+    }
 };
 
 #endif // STRINGREL_H
