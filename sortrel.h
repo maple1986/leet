@@ -155,6 +155,31 @@ public:
         int res2 = max1*min1*min2;
         return max(res1, res2);
     }
+
+
+    int findUnsortedSubarray(vector<int>& nums)
+    {
+        vector<int> tmp(nums);
+        sort(tmp.begin(), tmp.end());
+        int start = 0;
+        int end   = nums.size()-1;
+        while(tmp[start] == nums[start])
+        {
+            start++;
+        }
+        while(tmp[end] == nums[end])
+        {
+            end--;
+        }
+        if(end <= start)
+        {
+            return 0;
+        }
+        return end - start +1;
+    }
+
+
+
 };
 
 #endif // SORTREL_H

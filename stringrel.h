@@ -143,6 +143,61 @@ public:
         return true;
     }
 
+    string reverseVowels(string s)
+    {
+        if(s.size() < 2) return s;
+        int left = 0, right = s.size()-1;
+        while (left < right)
+        {
+            if(isVowel(s[left]) && isVowel(s[right]))
+            {
+                swap(s[left++], s[right--]);
+            }
+            else if(isVowel(s[left]))
+            {
+                --right;
+            }
+            else if(isVowel(s[right]))
+            {
+                ++left;
+            }
+            else
+            {
+                ++left;
+                --right;
+            }
+        }
+        return s;
+    }
+
+    vector<char> vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+
+    bool isVowel(char c)
+    {
+        for(char vowel : vowels)
+        {
+            if(vowel == c)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    string reverseString(string s)
+    {
+        if(s.size() < 2) return s;
+        int left = 0, right = s.size()-1;
+        while (left < right)
+        {
+            char c = s[left];
+            s[left] = s[right];
+            s[right] = s[left];
+            ++left;
+            --right;
+        }
+        return s;
+    }
 
     /*
    Sunday(T, P)
@@ -183,6 +238,27 @@ public:
         }
     }
 */
+    char findDifference(string s, string t)
+    {
+        vector<int> dict(26, 0);
+        for(char c : s)
+        {
+            dict[c-'a']++;
+        }
+        for(char c : t)
+        {
+            dict[c-'a']--;
+        }
+        for(int i=0; i < dict.size(); ++i)
+        {
+            if(dict[i] == -1)
+            {
+                return 'a'+i;
+            }
+        }
+        return 0;
+    }
+
 };
 
 #endif // STRINGREL_H
