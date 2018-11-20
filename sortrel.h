@@ -20,13 +20,33 @@ public:
     static void test();
     int findRadius(vector<int>& houses, vector<int>& heaters)
     {
-        int radius = max(abs(houses.front()-heaters.front()), abs(houses.back() - heaters.back()));
-        //int radius = *(houses.begin())-*(heaters.begin());
-        for(int i=1; i<heaters.size(); ++i)
+        if(houses.empty() || heaters.empty()) return 0;
+        int max_radius = 0;
+        sort(heaters.begin(), heaters.end());
+        for(int i=0; i<houses.size(); ++i)
         {
-            radius = max(radius, (heaters[i]-heaters[i-1])/2);
+            auto it = lower_bound(heaters.begin(), heaters.end(), houses[i]);
+            int cur_radius = 0;
+            if(it == heaters.end())
+            {
+                max_radius = max(max_radius, houses[i]-heaters.back());
+                continue;
+            }
+            else if(*it == houses[i])
+            {
+                continue;
+            }
+            else
+            {
+                cur_radius = *it - houses[i];
+                if(it != heaters.begin())
+                {
+                    cur_radius = min(cur_radius, houses[i]-(*(it-1)));
+                }
+            }
+            max_radius = max(max_radius, cur_radius);
         }
-        return radius;
+        return max_radius;
     }
 
     static bool compareFn(const Interval& x1, const Interval& x2)
@@ -114,6 +134,23 @@ public:
         }
 
         return intervals;
+    }
+
+    vector<Interval> insert1(vector<Interval>& intervals, Interval newInterval)
+    {
+        pair<vector<Interval>::iterator, vector<Interval>::iterator> range = \
+                equal_range(intervals.begin(), intervals.end(), newInterval, \
+                            [](const Interval& a, const Interval& b){return a.end < b.start;});
+        auto it_start = range.first;
+        auto it_end   = range.second;
+        if(it_start == it_end)
+        {
+            intervals.insert(it_start, newInterval);
+        }
+        else
+        {
+            //while(it_)
+        }
     }
 
 

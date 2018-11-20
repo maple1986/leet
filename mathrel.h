@@ -54,6 +54,82 @@ public:
         return max_average_k;
     }
 
+    int NthDigit(int n)
+    {
+        int digit = 1;
+        int nums  = 9;
+        int past_nums = nums*digit;
+        while(n - past_nums > 0)
+        {
+            nums *= 10;
+            digit++;
+            past_nums += nums*digit;
+        }
+        return 0;
+    }
+
+    bool studentAttandance(string s)
+    {
+        int absentCount = 0;
+        int continuesLaterCount = 0;
+        for(char c : s)
+        {
+            switch (c) {
+            case 'P':
+                continuesLaterCount = 0;
+                continue;
+            case 'A':
+                absentCount++;
+                continuesLaterCount = 0;
+                break;
+            case 'L':
+                if(++continuesLaterCount > 2)
+                    return false;
+                break;
+            default:
+                break;
+            }
+        }
+        return absentCount<2;
+    }
+
+    int studentAttandance2(int n)
+    {
+        if(n == 0) return 0;
+        int res;
+
+        dfs(n, 0, 0, 0, res);
+
+        return res % _mod;
+    }
+    int _mod = pow(10, 9)+7;
+    vector<char> _status = {'A', 'P', 'L'};
+    void dfs(int n, int cur, int absent_count, int clater_count, int& res)
+    {
+        if(n == cur)
+        {
+            res = res%_mod+1;
+            return;
+        }
+        for(int i=0; i<_status.size(); ++i)
+        {
+            switch (_status[i]) {
+            case 'P':
+                clater_count = 0;
+                dfs(n, cur+1, absent_count, 0, res);
+                break;
+            case 'A':
+                if(++absent_count > 1) return;
+                dfs(n, cur+1, absent_count, 0, res);
+                break;
+            case 'L':
+                if(++clater_count > 2) return;
+                dfs(n, cur+1, absent_count, clater_count, res);
+                break;
+            }
+        }
+        return;
+    }
 };
 
 #endif // MATHREL_H

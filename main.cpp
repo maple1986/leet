@@ -40,14 +40,14 @@ int main()
 
     */
     //ListSolutions::test();
-    //MathRel::test();
+    MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
     //NSum::test();
     //backtrack::test();
     //DFS::test();
-    BalanceTree::test();
+    //BalanceTree::test();
     return 0;
 }
 
