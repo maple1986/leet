@@ -5,6 +5,7 @@
 #include <bitset>
 #include <algorithm>
 #include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -288,15 +289,66 @@ public:
         return true;
     }
 
-    bool scan(string& word, int start)
+    vector<string> generatePalindromes(string s)
     {
-        bool initialCaptal = isupper(word[start]);
-        start++;
-        while(start < word.size() && word[start] != ' ')
+        /*
+        unordered_map<char> dict;
+        for(char c : s)
         {
-
+            dict[c]++;
         }
-        return true;
+        int odd = 0;
+        char mid = 0;
+        for(const auto& c: dict)
+        {
+            if(c.second%2)
+            {
+                mid = c.first;
+                odd++;
+            }
+        }
+        vector<string> res;
+        if(odd > 1) return res;
+        string init;
+        if(odd) init += mid;
+        dfs(init, dict, res);
+        */
+    }
+/*
+    void dfs(mid, dict, res)
+    {
+
+    }
+*/
+    bool validWordAbbreviation(string word, string abbr)
+    {
+        int m = word.size();
+        int n = abbr.size();
+        int i = 0, j =0;
+        while(j < n && i < m)
+        {
+            if(word[i] == abbr[j])
+            {
+                ++i, ++j;
+                continue;
+            }
+            int cnt = 0;
+            if(isdigit(abbr[j]))
+            {
+                if(abbr[j] == '0') return false;
+                while(isdigit(abbr[j]))
+                {
+                    cnt = cnt*10+abbr[j]-'0';
+                    ++j;
+                }
+                i += cnt;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return j == n && i == m;
     }
 };
 

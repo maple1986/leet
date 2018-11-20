@@ -96,7 +96,7 @@ public:
     int studentAttandance2(int n)
     {
         if(n == 0) return 0;
-        int res;
+        int res=0;
 
         dfs(n, 0, 0, 0, res);
 
@@ -115,16 +115,25 @@ public:
         {
             switch (_status[i]) {
             case 'P':
-                clater_count = 0;
                 dfs(n, cur+1, absent_count, 0, res);
                 break;
             case 'A':
-                if(++absent_count > 1) return;
+                if(++absent_count > 1)
+                {
+                    --absent_count;
+                    continue;
+                }
                 dfs(n, cur+1, absent_count, 0, res);
+                --absent_count;
                 break;
             case 'L':
-                if(++clater_count > 2) return;
+                if(++clater_count > 2)
+                {
+                    --clater_count;
+                    continue;
+                }
                 dfs(n, cur+1, absent_count, clater_count, res);
+                --clater_count;
                 break;
             }
         }

@@ -179,6 +179,24 @@ public:
 
     }
 
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        vector<int> smaller_equal;
+        vector<int> bigger;
+        auto it = lower_bound(arr.begin(), arr.end(), x);
+        if(it == arr.begin())
+        {
+            bigger.assign(arr.begin(), arr.begin()+k);
+            return bigger;
+        }
+        else if(it == arr.end())
+        {
+            smaller_equal.assign(arr.end()-k, arr.end());
+            return smaller_equal;
+        }
+
+
+    }
+
 };
 
 #endif // BINARYSEARCHREL_H

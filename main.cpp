@@ -30,7 +30,7 @@ int main()
 
     //NumofOnes::test();
 
-    //StringRel::test();
+    StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
@@ -40,7 +40,7 @@ int main()
 
     */
     //ListSolutions::test();
-    MathRel::test();
+    //MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
