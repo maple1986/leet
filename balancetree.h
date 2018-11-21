@@ -1414,6 +1414,11 @@ private:
         if(!root1 || !root2) return false;
         return root1->val == root2->val && isMirror(root1->left, root2->right) && isMirror(root1->right, root2->left);
     }
+
+    vector<int> boundaryOfBinaryTree(TreeNode* root)
+    {
+
+    }
 };
 
 #endif // BALANCETREE_H

@@ -20,6 +20,8 @@
 #include <dprel.h>
 #include <nsum.h>
 #include <twopointer.h>
+#include <hashrel.h>
+
 using namespace std;
 
 int main()
@@ -27,20 +29,20 @@ int main()
 
     //TwoPointer::test();
     //binarySearchRel::test();
-
+    //sortrel::test();
     //NumofOnes::test();
-
+    //SortAlg::test();
     //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
     MyAtoi::test();
-    SortAlg::test();
+
 
 
     */
     //ListSolutions::test();
-    MathRel::test();
+    //MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
@@ -48,6 +50,7 @@ int main()
     //backtrack::test();
     //DFS::test();
     //BalanceTree::test();
+    hashRel::test();
     return 0;
 }
 

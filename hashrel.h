@@ -6,12 +6,16 @@
 #include <map>
 #include <unordered_map>
 #include <algorithm>
+#include <string>
+#include <queue>
 
 using namespace std;
 class hashRel
 {
 public:
     hashRel();
+
+    static void test();
 
     vector<vector<string>> groupAnagrams(vector<string>& strs)
     {
@@ -70,37 +74,109 @@ public:
 
         return vvs;
     }
+
+
+    class charFrequency
+    {
+    public:
+        charFrequency(char c, int freq): _c(c), _freq(freq){}
+        char _c;
+        int  _freq;
+        bool operator <(const charFrequency& other) const
+        {
+            if(this == &other)
+            {
+                return false;
+            }
+            if(_freq < other._freq)
+            {
+                return true;
+            }
+            else if(_freq == other._freq)
+            {
+                return _c < other._c;
+            }
+            return false;
+        }
+    };
+
+    string frequencySort(string s)
+    {
+        unordered_map<char, int> dict;
+        priority_queue<charFrequency> pq;
+        for(char c : s)
+        {
+            dict[c]++;
+        }
+        for(const auto& it : dict)
+        {
+            pq.push(charFrequency(it.first, it.second));
+        }
+        string res;
+        while(!pq.empty())
+        {
+            string tmp(pq.top()._freq, pq.top()._c);
+            res += tmp;
+            pq.pop();
+        }
+        return res;
+    }
+
+    string frequencySort1(string s)
+    {
+        vector<int> freq(256, 0);
+        for(char c : s) ++freq[c];
+        priority_queue<pair<int, char>> pq;
+        for(int i=0; i<256; ++i)
+        {
+            if(freq[i])
+            {
+                pq.push(make_pair(freq[i], i));
+            }
+        }
+        string res;
+        while(!pq.empty())
+        {
+            res.append(pq.top().first, pq.top().second);
+            pq.pop();
+        }
+        return res;
+    }
+
+
+    int findSubstring(string s){
+            /*
+            vector<int> map(128,0);
+            int counter; // check whether the substring is valid
+            int begin=0, end=0; //two pointers, one point to tail and one  head
+            int d; //the length of substring
+
+            for() { /* initialize the hash map here * / }
+
+            while(end<s.size()){
+
+                if(map[s[end++]]-- ?){  /* modify counter here * / }
+
+                while(/* counter condition * /){
+
+                     /* update d here if finding minimum* /
+
+                    //increase begin to make it invalid/valid again
+
+                    if(map[s[begin++]]++ ?){ /*modify counter here* / }
+                }
+
+                /* update d here if finding maximum* /
+            }
+            return d;
+            */
+        return 0;
+      }
+
 };
 
 
-int findSubstring(string s){
-        /*
-        vector<int> map(128,0);
-        int counter; // check whether the substring is valid
-        int begin=0, end=0; //two pointers, one point to tail and one  head
-        int d; //the length of substring
 
-        for() { /* initialize the hash map here * / }
-
-        while(end<s.size()){
-
-            if(map[s[end++]]-- ?){  /* modify counter here * / }
-
-            while(/* counter condition * /){
-
-                 /* update d here if finding minimum* /
-
-                //increase begin to make it invalid/valid again
-
-                if(map[s[begin++]]++ ?){ /*modify counter here* / }
-            }
-
-            /* update d here if finding maximum* /
-        }
-        return d;
-        */
-    return 0;
-  }
 
 
 #endif // HASHREL_H

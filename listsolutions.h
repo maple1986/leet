@@ -423,6 +423,66 @@ public:
         return next2;
     }
     */
+    ListNode* plusOne(ListNode* head)
+    {
+        if(!head) return new ListNode(1);
+        int carry = helper(head);
+        if(carry)
+        {
+            ListNode* res = new ListNode(carry);
+            res->next = head;
+            return res;
+        }
+        return head;
+    }
+
+    int helper(ListNode* head)
+    {
+        if(!head)
+        {
+            return 0;
+        }
+        if(head->next)
+        {
+            head->val += helper(head->next);
+            if(head->val/10)
+            {
+                head->val = head->val%10;
+                return 1;
+            }
+            return 0;
+        }
+        else
+        {
+            head->val += 1;
+            if(head->val/10)
+            {
+                head->val = head->val%10;
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+
+    ListNode* plusOne1(ListNode* head)
+    {
+
+    }
+
+
+    ListNode* reverseBetween(ListNode* head, int m, int n)
+    {
+        if(m == n)
+        {
+            return head;
+        }
+        ListNode* prev = NULL;
+        ListNode* cur  = head;
+        ListNode* later= head->next;
+        //int
+    }
+
 };
 
 #endif // LISTSOLUTIONS_H

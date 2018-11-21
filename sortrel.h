@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 
 struct Interval {
@@ -215,6 +216,49 @@ public:
         return end - start +1;
     }
 
+    vector<int> findClosestElements(vector<int>& arr, int k, int x)
+    {
+
+    }
+
+
+    int subarraryK(vector<int>& nums, int k)
+    {
+        if(nums.empty()) return 0;
+        vector<int> sums(nums.size()+1, 0);
+        int res = 0;
+        for(int i=1; i<=nums.size(); ++i)
+        {
+            sums[i] = sums[i-1] + nums[i-1];
+        }
+        for(int i=0; i<nums.size(); ++i)
+        {
+            for(int j=i+1; j<=nums.size(); ++j)
+            {
+                if(sums[j] - sums[i] == k)
+                {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    int subarraySum(vector<int>& nums, int k)
+    {
+        vector<int> sum;
+        sum.push_back(0);
+        unordered_map<int, int> m;
+        for(int n: nums)
+            sum.push_back(sum.back() + n);
+        int ret = 0;
+        for(int n : sum){
+            if(m.find(n) != m.end())
+                ret += m[n];
+            m[n + k]++;
+        }
+        return ret;
+    }
 
 
 };

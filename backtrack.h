@@ -8,6 +8,7 @@
 #include <unordered_set>
 #include <iostream>
 #include <bitset>
+#include <algorithm>
 
 using namespace std;
 class backtrack
@@ -699,6 +700,42 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         }
         */
     }
+
+
+    int countArrangement(int N)
+    {
+        bitset<16> visited = {0};
+        int res = 0;
+        backtracking(N, 1, visited, res);
+        return res;
+    }
+
+    void backtracking(int N, int cur, bitset<16>& visited, int& res)
+    {
+        if(cur == N+1)
+        {
+            ++res;
+            return;
+        }
+        for(int i=1; i<=N; ++i)
+        {
+            if(visited[i]) continue;
+            if(i%cur==0 || cur%i == 0)
+            {
+                visited.flip(i);
+                backtracking(N, cur+1, visited, res);
+                visited.flip(i);
+            }
+        }
+        return;
+    }
+
+    vector<int> constructArray(int n, int k)
+    {
+
+    }
+
+
 };
 
 #endif // BACKTRACK_H

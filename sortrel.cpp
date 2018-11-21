@@ -22,4 +22,8 @@ void sortrel::test()
     vector<int> v4 = {10};
 
     sortl.findRadius(v3, v4);
+    vector<int> v5 = {1,1,1,2};
+    sortl.subarraySum(v5, 2);
+
+
 }

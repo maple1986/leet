@@ -298,6 +298,26 @@ public:
         }
         return true;
     }
+
+    string findContestMatch(int n)
+    {
+        vector<string> candidates;
+        for(int i=1; i<=n; ++i)
+        {
+            candidates.push_back(to_string(i));
+        }
+        while(n)
+        {
+            for(int i=0; i < n/2; ++i)
+            {
+                candidates[i] = "(" + candidates[i] + "," + candidates[2*n-i-1] + ")";
+            }
+            n /= 2;
+        }
+
+        return candidates[0];
+    }
+
 };
 
 #endif // STRINGREL_H
