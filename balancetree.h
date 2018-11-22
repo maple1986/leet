@@ -1414,6 +1414,29 @@ private:
         if(!root1 || !root2) return false;
         return root1->val == root2->val && isMirror(root1->left, root2->right) && isMirror(root1->right, root2->left);
     }
+
+    vector<vector<int>> verticalOrder(TreeNode* root)
+    {
+        vector<vector<int>> res;
+        if(!root) return res;
+        map<int, vector<int>> m;
+        queue<pair<TreeNode*, int>> q;
+        q.push(make_pair(root, 0));
+        while (!q.empty())
+        {
+            auto a = q.front();
+            q.pop();
+            TreeNode* curNode = a.first;
+            m[a.second].push_back(curNode->val);
+            if(curNode->left) q.push(make_pair(curNode, a.second-1));
+            if(curNode->left) q.push(make_pair(curNode, a.second+1));
+        }
+        for(const auto& item : m)
+        {
+            res.push_back(item.second);
+        }
+        return res;
+    }
 };
 
 #endif // BALANCETREE_H

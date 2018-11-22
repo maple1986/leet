@@ -180,21 +180,94 @@ public:
     }
 
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-        vector<int> smaller_equal;
-        vector<int> bigger;
+        vector<int> res;
         auto it = lower_bound(arr.begin(), arr.end(), x);
         if(it == arr.begin())
         {
-            bigger.assign(arr.begin(), arr.begin()+k);
-            return bigger;
+            res.assign(arr.begin(), arr.begin()+k);
+            return res;
         }
         else if(it == arr.end())
         {
-            smaller_equal.assign(arr.end()-k, arr.end());
-            return smaller_equal;
+            res.assign(arr.end()-k, arr.end());
+            return res;
         }
+        int mid = distance(arr.begin(), it);
+        int left=mid, right=mid;
+        while(k--)
+        {
+            if(left == 0)
+            {
+                ++right;
+                continue;
+            }
+            if(right == arr.size()-1)
+            {
+                --left;
+                continue;
+            }
+            if(x-arr[left] <= arr[right] - x)
+            {
+                --left;
+            }
+            else
+            {
+                ++right;
+            }
+        }
+        res.assign(arr.begin()+left, arr.begin()+right);
+        return res;
+    }
 
-
+    vector<int> findClosestElements1(vector<int>& arr, int k, int x) {
+        vector<int> res;
+        auto it = lower_bound(arr.begin(), arr.end(), x);
+        if(it == arr.begin())
+        {
+            res.assign(arr.begin(), arr.begin()+k);
+            return res;
+        }
+        else if(it == arr.end())
+        {
+            res.assign(arr.end()-k, arr.end());
+            reverse(res.begin(), res.end());
+            return res;
+        }
+        int mid = distance(arr.begin(), it);
+        int left=mid-1, right=mid;
+        for(; left>=0, right<arr.size(), k!=0; )
+        {
+            if(x-arr[left] <= arr[right] - x)
+            {
+                res.push_back(arr[left]);
+                --left;
+                --k;
+            }
+            else
+            {
+                res.push_back(arr[right]);
+                ++right;
+                --k;
+            }
+        }
+        if( k == 0)
+        {
+            return res;
+        }
+        else
+        {
+            if(left < 0)
+            {
+                res.insert(res.end(), arr.begin()+right, arr.begin()+right+k);
+            }
+            else
+            {
+                vector<int> tmp(arr.begin()+left-k, arr.begin()+left);
+                reverse(tmp.begin(), tmp.end());
+                res.insert(res.end(), tmp.begin(), tmp.end());
+            }
+        }
+        return res;
     }
 
 };

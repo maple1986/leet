@@ -9,4 +9,8 @@ void StringRel::test()
     str.validWordAbbreviation("internationalization", "i12iz4n");
     printf("res=[%d]\n",str.canPermutePalindrome("abcc"));
     printf("res=[%s]\n",str.shortestPalindrome("aaabbbb").c_str());
+    string time = "21:19";
+    str.nextClosestTime(time);
+    printf("time = %s\n", time.c_str());
+    printf("res=[%s]\n",str.shortestPalindrome("aaabbbb").c_str());
 }
