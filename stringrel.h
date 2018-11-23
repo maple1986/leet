@@ -5,6 +5,7 @@
 #include <bitset>
 #include <algorithm>
 #include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -288,15 +289,142 @@ public:
         return true;
     }
 
-    bool scan(string& word, int start)
+    vector<string> generatePalindromes(string s)
     {
-        bool initialCaptal = isupper(word[start]);
-        start++;
-        while(start < word.size() && word[start] != ' ')
+        /*
+        unordered_map<char> dict;
+        for(char c : s)
         {
-
+            dict[c]++;
         }
-        return true;
+        int odd = 0;
+        char mid = 0;
+        for(const auto& c: dict)
+        {
+            if(c.second%2)
+            {
+                mid = c.first;
+                odd++;
+            }
+        }
+        vector<string> res;
+        if(odd > 1) return res;
+        string init;
+        if(odd) init += mid;
+        dfs(init, dict, res);
+        */
+    }
+/*
+    void dfs(mid, dict, res)
+    {
+
+    }
+*/
+    bool validWordAbbreviation(string word, string abbr)
+    {
+        int m = word.size();
+        int n = abbr.size();
+        int i = 0, j =0;
+        while(j < n && i < m)
+        {
+            if(word[i] == abbr[j])
+            {
+                ++i, ++j;
+                continue;
+            }
+            int cnt = 0;
+            if(isdigit(abbr[j]))
+            {
+                if(abbr[j] == '0') return false;
+                while(isdigit(abbr[j]))
+                {
+                    cnt = cnt*10+abbr[j]-'0';
+                    ++j;
+                }
+                i += cnt;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return j == n && i == m;
+    }
+
+    int findLUSlength(vector<string>& strs)
+    {
+        map<int, vector<int>> dict;
+        int i = 0;
+        for(const auto& str : strs)
+        {
+            dict[str.length()].push_back(i++);
+        }
+        int res = 0;
+        for(const auto& item : dict)
+        {
+            //item
+        }
+    }
+
+    string nextClosestTime(string &time) {
+        // write your code here
+        _h1 = time[0];
+        _h2 = time[1];
+        _m1 = time[3];
+        _m2 = time[4];
+        _sorted.append(1, _h1);
+        _sorted.append(1, _h2);
+        _sorted.append(1, _m1);
+        _sorted.append(1, _m2);
+        sort(_sorted.begin(), _sorted.end());
+        //get max and min
+
+        if(_m2 != nextBiggerChar(_m2))
+        {
+             time[4] = nextBiggerChar(_m2);
+             return time;
+        }
+        time[4] = minChar();
+        if(_m1 != nextBiggerChar(_m1) && nextBiggerChar(_m1) < '6')
+        {
+            time[3] = nextBiggerChar(_m1);
+            return time;
+        }
+        time[3] = minChar();
+        if(_h2 != nextBiggerChar(_h2))
+        {
+            if(_h1 <= '1' || (_h1 > '1' && nextBiggerChar(_h2)< '4'))
+            {
+                time[1] = nextBiggerChar(_h2);
+                return time;
+            }
+        }
+        time[1] = minChar();
+        if(_h1 != nextBiggerChar(_h1) && nextBiggerChar(_h1) <= '2')
+        {
+            time[0] = nextBiggerChar(_h1);
+        }
+        time[0] = minChar();
+        return time;
+    }
+
+    char nextBiggerChar(char c)
+    {
+        char next = c;
+        for(char s : _sorted)
+        {
+            if(s > next)
+            {
+                next = s;
+                break;
+            }
+        }
+        return next;
+    }
+
+    char minChar()
+    {
+        return _sorted[0];
     }
 
     string findContestMatch(int n)
@@ -318,6 +446,12 @@ public:
         return candidates[0];
     }
 
+private:
+    char _h1;
+    char _h2;
+    char _m1;
+    char _m2;
+    string _sorted;
 };
 
 #endif // STRINGREL_H

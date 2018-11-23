@@ -18,4 +18,6 @@ void binarySearchRel::test()
     vector<int> v1 = {5,7,7,8,8,10};
     vector<int> v2 = {-1};
     bs.searchRange(v1, 8);
+    vector<int> nums = {1, 2, 3, 4, 5};
+    bs.findClosestElements(nums, 4, 3);
 }

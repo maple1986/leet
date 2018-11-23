@@ -1418,6 +1418,27 @@ private:
     vector<int> boundaryOfBinaryTree(TreeNode* root)
     {
 
+    vector<vector<int>> verticalOrder(TreeNode* root)
+    {
+        vector<vector<int>> res;
+        if(!root) return res;
+        map<int, vector<int>> m;
+        queue<pair<TreeNode*, int>> q;
+        q.push(make_pair(root, 0));
+        while (!q.empty())
+        {
+            auto a = q.front();
+            q.pop();
+            TreeNode* curNode = a.first;
+            m[a.second].push_back(curNode->val);
+            if(curNode->left) q.push(make_pair(curNode, a.second-1));
+            if(curNode->left) q.push(make_pair(curNode, a.second+1));
+        }
+        for(const auto& item : m)
+        {
+            res.push_back(item.second);
+        }
+        return res;
     }
 };
 

@@ -736,6 +736,26 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
     }
 
 
+    int findTargetSumWays(vector<int>& nums, int S)
+    {
+        if(nums.empty()) return 0;
+        int res = 0;
+        dfs(nums, 0, 0, S, res);
+        return res;
+    }
+
+    void dfs(vector<int>& nums, int cur, int sum, int S, int& res)
+    {
+        if(cur == nums.size())
+        {
+            if(sum == S) res++;
+            return;
+        }
+        dfs(nums, cur+1, sum+nums[cur], S, res);
+        dfs(nums, cur+1, sum-nums[cur], S, res);
+        return;
+    }
+
 };
 
 #endif // BACKTRACK_H

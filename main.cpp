@@ -32,7 +32,8 @@ int main()
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
-    //StringRel::test();
+
+    StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
