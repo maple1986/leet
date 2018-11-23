@@ -1417,6 +1417,7 @@ private:
 
     vector<int> boundaryOfBinaryTree(TreeNode* root)
     {
+    }
 
     vector<vector<int>> verticalOrder(TreeNode* root)
     {

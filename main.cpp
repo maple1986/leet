@@ -51,7 +51,7 @@ int main()
     //backtrack::test();
     //DFS::test();
     //BalanceTree::test();
-    hashRel::test();
+    //hashRel::test();
     return 0;
 }
 

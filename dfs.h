@@ -241,6 +241,69 @@ public:
     {
 
     }
+
+    vector<double> calcEquation(vector<pair<string, string>> equations,\
+                                vector<double>& values, vector<pair<string, string>> queries)
+    {
+        unordered_map<string, vector<pair<string, double>>> graph;
+        for(int i=0; i < equations.size(); ++i)
+        {
+            graph[equations[i].first].push_back(make_pair(equations[i].second, values[i]));
+        }
+        vector<double> res;
+        for(const auto& query : queries)
+        {
+            double cur = 0.f;
+            bfs(query.first, query.second, graph, cur);
+            res.push_back(cur);
+        }
+        return res;
+    }
+
+    void bfs(string start, string end,\
+             unordered_map<string, vector<pair<string, double>>>&graph, double& cur)
+    {
+        //if()
+    }
+
+    int coinChange(vector<int>& coins, int amount)
+    {
+        sort(coins.rbegin(), coins.rend());
+        int best = INT_MAX;
+        dfs(coins, 0, 0, amount, best);
+        return best;
+    }
+
+    void dfs(vector<int>& coins, int start, int cur, int rest_amount, int& best)
+    {
+        /*
+        if(cur >= best)
+        {
+            return;
+        }
+        if(start == coins.size())
+        {
+            if(rest_amount)
+            {
+                return;
+            }
+            else
+            {
+                best = min(best, cur);
+                return;
+            }
+        }
+        if(rest_amount%coins[start] == 0)
+        {
+            cur += rest_amount/coins[start];
+            best = min(best, cur);
+            return;
+        }
+
+        for(int i = rest_amount/coins[start]; )
+        */
+    }
+
 };
 
 #endif // DFS_H

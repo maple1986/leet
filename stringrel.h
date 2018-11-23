@@ -446,12 +446,131 @@ public:
         return candidates[0];
     }
 
-private:
+public:
     char _h1;
     char _h2;
     char _m1;
     char _m2;
     string _sorted;
+
+    vector<string> summaryRanges(vector<int>& nums)
+    {
+        vector<string> res;
+        if(nums.empty()) return res;
+        int start = nums[0];
+        int end = nums[0];
+        for(int i=1; i<nums.size();++i)
+        {
+            if(nums[i] - end == 1)
+            {
+                end++;
+            }
+            else
+            {
+                string cur;
+                if(end == start)
+                {
+                    cur = to_string(start);
+                }
+                else
+                {
+                    cur = to_string(start) + "->" + to_string(end);
+                }
+                res.push_back(cur);
+                end = nums[i];
+                start = end;
+            }
+        }
+        string cur;
+        if(end == start)
+        {
+            cur = to_string(start);
+        }
+        else
+        {
+            cur = to_string(start) + "->" + to_string(end);
+        }
+        res.push_back(cur);
+        return res;
+    }
+
+    vector<string> findMissingRanges(vector<int> &nums, int lower, int upper)
+    {
+        vector<string> res;
+        if(nums.empty())
+        {
+            return res;
+            //return res.push_back(to_string(lower)+"->"+to_string(upper));
+        }
+        if(nums[0] > lower+1)
+        {
+            res.push_back(to_string(lower)+"->"+to_string(nums[0]-1));
+        }
+        else if(nums[0] > lower)
+        {
+            res.push_back(to_string(lower));
+        }
+        for(int i=1; i<nums.size();++i)
+        {
+
+        }
+
+        if(1 + nums.back() < upper)
+        {
+            res.push_back(to_string(1+nums.back())+"->"+to_string(upper));
+        }
+        else if(nums.back() < upper)
+        {
+            res.push_back(to_string(upper));
+        }
+    }
+
+    void ValidWordAbbr(vector<string> dictionary) {
+        for(const auto& str : dictionary)
+        {
+            if(str.length() <= 2)
+            {
+                if(_m.count(str))
+                {
+                    _m[str]++;
+                }
+                else
+                {
+                    _m[str] = 1;
+                }
+            }
+            else
+            {
+                string abbr = str[0] + to_string(str.length()-2) + str[str.length()-1];
+                if(_m.count(abbr))
+                {
+                    _m[abbr]++;
+                }
+                else
+                {
+                    _m[abbr] = 1;
+                }
+            }
+        }
+    }
+
+    /*
+     * @param word: a string
+     * @return: true if its abbreviation is unique or false
+     */
+    bool isUnique(string &word) {
+        if(word.length() <= 2)
+        {
+            return _m.count(word) < 2;
+        }
+        else
+        {
+            string abbr = word[0] + to_string(word.length()-2) + word[word.length()-1];
+            return _m.count(abbr) < 2;
+        }
+    }
+
+    unordered_map<string, int> _m;
 };
 
 #endif // STRINGREL_H

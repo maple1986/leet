@@ -260,6 +260,14 @@ public:
         return ret;
     }
 
+    int countRangeSum(vector<int>& nums, int lower, int upper)
+    {
+        if(nums.empty()) return 0;
+        sort(nums.begin(), nums.end());
+        auto it_start = lower_bound(nums.begin(), nums.end(), lower);
+        auto it_end =   upper_bound(nums.begin(), nums.end(), upper);
+        return it_end - it_start;
+    }
 
 };
 
