@@ -3,6 +3,7 @@
 #include <list>
 #include <unordered_map>
 #include <vector>
+#include <queue>
 
 using namespace std;
 class LRUCache {
@@ -101,4 +102,74 @@ private:
     vector<vector<int>> _vecs;
 };
 
+class ZigzagIterator22 {
+public:
+    /*
+    * @param vecs: a list of 1d vectors
+    */ZigzagIterator22(vector<vector<int>>& vecs) {
+        // do intialization if necessary
+        _vecs = vecs;
+        int i = 0;
+        for(auto& vec : _vecs)
+        {
+            if(vec.begin() != vec.end())
+            {
+                _q.push(make_pair(i, vec.begin()));
+
+            }
+            ++i;
+        }
+
+    }
+
+    /*
+     * @return: An integer
+     */
+    int next() {
+        // write your code here
+        pair<int, vector<int>::iterator> element = _q.front();
+        int res = *element.second;
+        if(element.second+1 != _vecs[element.first].end())
+        {
+            _q.push(make_pair(element.first, element.second+1));
+        }
+        return res;
+    }
+
+    /*
+     * @return: True if has next
+     */
+    bool hasNext() {
+        return !_q.empty();
+        // write your code here
+    }
+    std::queue<pair<int, vector<int>::iterator>> _q;
+    vector<vector<int>> _vecs;
+};
+
+class ZigzagIterator23 {
+    ZigzagIterator23(vector<vector<int>>& vecs) {
+        _vecs = vecs;
+        for(auto& vec : _vecs)
+        {
+            if(!vec.empty())
+            {
+                q.push(make_pair(vec.begin(), vec.end()));
+            }
+        }
+    }
+
+    int next() {
+        auto it = q.front().first, end = q.front().second;
+        q.pop();
+        if (it + 1 != end) q.push(make_pair(it + 1, end));
+        return *it;
+    }
+    bool hasNext() {
+        return !q.empty();
+    }
+private:
+    queue<pair<vector<int>::iterator, vector<int>::iterator>> q;
+    vector<vector<int>> _vecs;
+};
 #endif // DESGIN_H
