@@ -21,7 +21,7 @@
 #include <nsum.h>
 #include <twopointer.h>
 #include <hashrel.h>
-
+#include "desgin.h"
 using namespace std;
 
 int main()
@@ -33,7 +33,7 @@ int main()
     //NumofOnes::test();
     //SortAlg::test();
 
-    StringRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
@@ -52,6 +52,7 @@ int main()
     //DFS::test();
     //BalanceTree::test();
     //hashRel::test();
+    ZigzagIterator2::test();
     return 0;
 }
 

@@ -2,12 +2,7 @@
 #define DESGIN_H
 #include <list>
 #include <unordered_map>
-
-class desgin
-{
-public:
-    desgin();
-};
+#include <vector>
 
 using namespace std;
 class LRUCache {
@@ -55,6 +50,55 @@ private:
     int _capacity;
     list<pair<int, int>> _cache;
     unordered_map<int, list<pair<int, int>>::iterator> _m;
+};
+
+class ZigzagIterator2
+{
+public:
+    static void test();
+    ZigzagIterator2(vector<vector<int>>& vecs) {
+        // do intialization if necessary
+        x = 0;
+        y = 0;
+        _vecs = vecs;
+    }
+
+    /*
+         * @return: An integer
+         */
+    int next() {
+        // write your code here
+        return _vecs[y++][x];
+    }
+
+    /*
+         * @return: True if has next
+         */
+    bool hasNext() {
+        // write your code here
+        while(!_vecs.empty())
+        {
+            if(y >= _vecs.size())
+            {
+                y = 0;
+                x++;
+            }
+            if(_vecs[y].size() <= x)
+            {
+                _vecs.erase(_vecs.begin()+y);
+            }
+            else
+            {
+                break;
+            }
+        }
+        return !_vecs.empty();
+    }
+
+private:
+    int x;
+    int y;
+    vector<vector<int>> _vecs;
 };
 
 #endif // DESGIN_H
