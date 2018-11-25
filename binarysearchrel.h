@@ -34,6 +34,31 @@ public:
         return l;
     }
 
+    int kthSmallest3(vector<vector<int>> &matrix, int k)
+    {
+        // write your code here
+        priority_queue<int> pq;
+        for(int i = 0; i<matrix.size(); ++i)
+        {
+            for(int j=0; j<matrix[0].size(); ++j)
+            {
+                if(pq.size() >= k)
+                {
+                    if(matrix[i][j] < pq.top())
+                    {
+                        pq.push(matrix[i][j]);
+                        pq.pop();
+                    }
+                }
+                else
+                {
+                    pq.push(matrix[i][j]);
+                }
+            }
+        }
+        return pq.top();
+    }
+
 
     int kthSmallest(vector<vector<int>>& matrix, int k)
     {

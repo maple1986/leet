@@ -18,5 +18,5 @@ void StringRel::test()
     //str.summaryRanges(num);
     vector<string> dict = {"deer", "cart", "cane", "make"};
     str.ValidWordAbbr(dict);
-
+    str.findStrobogrammatic(2);
 }

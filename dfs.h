@@ -304,6 +304,34 @@ public:
         */
     }
 
+    int minArea(vector<vector<char>> &image, int x, int y) {
+        int x0 = x, x1 = x, y0 = y, y1 = y;
+        dfs(image, x, y, x0, x1, y0, y1);
+        return (x1-x0+1)*(y1-y0+1);
+    }
+
+    void dfs(vector<vector<char>> &image, int x, int y, int& x0, int& x1, int& y0, int& y1)
+    {
+        if(x < 0 || x >= image.size() || y < 0 || y >= image[0].size())
+        {
+            return;
+        }
+        if(image[x][y] != '1')
+        {
+            return;
+        }
+        image[x][y] = '2';
+        x0 = min(x0, x);
+        y0 = min(y0, y);
+        x1 = max(x1, x);
+        y1 = max(y1, y);
+
+        dfs(image, x-1, y, x0, x1, y0, y1);
+        dfs(image, x+1, y, x0, x1, y0, y1);
+        dfs(image, x, y-1, x0, x1, y0, y1);
+        dfs(image, x, y+1, x0, x1, y0, y1);
+    }
+
 };
 
 #endif // DFS_H

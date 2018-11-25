@@ -756,6 +756,27 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return;
     }
 
+    vector<string> findStrobogrammatic(int n)
+    {
+        vector<string> res = {""};
+        vector<string> res_odd = {"0", "1", "8"};
+        if(n%2) res.swap(res_odd);
+        for(int i= (n%2)+2; i <= n; i+=2)
+        {
+            vector<string> cur;
+            for(auto& s : res)
+            {
+                if(i != n) cur.push_back("0" + s + "0");
+                cur.push_back("1" + s + "1");
+                cur.push_back("8" + s + "8");
+                cur.push_back("6" + s + "9");
+                cur.push_back("9" + s + "6");
+            }
+            res.swap(cur);
+        }
+        return res;
+    }
+
 };
 
 #endif // BACKTRACK_H

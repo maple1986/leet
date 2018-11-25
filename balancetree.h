@@ -1441,6 +1441,24 @@ private:
         }
         return res;
     }
+
+    int longestConsecutive(TreeNode * root)
+    {
+        if(!root) return 0;
+        int res = 1;
+        dfs(root, root->val, 1, res);
+        return res;
+    }
+
+    void dfs(TreeNode *root, int pValue, int cur, int &res)
+    {
+        if(!root) return;
+        if(root->val == pValue+1) cur++;
+        else cur = 1;
+        res = max(cur, res);
+        dfs(root->left, root->val, cur, res);
+        dfs(root->right, root->val, cur, res);
+    }
 };
 
 #endif // BALANCETREE_H

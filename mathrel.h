@@ -139,6 +139,28 @@ public:
         }
         return;
     }
+
+
+    int maximumSwap(int num) {
+        // Write your code here
+        string res = to_string(num);
+        string back = res;
+        for(int b = back.size()-2; b >= 0; --b)
+        {
+            back[b] = max(back[b+1], back[b]);
+        }
+        for(int f=0; f<res.size(); ++f)
+        {
+            if(res[f] < back[f])
+            {
+                int b = back.size();
+                while(back[--b] != back[f]);
+                swap(res[f], res[b]);
+                break;
+            }
+        }
+        return stoi(res);
+    }
 };
 
 #endif // MATHREL_H

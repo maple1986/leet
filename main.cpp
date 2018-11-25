@@ -43,7 +43,7 @@ int main()
 
     */
     //ListSolutions::test();
-    //MathRel::test();
+    MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
@@ -52,7 +52,7 @@ int main()
     //DFS::test();
     //BalanceTree::test();
     //hashRel::test();
-    ZigzagIterator2::test();
+    //ZigzagIterator2::test();
     return 0;
 }
 

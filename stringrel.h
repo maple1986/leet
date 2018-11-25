@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -141,7 +142,61 @@ public:
 
     bool isStrobogrammatic(string num)
     {
+        if(num.empty()) return false;
+        unordered_map<char, char> dict;
+        dict.insert(make_pair('0', '0'));
+        dict.insert(make_pair('1', '1'));
+        dict.insert(make_pair('8', '8'));
+        dict.insert(make_pair('6', '9'));
+        dict.insert(make_pair('9', '6'));
+
+        if(num[0] == '0' && num.size() != 1)
+        {
+            return false;
+        }
+        int left = 0, right = num.size()-1;
+        while(left <= right)
+        {
+            if(dict[num[left++]] != num[right--])
+            {
+                return false;
+            }
+        }
         return true;
+    }
+
+
+    vector<string> findStrobogrammatic(int n)
+    {
+        vector<string> res;
+        find(n, n, res);
+        return res;
+    }
+
+    void find(int m, int n, vector<string>& res)
+    {
+        if(m == 0)
+        {
+            res = {""};
+            return;
+        }
+        if(m == 1)
+        {
+            res = {"0", "1", "8"};
+            return;
+        }
+
+        find(m-2, n, res);
+        vector<string> cur;
+        for(auto& s : res)
+        {
+            if(m != n) cur.push_back("0" + s + "0");
+            cur.push_back("1" + s + "1");
+            cur.push_back("8" + s + "8");
+            cur.push_back("6" + s + "9");
+            cur.push_back("9" + s + "6");
+        }
+        res.swap(cur);
     }
 
     string reverseVowels(string s)
@@ -569,6 +624,16 @@ public:
             return _m.count(abbr) < 2;
         }
     }
+
+
+    vector<int> findPermutation(string &s)
+    {
+        int n = s.size()+1;
+        vector<int> res;
+        unordered_set<int> visited;
+
+    }
+
 
     unordered_map<string, int> _m;
 };

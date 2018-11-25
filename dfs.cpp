@@ -22,6 +22,9 @@ void DFS::test()
         printf("%s\n", it->c_str());
         ++it;
     }
+
+    vector<vector<char>> image = {{'0','0','1','0'},{'0','1','1','0'},{'0','1','0','0'}};
+    dfs.minArea(image, 0, 2);
 }
 
 bool DFS::isSameTree(TreeNode *p, TreeNode *q)

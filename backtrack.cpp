@@ -40,4 +40,6 @@ void backtrack::test()
 
     v2 = bt.grayCode(2);
     bt.printVec(v2);
+
+    bt.findStrobogrammatic(2);
 }
