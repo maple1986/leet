@@ -28,7 +28,7 @@ int main()
 {
 
     //TwoPointer::test();
-    //binarySearchRel::test();
+    binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
@@ -43,7 +43,7 @@ int main()
 
     */
     //ListSolutions::test();
-    MathRel::test();
+    //MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();

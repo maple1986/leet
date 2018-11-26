@@ -1459,6 +1459,40 @@ private:
         dfs(root->left, root->val, cur, res);
         dfs(root->right, root->val, cur, res);
     }
+
+    vector<int> closestKValues(TreeNode * root, double target, int k)
+    {
+        inorder(root, target, k);
+        vector<int> res;
+        res.reserve(k);
+        while(!_pq.empty())
+        {
+            res.emplace_back(_pq.top().second);
+            _pq.pop();
+        }
+        return res;
+    }
+
+    void inorder(TreeNode* root, double target, int k)
+    {
+        if(!root) return;
+        inorder(root->left, target, k);
+        if(_pq.size() < k)
+        {
+            _pq.push(make_pair(abs(target-root->val), root->val));
+        }
+        else
+        {
+            if(_pq.top().first > abs(target-root->val))
+            {
+                _pq.pop();
+                _pq.push(make_pair(abs(target-root->val), root->val));
+            }
+        }
+        inorder(root->right, target, k);
+    }
+
+    priority_queue<pair<double, int>> _pq;
 };
 
 #endif // BALANCETREE_H
