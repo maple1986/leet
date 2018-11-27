@@ -28,12 +28,12 @@ int main()
 {
 
     //TwoPointer::test();
-    binarySearchRel::test();
+    //binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
 
-    //StringRel::test();
+    StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();

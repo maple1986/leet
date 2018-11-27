@@ -1022,6 +1022,15 @@ public:
         return accumulate(dp.begin(), dp.end(), 0);
     }
 
+    int maxLen(vector<int> &a)
+    {
+        if(a.size() <= 2) return a.size();
+        vector<vector<int>> dict(2, vector<int>(2, -1));
+        for(int i=1; i<a.size(); ++i)
+        {
+
+        }
+    }
 
 
 private:

@@ -21,4 +21,7 @@ void StringRel::test()
     str.findStrobogrammatic(2);
     vector<string> emails = {"zh.ang+fs@123.com", "zliu.ang+fs@123.com"};
     str.countGroups1(emails);
+
+    vector<int> num3 ={4,3,2,7,8,2,3,1};
+    str.findDisappearedNumbers(num3);
 }

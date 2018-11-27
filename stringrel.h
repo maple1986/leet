@@ -728,9 +728,31 @@ public:
         }
         return ans;
     }
-
-
     unordered_map<string, int> _m;
+
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        if(nums.size() < 1 ) return {};
+        int n = nums.size();
+        for(int i=0; i<n; ++i)
+        {
+            int pos = nums[i]-1;
+            if(nums[pos] > 0)
+            {
+                int value = nums[pos];
+                nums[pos] = -value;
+            }
+        }
+
+        vector<int> res;
+        for(int i=0; i<n; ++i)
+        {
+            if(nums[i] > 0)
+            {
+                res.push_back(i+1);
+            }
+        }
+        return res;
+    }
 };
 
 #endif // STRINGREL_H
