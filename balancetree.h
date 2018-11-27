@@ -1118,7 +1118,7 @@ private:
 
     }
 
-    int longestUnivaluePath(TreeNode* root)
+    int longestUnivaluePath2(TreeNode* root)
     {
         if(!root) return 0;
         vector<pair<TreeNode*, int>> dp;
@@ -1459,6 +1459,187 @@ private:
         dfs(root->left, root->val, cur, res);
         dfs(root->right, root->val, cur, res);
     }
+
+    int longestUnivaluePath(TreeNode* root)
+    {
+        if(!root) return 0;
+        vector<pair<TreeNode*, int>> dp;
+        int res = 0;
+        dfs(root, dp, res);
+
+        return res;
+    }
+
+    void dfs1(TreeNode *root, vector<pair<TreeNode*, int>> &dp, int &res)
+    {
+        int tmp = 0;
+        if(!dp.empty() && root->val == dp.back().first->val)
+        {
+            tmp = dp.back().second+1;
+        }
+        dp.push_back(make_pair(root, tmp));
+
+        if(!root->left && !root->right)
+        {
+            for(auto i : dp)
+            {
+                res = max(res, i.second);
+            }
+            dp.pop_back();
+            return;
+        }
+        if(root->left) dfs(root->left, dp, res);
+        if(root->right) dfs(root->right, dp, res);
+        dp.pop_back();
+        return;
+    }
+
+
+    int ans = 0;
+
+    int longestUnivaluePath1(TreeNode* root) {
+        lup(root);
+        return ans;
+    }
+
+    int lup(TreeNode* cur){
+        if(!cur) return 0;
+        int left, right, L = 0, R = 0;
+        left = lup(cur->left);
+        right = lup(cur->right);
+        if(cur->left!=NULL&&cur->val==cur->left->val){
+            L = left + 1;
+        }
+        if(cur->right!=NULL&&cur->val==cur->right->val){
+            R = right + 1;
+        }
+        ans = max(ans,L+R);
+        return max(L,R);
+    }
+
+    int longestUnivaluePath3(TreeNode* root) {
+         if (!root) return 0;
+         int res = 0;
+         helper(root, res);
+         return res;
+     }
+     int helper(TreeNode* node, int& res) {
+         if (!node) return 0;
+         int left = helper(node->left, res);
+         int right = helper(node->right, res);
+         left = (node->left && node->val == node->left->val) ? left + 1 : 0;
+         right = (node->right && node->val == node->right->val) ? right + 1 : 0;
+         res = max(res, left + right);
+         return max(left, right);
+     }
+
+     bool isValidBST1(TreeNode* root) {
+         if(!root) return true;
+         return isValidBST_Rec(root->left, NULL, root) && isValidBST_Rec(root->right, root, NULL);
+     }
+
+     bool isValidBST_Rec(TreeNode* root, TreeNode* left_bound, TreeNode* right_bound)
+     {
+         if(!root) return true;
+         if(left_bound && left_bound->val >= root->val)
+         {
+             return false;
+         }
+         if(right_bound && right_bound->val <= root->val)
+         {
+             return false;
+         }
+         //left_bound = root->left?root->left:NULL;
+         //right_bound = root->right?root->right:NULL;
+         return isValidBST_Rec(root->left, left_bound, root) && isValidBST_Rec(root->right, root, right_bound);
+     }
+
+
+     bool isValidBST(TreeNode* root)
+     {
+        if(!root) return true;
+        vector<int> nums;
+        inorder(root, nums);
+        for(int i=0; i<nums.size()-1; ++i)
+        {
+            if(nums[i] >= nums[i+1])
+            {
+                return false;
+            }
+        }
+        return true;
+     }
+
+
+     bool isValidBST2(TreeNode* root) {
+         if(!root) return true;
+         TreeNode* prev = NULL;
+         return inorder2(root, prev);
+     }
+
+     bool inorder2(TreeNode* node, TreeNode*& prev)
+     {
+         if(!node) return true;
+         if(!inorder2(node->left, prev)) return false;
+         if (prev != NULL && prev->val >= node->val) return false;
+         prev = node;
+         return inorder2(node->right, prev);
+     }
+
+     int closestValue(TreeNode * root, double target) {
+         int res = root->val;
+         while(root)
+         {
+             if(abs(root->val-target) < abs(res - target))
+             {
+                 res = root->val;
+             }
+             root = root->val > target ? root->left : root->right;
+         }
+         return res;
+     }
+
+     vector<int> closestKValues(TreeNode * root, double target, int k) {
+         //vector<int> res;
+         vector<int> nums;
+         inorder(root, nums);
+         priority_queue<pair<double, int>> pq;
+         for(auto num : nums)
+         {
+             if(pq.size() < k)
+             {
+                pq.push(make_pair(abs(num-target), num));
+             }
+             else
+             {
+                 double delta = abs(num-target);
+                 if(delta < pq.top().first)
+                 {
+                     pq.pop();
+                     pq.push(make_pair(delta, num));
+                 }
+             }
+         }
+         nums.clear();
+         while(!pq.empty())
+         {
+             nums.push_back(pq.top().second);
+             pq.pop();
+         }
+         return nums;
+     }
+
+     vector<int> closestKValues2(TreeNode * root, double target, int k)
+     {
+         vector<int> nums;
+         inorder(root, nums);
+         auto it = lower_bound(nums.begin(), nums.end(), target);
+         int i = distance(nums.begin(), it),  j = i;
+         while(k--)
+         {
+
+         }
+     }
 };
 
 #endif // BALANCETREE_H
