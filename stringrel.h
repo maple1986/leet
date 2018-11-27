@@ -7,6 +7,7 @@
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
+#include <set>
 
 using namespace std;
 
@@ -632,6 +633,100 @@ public:
         vector<int> res;
         unordered_set<int> visited;
 
+    }
+
+    int countGroups(vector<string> &emails) {
+        unordered_map<string, int> groups;
+        int res = 0;
+        for(string email : emails)
+        {
+            string formated_email;
+            int offset_at = email.find('@');
+            for(int i=0; i<offset_at; ++i)
+            {
+                if('.' == email[i]) continue;
+                if('+' == email[i]) break;
+                formated_email += email[i];
+            }
+            formated_email.append(email.begin()+offset_at, email.end());
+            if(groups[formated_email]++ == 1)
+            {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    int countGroups1(vector<string> &emails) {
+        unordered_set<string> groups;
+        for(string email : emails)
+        {
+            string formated_email;
+            bool skiped = false;
+            for(int i=0; i<email.length(); ++i)
+            {
+                if(!skiped)
+                {
+                    if('.' == email[i]) continue;
+                    else if('+' == email[i])
+                    {
+                        skiped = true;
+                    }
+                    else
+                    {
+                        formated_email += email[i];
+                    }
+                }
+                else
+                {
+                    if(email[i] == '@')
+                    {
+                        formated_email += email.substr(i);
+                        break;
+                    }
+                }
+            }
+            groups.insert(formated_email);
+            /*
+            if(groups[formated_email]++ == 1)
+            {
+                res++;
+            }
+            */
+        }
+        return groups.size();
+    }
+
+    int countGroups2(vector<string> &emails)
+    {
+        set<string> s;
+        int ans = 0;
+        for (auto &email : emails) {
+            string temp = "";
+            int size = email.size();
+            bool flag = true;
+            for (int i = 0; i < size; ++i) {
+                if (flag) {
+                    if (email[i] == '.') {
+                        continue;
+                    } else if (email[i] == '+') {
+                        flag = false;
+                    } else {
+                        temp += email[i];
+                    }
+                } else {
+                    if (email[i] == '@') {
+                        temp += email.substr(i);
+                    }
+                }
+            }
+
+            if (s.count(temp) == 0) {
+                s.insert(temp);
+                ++ans;
+            }
+        }
+        return ans;
     }
 
 

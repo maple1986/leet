@@ -1599,7 +1599,7 @@ private:
          return res;
      }
 
-     vector<int> closestKValues(TreeNode * root, double target, int k) {
+     vector<int> closestKValues1(TreeNode * root, double target, int k) {
          //vector<int> res;
          vector<int> nums;
          inorder(root, nums);

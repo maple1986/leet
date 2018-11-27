@@ -19,4 +19,6 @@ void StringRel::test()
     vector<string> dict = {"deer", "cart", "cane", "make"};
     str.ValidWordAbbr(dict);
     str.findStrobogrammatic(2);
+    vector<string> emails = {"zh.ang+fs@123.com", "zliu.ang+fs@123.com"};
+    str.countGroups1(emails);
 }

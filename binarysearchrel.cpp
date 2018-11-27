@@ -23,5 +23,7 @@ void binarySearchRel::test()
     vector<int> res = bs.findClosestElements(nums, 9, 4);
     vector<vector<int>> mat = {{1,3,5,7},{10,11,16,20},{23,30,34,50}};
     bool bres1 = bs.searchMatrix(mat, 10);
+    vector<int> salaries = {2,4,6,8,10,12,14,15};
+    int cap = bs.getCap(salaries, 72);
     int i = 0;
 }

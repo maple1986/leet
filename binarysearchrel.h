@@ -331,18 +331,83 @@ public:
             }
         }
 
-        auto it = lower_bound(matrix[low].begin(), matrix[low].end(), target);
-        if(it == matrix[low].end())
+        int left = 0, right = m-1;
+        while(left <= right)
         {
-            return false;
-        }
-        if(*it == target)
-        {
-            return true;
+            int mid = left + (right-left)/2;
+            if(matrix[high][mid] > target)
+            {
+                right = mid-1;
+            }
+            else if(matrix[high][mid] < target)
+            {
+                left = mid+1;
+            }
+            else
+            {
+                return true;
+            }
         }
         return false;
     }
 
+    bool searchMatrix2(vector<vector<int>>& matrix, int target)
+    {
+        int m = matrix.size();
+        if(m == 0) return false;
+        int n = matrix[0].size();
+        if(n == 0) return false;
+        if(target < matrix[0][0] || target > matrix.back().back()) return false;
+        int x = 0, y = n-1;
+        while(y>=0 && x<m)
+        {
+            if(matrix[x][y] > target) y--;
+            else if(matrix[x][y] < target) x++;
+            else return true;
+        }
+        return false;
+    }
+
+    int getCap(vector<int> &a, int target)
+    {
+        if(a.empty() || target == 0) return 0;
+        if(a.size() == 1) return target;
+        sort(a.begin(), a.end());
+        int n = a.size();
+        vector<int> prefix_sum(n, 0);
+        prefix_sum[0] = a[0];
+        for(int i=1; i<n; ++i)
+        {
+            prefix_sum[i] = prefix_sum[i-1] + a[i];
+        }
+        int low = 0, high = n-1;
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;
+            if(a[mid]*(mid+1) + prefix_sum[n-1] - prefix_sum[mid] > target)
+            {
+                high = mid-1;
+            }
+            else if(a[mid]*(mid+1)+prefix_sum[n-1]-prefix_sum[mid] < target)
+            {
+                low = mid+1;
+            }
+            else return a[mid];
+        }
+        for(int i=a[high]; i<=a[low]; ++i)
+        {
+            if(i*(high+1)+prefix_sum[n-1]-prefix_sum[high] >= target)
+            {
+                return i;
+            }
+        }
+        return a[low];
+    }
+
+    int getCap1(vector<int> &a, int target)
+    {
+
+    }
 };
 
 #endif // BINARYSEARCHREL_H
