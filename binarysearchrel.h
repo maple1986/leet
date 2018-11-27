@@ -114,10 +114,6 @@ public:
         return cnt;
     }
 
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        return true;
-    }
-
     vector<int> searchRange(vector<int>& nums, int target) {
         if(nums.empty()) return vector<int> {-1, -1};
         int left  = 0;
@@ -217,30 +213,27 @@ public:
             res.assign(arr.end()-k, arr.end());
             return res;
         }
-        int mid = distance(arr.begin(), it);
-        int left=mid, right=mid;
-        while(k--)
+        auto start = it, end = it;
+        while(end - start < k)
         {
-            if(left == 0)
+            if(end == arr.end())
             {
-                ++right;
+                --start;
                 continue;
             }
-            if(right == arr.size()-1)
+            if(start == arr.begin())
             {
-                --left;
+                ++end;
                 continue;
             }
-            if(x-arr[left] <= arr[right] - x)
+            if(x - *(start-1) <= *end - x)
             {
-                --left;
+                --start;
             }
             else
-            {
-                ++right;
-            }
+                ++end;
         }
-        res.assign(arr.begin()+left, arr.begin()+right);
+        res.assign(start, end);
         return res;
     }
 
@@ -293,6 +286,61 @@ public:
             }
         }
         return res;
+    }
+
+    vector<int> findClosestElements3(vector<int>& arr, int k, int x)
+    {
+        int left = 0, right = arr.size()-k;
+        while(left < right)
+        {
+            int mid = left + (right-left)/2;
+            if(abs(arr[mid+k]-x) <= abs(arr[right+k]-x))
+            {
+                right = mid;
+            }
+            else
+            {
+                left = mid+1;
+            }
+        }
+        vector<int> result(arr.begin() + left, arr.begin() + left + k);
+        return result;
+    }
+
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(matrix.empty()) return false;
+        if(matrix[0].empty()) return false;
+        if (target < matrix[0][0] || target > matrix.back().back()) return false;
+        int m = matrix[0].size();
+        int n = matrix.size();
+        int low = 0, high = n-1;
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;
+            if(matrix[mid][0] > target)
+            {
+                high = mid-1;
+            }
+            else if(matrix[mid][0] < target)
+            {
+                low = mid+1;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        auto it = lower_bound(matrix[low].begin(), matrix[low].end(), target);
+        if(it == matrix[low].end())
+        {
+            return false;
+        }
+        if(*it == target)
+        {
+            return true;
+        }
+        return false;
     }
 
 };
