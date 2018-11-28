@@ -11,7 +11,6 @@ SOURCES += main.cpp \
     stringrel.cpp \
     powerofn.cpp \
     sortrel.cpp \
-    ZigZag6.cpp \
     myatoi.cpp \
     dfs.cpp \
     balancetree.cpp \
@@ -39,7 +38,6 @@ HEADERS += \
     stringrel.h \
     powerofn.h \
     sortrel.h \
-    ZigZag6.h \
     myatoi.h \
     dfs.h \
     balancetree.h \

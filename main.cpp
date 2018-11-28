@@ -4,7 +4,6 @@
 #include "backtrack.h"
 #include "stringrel.h"
 #include "powerofn.h"
-#include <ZigZag6.h>
 #include <balancetree.h>
 #include <msra.h>
 #include <myatoi.h>
@@ -33,7 +32,7 @@ int main()
     //NumofOnes::test();
     //SortAlg::test();
 
-    StringRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
@@ -48,7 +47,7 @@ int main()
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    //backtrack::test();
+    backtrack::test();
     //DFS::test();
     //BalanceTree::test();
     //hashRel::test();

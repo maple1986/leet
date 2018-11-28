@@ -42,4 +42,7 @@ void backtrack::test()
     bt.printVec(v2);
 
     bt.findStrobogrammatic(2);
+
+    int i = bt.countNumbersWithUniqueDigits(3);
+    i=0;
 }

@@ -24,7 +24,7 @@ void BalanceTree::test()
     vs.push_back("cog");
     vs.push_back("lot");
 
-
+    /*
     int length = bt.ladderLength1(start, end, vs);
     cout << "ladder length1 =" << length << endl;
 
@@ -68,7 +68,12 @@ void BalanceTree::test()
     //bt.findCircleNum(relation);
     vector<vector<int>> relation1 = {{0,0,0},{0,1,0},{1,1,1}};
     relation1 = bt.updateMatrix(relation1);
-    i = 0;
+    */
+    char* str7 = "[1,2,3,4,5]";
+    TreeNode* tree7 = bt.generateTree(str7);
+    int j = bt.diameterOfBinaryTree(tree7);
+
+    j = 0;
 }
 
 static int isdigit(const char c)

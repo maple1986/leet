@@ -777,6 +777,62 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return res;
     }
 
+    int countNumbersWithUniqueDigits(int n)
+    {
+        if(n == 0) return 1;
+        bitset<10> mark;
+        int res = 0;
+        doCountNumbers(1, n, mark, res);
+        return res;
+    }
+
+    void doCountNumbers(int cur, int n, bitset<10>& mark, int& res)
+    {
+        if(cur == n+1)
+        {
+            return;
+        }
+        for(int i=0; i<=9; ++i)
+        {
+            if(mark[i]) continue;
+            if(cur==2 && mark[0]) continue;
+            mark.flip(i);
+            res++;
+            doCountNumbers(cur+1, n, mark, res);
+            mark.flip(i);
+        }
+        return;
+    }
+
+    int countArrangement(int N)
+    {
+        if(N<3) return N;
+        bitset<16> mark;
+        int res = 0;
+        doCountArrangement(1, N, mark, res);
+        return res;
+    }
+
+    void doCountArrangement(int cur, int N, bitset<16>& mark, int& res)
+    {
+        if(cur == N+1)
+        {
+            return;
+        }
+        for(int i=1; i<=N; ++i)
+        {
+            if(mark[i]) continue;
+            if(!(i%cur||cur%i)) continue;
+            mark.flip(i);
+            res++;
+            doCountArrangement(cur+1, N, mark, res);
+            mark.flip(i);
+        }
+    }
+
+    vector<int> constructArray(int n, int k) {
+
+    }
 };
 
 #endif // BACKTRACK_H

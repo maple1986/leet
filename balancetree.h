@@ -1672,7 +1672,85 @@ private:
         inorder(root->right, target, k);
     }
 
+    int diameterOfBinaryTree(TreeNode* root)
+    {
+        if(!root) return 0;
+        diameterOfBinaryTree_rec(root);
+        return _diameter-1;
+    }
+
+    int diameterOfBinaryTree_rec(TreeNode* root)
+    {
+        if(!root) return 0;
+        int diameter = heightOfTree(root->left) + heightOfTree(root->right) + 1;
+        int tmp = max(diameterOfBinaryTree(root->right), diameterOfBinaryTree(root->left));
+        int res = max(diameter, tmp);
+        _diameter = max(_diameter, res);
+        return res;
+    }
+
+    int heightOfTree(TreeNode* node)
+    {
+        if(!node) return 0;
+        if(_treehights.count(node))
+        {
+            return _treehights[node];
+        }
+        int height = max(heightOfTree(node->left), heightOfTree(node->right))+1;
+        _treehights[node] = height;
+        return height;
+    }
+
+    int _diameter = 0;
     priority_queue<pair<double, int>> _pq;
+    unordered_map<TreeNode*, int> _treehights;
+
+    int diameterOfBinaryTree2(TreeNode* root)
+    {
+        if(!root) return 0;
+        int res = 0;
+        maxDepth(root, res);
+        return res;
+    }
+
+    int maxDepth(TreeNode* root, int& res)
+    {
+        if(!root) return 0;
+        if(_treehights.count(root))
+        {
+            return _treehights[root];
+        }
+        int left  = maxDepth(root->left, res);
+        int right = maxDepth(root->right, res);
+        res = max(res, left+right);
+        _treehights[root] = max(left, right)+1;
+        return _treehights[root];
+    }
+
+    vector<int> findMode(TreeNode* root)
+    {
+        if(!root) return {};
+        vector<int> nums, res;
+        inorder(root, nums);
+        res.push_back(nums[0]);
+        int cur = 1, mode = 1;
+        for(int i=1; i<nums.size(); ++i)
+        {
+            if(nums[i] == nums[i-1]) cur++;
+            else cur = 1;
+            if(cur == mode)
+            {
+                res.push_back(nums[i]);
+            }
+            else if( cur > mode)
+            {
+                mode = cur;
+                res.clear();
+                res.push_back(nums[i]);
+            }
+        }
+        return res;
+    }
 };
 
 #endif // BALANCETREE_H

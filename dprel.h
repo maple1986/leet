@@ -927,6 +927,19 @@ public:
         return maxSum;
     }
 
+
+    int maxSubArray53_2(vector<int>& nums)
+    {
+        if(nums.empty()) return 0;
+        int maxEndingHere = nums[0], maxSofar = nums[0];
+        for(int i=1; i < nums.size(); ++i)
+        {
+            maxEndingHere = max(maxEndingHere+nums[i], nums[i]);
+            maxSofar = max(maxSofar, maxEndingHere);
+        }
+        return maxSofar;
+    }
+
     int maxProduct152(vector<int>& nums)
     {
         int n = nums.size();
