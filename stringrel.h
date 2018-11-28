@@ -626,15 +626,6 @@ public:
         }
     }
 
-
-    vector<int> findPermutation(string &s)
-    {
-        int n = s.size()+1;
-        vector<int> res;
-        unordered_set<int> visited;
-
-    }
-
     int countGroups(vector<string> &emails) {
         unordered_map<string, int> groups;
         int res = 0;
@@ -774,6 +765,38 @@ public:
         for (int i =0; i<rows.size(); ++i) ret += rows[i];
         return ret;
     }
+
+    vector<int> findPermutation(string &s)
+    {
+        int n = s.length()+1;
+        if(n <= 1) return {};
+        vector<int> res(n, 0);
+        for(int i=0; i<res.size(); ++i)
+        {
+            res[i] = i+1;
+        }
+        int swapStart = 0, swapEnd = 0;
+        while(swapEnd < s.length())
+        {
+            swapStart = swapEnd;
+            if(s[swapEnd] == 'D')
+            {
+                while(swapEnd<s.length() && s[swapEnd] == 'D')
+                {
+                    ++swapEnd;
+                }
+                reverse(res.begin()+swapStart, res.begin()+swapEnd+1);
+            }
+            else
+            {
+                ++swapEnd;
+            }
+        }
+        return res;
+    }
+
+
+
 };
 
 #endif // STRINGREL_H

@@ -730,12 +730,6 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return;
     }
 
-    vector<int> constructArray(int n, int k)
-    {
-
-    }
-
-
     int findTargetSumWays(vector<int>& nums, int S)
     {
         if(nums.empty()) return 0;
@@ -804,7 +798,7 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return;
     }
 
-    int countArrangement(int N)
+    int countArrangement1(int N)
     {
         if(N<3) return N;
         bitset<16> mark;

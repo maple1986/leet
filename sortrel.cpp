@@ -25,5 +25,7 @@ void sortrel::test()
     vector<int> v5 = {1,1,1,2};
     sortl.subarraySum(v5, 2);
 
-
+    vector<int> nums1 = {1,7,11};
+    vector<int> nums2 = {2,4,6};
+    sortl.kSmallestPairs1(nums1, nums2, 3);
 }

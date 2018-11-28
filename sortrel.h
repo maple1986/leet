@@ -4,6 +4,8 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_map>
+#include <queue>
+
 using namespace std;
 
 struct Interval {
@@ -267,6 +269,84 @@ public:
         auto it_start = lower_bound(nums.begin(), nums.end(), lower);
         auto it_end =   upper_bound(nums.begin(), nums.end(), upper);
         return it_end - it_start;
+    }
+
+    vector<pair<int, int>> kSmallestPairs1(vector<int>& nums1, vector<int>& nums2, int k)
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+
+        vector<vector<int>> sum(n, vector<int>(m, 0));
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<m; ++j)
+            {
+                sum[i][j] = nums1[j] + nums2[i];
+            }
+        }
+        priority_queue<pair<int, pair<int, int>>> pq;
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<m; ++j)
+            {
+                if(pq.size() >= k)
+                {
+                    if(pq.top().first > sum[i][j])
+                    {
+                        pq.pop();
+                        pq.push(make_pair(sum[i][j], make_pair(nums1[j], nums2[i])));
+                    }
+                }
+                else
+                {
+                    pq.push(make_pair(sum[i][j], make_pair(nums1[j], nums2[i])));
+                }
+            }
+        }
+        vector<pair<int, int>> res;
+
+        while(!pq.empty())
+        {
+            res.push_back(pq.top().second);
+            pq.pop();
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+
+    vector<pair<int, int>> kSmallestPairs2(vector<int>& nums1, vector<int>& nums2, int k)
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+        priority_queue<pair<int, pair<int, int>>> pq;
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<m; ++j)
+            {
+                int sum = nums1[j] + nums2[i];
+                if(pq.size() >= k)
+                {
+                    if(pq.top().first > sum)
+                    {
+                        pq.pop();
+                        pq.push(make_pair(sum, make_pair(nums1[j], nums2[i])));
+                    }
+                }
+                else
+                {
+                    pq.push(make_pair(sum, make_pair(nums1[j], nums2[i])));
+                }
+            }
+        }
+        vector<pair<int, int>> res;
+
+        while(!pq.empty())
+        {
+            res.push_back(pq.top().second);
+            pq.pop();
+        }
+        reverse(res.begin(), res.end());
+        return res;
     }
 
 };
