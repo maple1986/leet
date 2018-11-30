@@ -173,24 +173,6 @@ public:
         }
         return count;
     }
-
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target)
-    {
-        vector<vector<int>> res;
-        sort(candidates.begin(), candidates.end());
-        for(int i=0; i<candidates.size(); ++i)
-        {
-            vector<int> tmp;
-            tmp.push_back(candidates[i]);
-            int left = 0, right = candidates.size()-1;
-            while(left < right)
-            {
-                int newtarget = target-tmp.at(0);
-
-            }
-        }
-    }
-
 };
 
 #endif // NSUM_H

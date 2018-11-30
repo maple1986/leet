@@ -29,7 +29,9 @@ SOURCES += main.cpp \
     nsum.cpp \
     twopointer.cpp \
     desgin.cpp \
-    hashtable.cpp
+    hashtable.cpp \
+    graph1.cpp \
+    array1.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -57,4 +59,6 @@ HEADERS += \
     nsum.h \
     twopointer.h \
     desgin.h \
-    hashtable.h
+    hashtable.h \
+    graph1.h \
+    array1.h

@@ -552,6 +552,35 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
 
     }
 
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+    {
+        vector<vector<int>> res;
+        if(target <= 0) return res;
+        vector<int> cur;
+        dfs(candidates, cur, 0, target, res);
+        return res;
+    }
+
+    void dfs(vector<int>& candidates, vector<int>& cur, int startIdx, int target, vector<vector<int>>& res)
+    {
+        if(target == 0)
+        {
+            res.push_back(cur);
+            return;
+        }
+
+        for(int i=startIdx; i<candidates.size(); ++i)
+        {
+            if(candidates[i] > target) break;
+            if(i>startIdx && candidates[i] == candidates[i-1]) continue;
+            cur.push_back(candidates[i]);
+            dfs(candidates, cur, startIdx+1, target-candidates[i], res);
+            cur.pop_back();
+        }
+        return;
+    }
+
+
 
     vector<vector<int>> combinationSum3(int k, int n) {
         vector<vector<int>> res;
