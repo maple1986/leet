@@ -44,5 +44,10 @@ void backtrack::test()
     bt.findStrobogrammatic(2);
 
     int i = bt.countNumbersWithUniqueDigits(3);
+    vector<int> nums1 = {1, 2, 3};
+    res1  = bt.subsets5(nums1);
+    string word = "word";
+    res = bt.generateAbbreviations(word);
+
     i=0;
 }

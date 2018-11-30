@@ -504,6 +504,53 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         }
     }
 
+    vector<vector<int>> subsets4(vector<int>& nums)
+    {
+        vector<vector<int>> res;
+        if(nums.empty()) return res;
+        //vector<int> cur;
+        backtracking(nums, 0, nums.size(), res);
+        return res;
+    }
+
+    void backtracking(vector<int> nums, int start, int n, vector<vector<int>>& res)
+    {
+        if(n <= start)
+        {
+            res.push_back(nums);
+            return;
+        }
+        backtracking(nums, start+1, n, res);
+        vector<int> tmp(nums);
+        auto pos = find(tmp.begin(), tmp.end(), start+1);
+        tmp.erase(pos);
+        backtracking(tmp, start+1, n, res);
+        //nums.insert(nums.begin()+start, start+1);
+    }
+
+    vector<vector<int>> subsets5(vector<int>& nums)
+    {
+        vector<vector<int>> res;
+        if(nums.empty()) return res;
+        vector<int> cur;
+        backtracking(0, nums, cur, res);
+        return res;
+    }
+
+    void backtracking(int startIdx, vector<int>& nums, vector<int>& cur, vector<vector<int>>& res)
+    {
+        res.push_back(cur);
+        for(int i=startIdx; i<nums.size(); ++i)
+        {
+            if(cur.end() != find(cur.begin(), cur.end(), nums[i]))
+            {
+                continue;
+            }
+            cur.push_back(nums[i]);
+            backtracking(i+1, nums, cur, res);
+            cur.pop_back();
+        }
+    }
 
 
     void printVec(vector<int>& vec){
@@ -686,19 +733,22 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
 
     void helper(int n,int row, vector<string>& cur, vector<vector<string>>& res)
     {
-        /*
         if(row == n){
-            draw(pos);
+            //draw(pos);
+            res.push_back(cur);
             return;
         }
-        for(int i=0;i<n;i++){
+        for(int i=0;i<n;i++)
+        {
+            /*
             if(isValid(row,i,pos)){
-                pos[row][i] = 1;
-                helper(n,row+1,pos);
-                pos[row][i] = 0;
+                cur[row][i] = 1;
+                helper(n,row+1, cur, pos);
+                cur[row][i] = 0;
+
             }
+            */
         }
-        */
     }
 
 
@@ -825,6 +875,37 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
     }
 
     vector<int> constructArray(int n, int k) {
+
+    }
+
+    vector<string> generateAbbreviations(string &word) {
+        vector<string> res;
+        if(word.empty()) return res;
+        string cur;
+        backtracking(word, 0, 0, cur, res);
+        return res;
+    }
+
+    void backtracking(string& word, int curInx, int curAbbr, string& cur, vector<string>& res)
+    {
+        if(curInx == word.length())
+        {
+            res.push_back(cur);
+            return;
+        }
+        cur += word[curInx];
+        backtracking(word, curInx+1, 0, cur, res);
+        cur.pop_back();
+        string tmp(cur);
+        while(isdigit(cur.back())) cur.pop_back();
+        cur += to_string(++curAbbr);
+        backtracking(word, curInx+1, curAbbr, cur, res);
+        --curAbbr;
+        cur = tmp;
+    }
+
+    vector<string> generateAbbreviations1(string word)
+    {
 
     }
 };

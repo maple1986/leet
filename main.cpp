@@ -28,7 +28,7 @@ int main()
 
     //TwoPointer::test();
     //binarySearchRel::test();
-    sortrel::test();
+    //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
 
@@ -47,7 +47,7 @@ int main()
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    //backtrack::test();
+    backtrack::test();
     //DFS::test();
     //BalanceTree::test();
     //hashRel::test();
