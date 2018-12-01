@@ -173,6 +173,59 @@ public:
         return 0;
       }
 
+    vector<string> wordsAbbreviation(vector<string> &dict)
+    {
+        // write your code here
+        unordered_map<string, vector<pair<int, string>>> abbrs;
+        for(int i=0; i<dict.size(); ++i)
+        {
+            string cur = dict[i];
+            if(cur.length() > 3)
+            {
+                cur = cur.front() + to_string(cur.length()-2) + cur.back();
+            }
+            abbrs[cur].emplace_back(i, dict[i]);
+        }
+        resolveConflict(abbrs);
+        vector<string> res;
+        for(int i=0; i<dict.size(); ++i)
+        {
+            string cur = dict[i];
+            if(cur.length() > 3)
+            {
+                cur = cur.front() + to_string(cur.length()-2) + cur.back();
+            }
+            if(abbrs[cur].size() == 1)
+            {
+                res.emplace_back(cur);
+            }
+            else
+            {
+                //vector<pair<int, string>>& conflicts = abbrs[cur];
+            }
+        }
+    }
+
+    void resolveConflict(unordered_map<string, vector<pair<int, string>>>& abbrs)
+    {
+        for(auto abbr : abbrs)
+        {
+            if(abbr.second.size() == 1)
+            {
+                continue;
+            }
+            else
+            {
+                vector<int> pre;
+            }
+        }
+    }
+
+    vector<string> wordsAbbreviation1(vector<string> &dict)
+    {
+
+    }
+
 };
 
 
