@@ -242,6 +242,7 @@ public:
 
     }
 
+    unordered_set<string> _visited;
     vector<double> calcEquation(vector<pair<string, string>> equations,\
                                 vector<double>& values, vector<pair<string, string>> queries)
     {
@@ -249,21 +250,44 @@ public:
         for(int i=0; i < equations.size(); ++i)
         {
             graph[equations[i].first].push_back(make_pair(equations[i].second, values[i]));
+            graph[equations[i].second].push_back(make_pair(equations[i].first, 1.f/values[i]));
         }
         vector<double> res;
+
         for(const auto& query : queries)
         {
-            double cur = 0.f;
-            bfs(query.first, query.second, graph, cur);
-            res.push_back(cur);
+            if(!(graph.count(query.first) && graph.count(query.second)))
+            {
+                res.push_back(-1.f);
+                continue;
+            }
+            _visited.clear();
+            double cur = 1.f;
+            if(dfs(query.first, query.second, graph, cur))
+                res.push_back(cur);
+            else res.push_back(-1.f);
         }
         return res;
     }
 
-    void bfs(string start, string end,\
+    bool dfs(string start, string end,\
              unordered_map<string, vector<pair<string, double>>>&graph, double& cur)
     {
-        //if()
+        if(start == end)
+        {
+            return true;
+        }
+        _visited.insert(start);
+        for(auto& v : graph[start])
+        {
+            if(_visited.count(v.first)) continue;
+            cur *= v.second;
+            _visited.insert(v.first);
+            if(dfs(v.first, end, graph, cur)) return true;
+            _visited.erase(v.first);
+            cur /= v.second;
+        }
+        return false;
     }
 
     int coinChange(vector<int>& coins, int amount)
@@ -332,6 +356,152 @@ public:
         dfs(image, x, y+1, x0, x1, y0, y1);
     }
 
+    int findCircleNum(vector<vector<int>>& M) {
+        int n = M.size();
+        if(1 == n) return n;
+        int res = 0;
+        unordered_set<int> seen;
+        for(int i=0; i<n; ++i)
+        {
+            if(seen.count(i))
+            {
+                continue;
+            }
+            seen.insert(i);
+            dfs(M, i, n, seen);
+            res++;
+        }
+        return res;
+    }
+
+    void dfs(vector<vector<int>>& M, int i, int n, unordered_set<int>& seen)
+    {
+        if(i < 0 || i >= n)
+        {
+            return;
+        }
+        for(int j=0; j<n; ++j)
+        {
+            if(M[i][j] == 1)
+            {
+                seen.insert(j);
+                dfs(M, j, n, seen);
+            }
+        }
+        return;
+    }
+
+    int findCircleNum1(vector<vector<int>>& M)
+    {
+        int n = M.size();
+        if( 1 == n ) return 1;
+        int res = 0;
+        for(int i=0; i<n; ++i)
+        {
+            if(_seen.count(i)) continue;
+            dfs(M, i, n);
+            res++;
+        }
+        return res;
+    }
+
+    void dfs(vector<vector<int> > &M, int i, int n)
+    {
+        for(int j=0; j<n; ++j)
+        {
+            if(j == i) continue;
+            if(_seen.count(j)) continue;
+            if(M[i][j] == 1)
+            {
+                _seen.insert(j);
+                dfs(M, j, n);
+            }
+        }
+        return;
+    }
+
+    unordered_set<int> _seen;
+
+    vector<string> binaryTreePaths3(TreeNode* root)
+    {
+        vector<string> res;
+        if(!root) return res;
+        string prefix = to_string(root->val);
+        dfs(prefix, root->left, res);
+        dfs(prefix, root->right, res);
+        return res;
+    }
+
+    void dfs(string& prefix, TreeNode* node, vector<string>& res)
+    {
+        if(!node) return;
+        if(!node->left && !node->right)
+        {
+            res.push_back(prefix+"->"+to_string(node->val));
+            return;
+        }
+        int pos = prefix.length();
+        prefix = prefix + "->"+to_string(node->val);
+        dfs(prefix, node->left, res);
+        dfs(prefix, node->right, res);
+        prefix = prefix.substr(0, pos-1);
+    }
+
+    void binaryTreePaths(TreeNode* root, string s, vector<string>& res) {
+
+        if (!root)
+            return;
+
+        if (!s.empty())
+            s += "->";
+
+        s += to_string(root->val);
+
+        if (!root->left && !root->right) {
+            res.push_back(s);
+            return;
+        }
+
+        binaryTreePaths(root->left, s, res);
+        binaryTreePaths(root->right, s, res);
+    }
+
+    vector<string> binaryTreePaths2(TreeNode* root) {
+        vector<string> res;
+        binaryTreePaths(root, "", res);
+        return res;
+    }
+
+    int numSquares(int n) {
+        int maxN = sqrt(n);
+        int res  = n;
+        int cur  = 0;
+        dfs(maxN, n, cur, res);
+        return res;
+    }
+
+    void dfs(int maxN, int target, int& cur, int& res)
+    {
+        if(target == 0)
+        {
+            res = min(cur, res);
+            return;
+        }
+        for(int i= maxN; i>=1; --i)
+        {
+            if(target - maxN*maxN < 0) continue;
+            target = target - maxN*maxN;
+            ++cur;
+            dfs(maxN, target, cur, res);
+            --cur;
+            target += maxN*maxN;
+        }
+    }
+
+    int numSquares_bfs(int n)
+    {
+
+    }
 };
 
 #endif // DFS_H

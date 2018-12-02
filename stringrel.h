@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <set>
+#include <sstream>
 
 using namespace std;
 
@@ -111,34 +112,76 @@ public:
         return bs.count() < 2;
     }
 
-    void countOfAtoms(map<string, int>& res, string& formula, int& i)
+    map<string, int> countOfAtoms(string& formula, int& pos)
     {
-
-        while(i < formula.size())
+        map<string, int> res;
+        while(pos < formula.length())
         {
-            if(formula[i] == '(')
+            if(formula[pos] == '(')
             {
-                countOfAtoms(res, formula, ++i);
+                map<string, int> tmp = countOfAtoms(formula, ++pos);
+                int count = getCount(formula, pos);
+                for(auto& atom : tmp)
+                {
+                    atom.second *= count;
+                    res[atom.first] += atom.second;
+                }
             }
-            else if(formula[i] == ')')
+            else if(formula[pos] == ')')
             {
-
+                //int count = getCount(formula, ++pos);
+                pos++;
+                return res;
+            }
+            else
+            {
+                string name = getName(formula, pos);
+                int count = getCount(formula, pos);
+                res[name] += count;
             }
         }
+        return res;
     }
 
     string countOfAtoms(string formula)
     {
         map<string, int> res;
         string ans;
-        /*
-        countOfAtoms(res, formula, 0);
+        int pos = 0;
+        res = countOfAtoms(formula, pos);
         for(auto v : res)
         {
-            ans += v->first + ":" + to_string(v->second);
+            ans += v.first + to_string(v.second);
         }
-        */
         return ans;
+    }
+
+    string getName(string& formula, int& pos)
+    {
+        string name;
+        if(isupper(formula[pos]))
+        {
+            name += formula[pos++];
+            while(islower(formula[pos]))
+            {
+                name += formula[pos++];
+            }
+            return name;
+        }
+        else
+        {
+            return name;
+        }
+    }
+
+    int getCount(string& formula, int& pos)
+    {
+        string count_str;
+        while(isdigit(formula[pos]))
+        {
+            count_str = formula[pos++];
+        }
+        return count_str.empty()?1:stoi(count_str);
     }
 
     bool isStrobogrammatic(string num)
@@ -795,7 +838,34 @@ public:
         return res;
     }
 
-
+    vector<string> wordSegmentation(string &s, int k)
+    {
+        // Write your code here
+        vector<string> temp;
+        istringstream sb(s);
+        string a;
+        while (sb >> a) {
+            temp.push_back(a);
+        }
+        a.clear();
+        //a = temp[0];
+        vector<string> result;
+        if(temp.empty()) return result;
+        for(int i=0; i<temp.size(); ++i)
+        {
+            if(a.size()+temp[i].size() < k)
+            {
+                a = a + " " + temp[i];
+            }
+            else
+            {
+                result.push_back(a);
+                a = temp[i];
+            }
+        }
+        result.push_back(a);
+        return result;
+    }
 
 };
 

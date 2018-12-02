@@ -1279,41 +1279,6 @@ private:
         return;
     }
 
-    int findCircleNum(vector<vector<int>>& M) {
-        int n = M.size();
-        if(1 == n) return n;
-        int res = 0;
-        unordered_set<int> seen;
-        for(int i=0; i<n; ++i)
-        {
-            if(seen.count(i))
-            {
-                continue;
-            }
-            seen.insert(i);
-            dfs(M, i, n, seen);
-            res++;
-        }
-        return res;
-    }
-
-    void dfs(vector<vector<int>>& M, int i, int n, unordered_set<int>& seen)
-    {
-        if(i < 0 || i >= n)
-        {
-            return;
-        }
-        for(int j=0; j<n; ++j)
-        {
-            if(M[i][j] == 1)
-            {
-                seen.insert(j);
-                dfs(M, j, n, seen);
-            }
-        }
-        return;
-    }
-
     int maxAreaOfIsland(vector<vector<int>>& grid)
     {
         int n = grid.size();

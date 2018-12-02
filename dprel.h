@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <map>
+#include <unordered_map>
 
 using namespace std;
 class DPRel
@@ -1038,11 +1039,37 @@ public:
     int maxLen(vector<int> &a)
     {
         if(a.size() <= 2) return a.size();
-        vector<vector<int>> dict(2, vector<int>(2, -1));
-        for(int i=1; i<a.size(); ++i)
+        unordered_map<int, int> dict;
+        int res = 0;
+        int cur = 0;
+        for(int i=0; i<a.size(); ++i)
         {
-
+            if(dict.count(a[i]))
+            {
+                dict[a[i]] = i;
+                cur++;
+            }
+            else
+            {
+                if(dict.size() < 2)
+                {
+                    dict[a[i]] = i;
+                    cur++;
+                }
+                else
+                {
+                    auto it = dict.begin();
+                    int end1 = dict.begin()->second;
+                    int end2 = (++it)->second;
+                    end1 > end2?dict.erase(it):dict.erase(dict.begin());
+                    dict[a[i]] = i;
+                    int end = end1>end2?end2:end1;
+                    cur = i- end;
+                }
+            }
+            res = max(res, cur);
         }
+        return res;
     }
 
 

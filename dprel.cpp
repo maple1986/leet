@@ -42,5 +42,7 @@ void DPRel::test()
     i = dprel.findSubstringInWraproundString("zadcd");
     vector<int> num10 = {2, 4, 5, 10};
     i = dprel.numFactoredBinaryTrees(num10);
+    vector<int> num11 = {3,2,3,1,5,2,5,1};
+    i = dprel.maxLen(num11);
     i = i+1;
 }

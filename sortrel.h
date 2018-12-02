@@ -93,6 +93,52 @@ public:
         return res;
     }
 
+    vector<Interval> merge1(vector<Interval>& intervals)
+    {
+        //vector<Interval> res;
+        if(intervals.empty()) return intervals;
+        std::sort(intervals.begin(), intervals.end(),
+                  [](const Interval& in1, const Interval& in2)
+                  {if(in1.start < in2.start) return true;
+                    else if( in1.start > in2.start)
+                        return false;
+                    else
+                        return in1.end < in2.end;});
+        //res.push_back(*intervals.begin());
+        for(int i=1; i < intervals.size()-1;)
+        {
+            /*
+            if(res.back().end >= intervals[i].end)
+            {
+                //do nothing
+            }
+            else if(res.back().end >= intervals[i].start)
+            {
+                res.back().end = intervals[i].end;
+            }
+            else
+            {
+                res.push_back(intervals[i]);
+            }
+            */
+            if(intervals[i].end >= intervals[i+1].end)
+            {
+                intervals.erase(intervals.begin()+i+1);
+            }
+            else if(intervals[i].end > intervals[i+1].start)
+            {
+                intervals[i].end = intervals[i+1].end;
+            }
+            else
+            {
+                ++i;
+            }
+        }
+        return intervals;
+    }
+
+
+
     vector<Interval> insert(vector<Interval>& intervals, Interval newInterval)
     {
         if(intervals.empty())

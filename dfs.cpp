@@ -25,6 +25,18 @@ void DFS::test()
 
     vector<vector<char>> image = {{'0','0','1','0'},{'0','1','1','0'},{'0','1','0','0'}};
     dfs.minArea(image, 0, 2);
+
+    vector<pair<string, string>> equations = {{"a","b"},{"b","c"}};
+    vector<double> values = {2.0,3.0};
+    vector<pair<string, string>> queries = {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
+
+    dfs.calcEquation(equations, values, queries);
+
+    vector<vector<int>> relation = {{1,0,0,1},{0,1,1,0},{0,1,1,1},{1,0,1,1}};
+    vector<vector<int>> relation1 = {{1,1,0},{1,1,0},{0,0,1}};
+    int i = dfs.findCircleNum1(relation);
+    i = dfs.numSquares(12);
+    i = 0;
 }
 
 bool DFS::isSameTree(TreeNode *p, TreeNode *q)

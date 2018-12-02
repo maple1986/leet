@@ -50,6 +50,38 @@ public:
     }
     unordered_set<int> _visited;
     unordered_set<int> _visiting;
+
+    bool isSentenceSimilarity(vector<string> &words1, vector<string> &words2, vector<vector<string>> &pairs) {
+        if(words1.size() != words2.size())
+        {
+            return false;
+        }
+        int n = words1.size();
+        if(n == 0) return true;
+        unordered_map<string, unordered_set<string>> graph;
+        //build graph
+        for(auto& eachpair : pairs)
+        {
+            graph[eachpair[0]].insert(eachpair[1]);
+            graph[eachpair[1]].insert(eachpair[0]);
+        }
+        for(int i=0; i<n; ++i)
+        {
+            if(words1[i] == words2[i])
+            {
+                continue;
+            }
+            if(!graph.count(words1[i]))
+            {
+                return false;
+            }
+            if(!graph[words1[i]].count(words2[i]))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
 #endif // GRAPH1_H

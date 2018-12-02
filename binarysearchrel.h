@@ -4,6 +4,9 @@
 #include <vector>
 #include <algorithm>
 #include <queue>
+#include <set>
+#include <unordered_map>
+
 using namespace std;
 class binarySearchRel
 {
@@ -408,6 +411,52 @@ public:
     {
 
     }
+
+    vector<int> minimalDistance(vector<int> &a, vector<int> &b) {
+        // Write your code here
+        set<int> source(a.begin(), a.end());
+        unordered_map<int, int> dict;
+        vector<int> res;
+        /*
+        for(b)
+        {
+            find in dict;
+            find;
+            insert to dict;
+            arrange the result;
+        }
+        */
+        for(int num : b)
+        {
+            if(dict.count(num))
+            {
+
+                //continue;
+            }
+            else
+            {
+                auto it = source.lower_bound(num);
+                if(it == source.begin())
+                {
+                    dict[num] = *it;
+                }
+                else if(it == source.end())
+                {
+                    dict[num] = *(--it);
+                }
+                else
+                {
+                    int cand1 = *it;
+                    int cand2 = *(--it);
+                    dict[num] = cand1-num >= num-cand2?cand2:cand1;
+                }
+            }
+            res.push_back(dict[num]);
+        }
+
+        return res;
+    }
+
 };
 
 #endif // BINARYSEARCHREL_H
