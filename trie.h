@@ -9,30 +9,78 @@ using namespace std;
 
 class TrieNode
 {
-    TrieNode(){}
+public:
+    TrieNode():_children(26, NULL),_is_word(false)
+    {
 
+    }
+
+    ~TrieNode()
+    {
+        for(TrieNode* child : _children)
+        {
+            if(child) delete child;
+        }
+    }
+
+    bool _is_word;
+    //char _value;
+    vector<TrieNode*> _children;
 };
 
 class Trie {
 public:
     /** Initialize your data structure here. */
-    Trie() {
+    Trie():_root(new TrieNode){
 
     }
-
+    ~Trie()
+    {
+        if(_root) delete _root;
+    }
     /** Inserts a word into the trie. */
     void insert(string word) {
-
+        TrieNode* p = _root;
+        for(char c : word)
+        {
+            if(!p->_children[c-'a'])
+            {
+                p->_children[c-'a'] = new TrieNode;
+            }
+            p = p->_children[c-'a'];
+        }
+        p->_is_word = true;
     }
 
     /** Returns if the word is in the trie. */
     bool search(string word) {
-
+        TrieNode* p = find(word);
+        return p && p->_is_word;
     }
 
     /** Returns if there is any word in the trie that starts with the given prefix. */
     bool startsWith(string prefix) {
+        if(find(prefix))
+            return true;
+        return false;
+    }
 
+private:
+    TrieNode* _root;
+    TrieNode* find(string word)
+    {
+        TrieNode* p = _root;
+        for(char c : word)
+        {
+            if(p->_children[c-'a'])
+                p = p->_children[c-'a'];
+            else
+            {
+                p = NULL;
+                break;
+            }
+        }
+        return p;
     }
 };
 
@@ -46,6 +94,8 @@ public:
 
 class TrieQuestion
 {
+public:
+    static void test();
     string longestWord(vector<string>& words) {
         sort(words.begin(), words.end(), [](const string& s1, const string& s2){
             if(s1.length() != s2.length())

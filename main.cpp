@@ -22,11 +22,13 @@
 #include <hashrel.h>
 #include "desgin.h"
 #include "array1.h"
+#include "trie.h"
 using namespace std;
 
 int main()
 {
-    array1::test();
+    TrieQuestion::test();
+    //array1::test();
     //TwoPointer::test();
     //binarySearchRel::test();
     //sortrel::test();
