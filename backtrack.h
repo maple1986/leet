@@ -933,6 +933,40 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
     {
 
     }
+
+    vector<string> generateParenthesis(int n)
+    {
+        vector<string> res;
+        if(n == 0) return res;
+        string cur;
+        dfs(n, n, 0, res, cur);
+        return res;
+    }
+
+    void dfs(int left, int right, int sum, vector<string>& res, string& cur)
+    {
+        if(sum < 0)
+        {
+            return;
+        }
+        if(left == 0 && right ==0 && sum ==0)
+        {
+            res.push_back(cur);
+            return;
+        }
+        if(left>0)
+        {
+            cur += "(";
+            dfs(left-1, right, sum+1, res, cur);
+            cur.pop_back();
+        }
+        if(right>0)
+        {
+            cur += ")";
+            dfs(left, right-1, sum-1, res, cur);
+            cur.pop_back();
+        }
+    }
 };
 
 #endif // BACKTRACK_H

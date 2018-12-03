@@ -21,11 +21,12 @@
 #include <twopointer.h>
 #include <hashrel.h>
 #include "desgin.h"
+#include "array1.h"
 using namespace std;
 
 int main()
 {
-
+    array1::test();
     //TwoPointer::test();
     //binarySearchRel::test();
     //sortrel::test();
@@ -48,7 +49,7 @@ int main()
     //DPRel::test();
     //NSum::test();
     //backtrack::test();
-    DFS::test();
+    //DFS::test();
     //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();

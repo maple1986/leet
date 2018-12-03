@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
+#include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,6 +13,7 @@ class array1
 {
 public:
     array1();
+    static void test();
     vector<string> findMissingRanges(vector<int> &nums, int lower, int upper)
     {
         vector<string> res;
@@ -47,6 +51,161 @@ public:
         {
             return to_string(lower) + "->" + to_string(upper);
         }
+    }
+
+    void nextPermutation(vector<int>& nums)
+    {
+        if(nums.size() <= 1) return;
+        int maxNum = 0;
+        int swapLeft = nums.size()-1;
+        vector<int> lastNum(10, -1);
+        for(int i=nums.size()-1; i>=0; --i, --swapLeft)
+        {
+            maxNum = max(maxNum, nums[i]);
+            if(lastNum[nums[i]] == -1)
+            {
+                lastNum[nums[i]] = i;
+            }
+            if(maxNum > nums[i])
+            {
+                int swapRight = findSwapRight(nums[i], lastNum);
+                swap(nums[swapLeft], nums[swapRight]);
+                return;
+            }
+        }
+        sort(nums.begin(), nums.end());
+        return;
+    }
+
+    int findSwapRight(int num, vector<int>& lastNum)
+    {
+        if(num == 9)
+        {
+            return -1;
+        }
+        for(int i=num+1; i<lastNum.size(); ++i)
+        {
+            if(lastNum[i] != -1)
+            {
+                return lastNum[i];
+            }
+        }
+        return -1;
+    }
+
+    /*
+[4,1,2]
+[1,3,4,2]
+    */
+    vector<int> nextGreaterElement(vector<int>& findNums, vector<int>& nums)
+    {
+        unordered_map<int, int> indexes;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            indexes[nums[i]] = i;
+        }
+        vector<int> res(findNums.size(), -1);
+        for(int i=0; i<findNums.size(); ++i)
+        {
+            int pos = indexes[findNums[i]];
+            for(int j=pos+1; j<nums.size(); ++j)
+            {
+                if(nums[j] > findNums[i])
+                {
+                    res[i] = nums[j];
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    vector<int> nextGreaterElement_st(vector<int>& findNums, vector<int>& nums)
+    {
+        if(findNums.empty()) return {};
+        vector<int> res(findNums.size(), -1);
+        unordered_map<int, int> indexes;
+        stack<int> st;
+        for(int num : nums)
+        {
+            while(!st.empty() && st.top() < num)
+            {
+                indexes[st.top()] = num;
+                st.pop();
+            }
+            st.push(num);
+        }
+        for(int i=0; i<findNums.size(); ++i)
+        {
+            if(indexes.count(findNums[i]))
+            {
+               res[i] = indexes[findNums[i]];
+            }
+        }
+        return res;
+    }
+
+    vector<int> nextGreaterElement2(vector<int>& nums)
+    {
+        if(nums.empty()) return {};
+        vector<int> res(nums.size(), -1);
+        //unordered_map<int, int> indexes;
+        stack<pair<int,int>> st;
+        for(int i=0; i<2*nums.size(); ++i)
+        {
+            int index = i%nums.size();
+            while(!st.empty() && st.top().first < nums[index])
+            {
+                res[st.top().second] = nums[index];
+                st.pop();
+            }
+            st.push(make_pair(nums[index], index));
+        }
+
+        return res;
+    }
+
+    int nextGreaterElement(int n)
+    {
+        string str = to_string(n);
+        if(str.size() <= 1) return -1;
+        vector<int> back(10, -1);
+        for(int i=str.size()-1; i>=0; --i)
+        {
+            //maxNum = max(maxNum, nums[i]);
+            if(back[str[i]-'0'] == -1)
+            {
+                back[str[i]-'0'] = i;
+            }
+            if(i != str.size()-1 && str[i] == str[i+1])
+                continue;
+            int right = findGreater(back, str[i]-'0');
+
+            if(right != -1)
+            {
+                swap(str[i], str[right]);
+                sort(str.begin()+i+1, str.end());
+                long long res = stoll(str);
+                return res > INT_MAX? -1 : res;
+            }
+        }
+        return -1;
+    }
+
+    int findGreater(vector<int>& back, int num)
+    {
+        if(num == 9)
+        {
+            return -1;
+        }
+        for(int i=num+1; i<back.size(); ++i)
+        {
+            if(back[i] != -1)
+            {
+                return back[i];
+            }
+        }
+        return -1;
     }
 };
 

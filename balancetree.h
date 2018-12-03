@@ -1319,6 +1319,7 @@ private:
         }
         return;
     }
+
     vector<vector<int>> updateMatrix(vector<vector<int>>& matrix)
     {
         int n = matrix.size();
@@ -1341,7 +1342,7 @@ private:
                 }
                 else
                 {
-                    int distance = dfs(matrix, i, j, m, n);
+                    int distance = dfs(matrix, i, j, m, n, visited);
                     matrix[i][j] = distance;
                 }
             }
@@ -1350,7 +1351,7 @@ private:
     }
 
 
-    int dfs(vector<vector<int>>& matrix, int i, int j, int m, int n)
+    int dfs(vector<vector<int>>& matrix, int i, int j, int m, int n, vector<vector<int>>& visited)
     {
         if(i < 0 || i >= n || j < 0 || j >= m)
         {
@@ -1360,12 +1361,17 @@ private:
         {
             return 1;
         }
-        int min_distance  = 1;
+        int min_distance  = INT_MAX;
         for(int k=0; k<4; ++k)
         {
-            min_distance = min(min_distance, dfs(matrix, i+row[k], j+column[k], m, n));
+            min_distance = min(min_distance, dfs(matrix, i+row[k], j+column[k], m, n, visited));
         }
         return min_distance;
+    }
+
+    vector<vector<int>> updateMatrix2(vector<vector<int>>& matrix)
+    {
+
     }
 
     bool isSymmetric(TreeNode* root) {

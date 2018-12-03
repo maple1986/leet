@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     desgin.cpp \
     hashtable.cpp \
     graph1.cpp \
-    array1.cpp
+    array1.cpp \
+    trie.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -61,4 +62,5 @@ HEADERS += \
     desgin.h \
     hashtable.h \
     graph1.h \
-    array1.h
+    array1.h \
+    trie.h

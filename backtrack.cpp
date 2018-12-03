@@ -48,5 +48,7 @@ void backtrack::test()
     res1  = bt.subsets5(nums1);
     string word = "word";
     res = bt.generateAbbreviations(word);
+    res = bt.generateParenthesis(3);
+    //bt.nextPermutation(nums1);
     i=0;
 }
