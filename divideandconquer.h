@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdio.h>
 #include <set>
+#include <string>
 
 using namespace std;
 class DivideAndConquer
@@ -150,8 +151,39 @@ public:
 
     }
 
+    string longestCommonPrefix(vector<string>& strs)
+    {
+        int n = strs.size();
+        if(n == 0) return "";
+        if(n == 1) return strs.front();
+        return longestCommonPrefixHelper(strs, 0, strs.size()-1);
+    }
 
+    string longestCommonPrefixHelper(vector<string>& strs, int begin, int end)
+    {
+        if(begin > end) return "";
+        if(end == begin) return strs[begin];
+        int mid = begin + (end-begin)/2;
+        string left =  longestCommonPrefixHelper(strs, begin, mid);
+        string right = longestCommonPrefixHelper(strs, mid+1, end);
+        string common_pre = merge(left, right);
+        return common_pre;
+    }
 
+    string merge(string& pre1, string& pre2)
+    {
+        if(pre1.empty() || pre2.empty()) return "";
+        int index = 0;
+        while(index < min(pre1.length(), pre2.length()))
+        {
+            if(pre1[index] != pre2[index])
+            {
+                break;
+            }
+            index++;
+        }
+        return pre1.substr(0, index);
+    }
 };
 
 #endif // DIVIDEANDCONQUER_H

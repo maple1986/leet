@@ -128,4 +128,104 @@ public:
         return best;
     }
 };
+
+class WordFilter {
+public:
+    class WordFilterTrieNode
+    {
+    public:
+        WordFilterTrieNode():_children(26, NULL),max_weight(0)
+        {
+
+        }
+
+        ~WordFilterTrieNode()
+        {
+            for(WordFilterTrieNode* child : _children)
+            {
+                if(child) delete child;
+            }
+        }
+
+        int max_weight;
+        vector<WordFilterTrieNode*> _children;
+    };
+
+    WordFilter(vector<string> words) {
+        for(int i=0; i<words.size(); ++i)
+        {
+            _prefixTrie.insert(words[i], i);
+            reverse(words[i].begin(), words[i].end());
+            _suffixTrie.insert(words[i], i);
+        }
+        _max = words.size()-1;
+    }
+
+    int f(string prefix, string suffix) {
+        if(prefix.empty() && suffix.empty())
+            return _max;
+        if(prefix.empty())
+            return _suffixTrie.search(suffix);
+        if(suffix.empty())
+            return _prefixTrie.search(prefix);
+        return min(_suffixTrie.search(suffix), _prefixTrie.search(prefix));
+    }
+
+
+
+    class WordFilterTrie {
+    public:
+        /** Initialize your data structure here. */
+        WordFilterTrie():_root(new WordFilterTrieNode){
+
+        }
+        ~WordFilterTrie()
+        {
+            if(_root) delete _root;
+        }
+        /** Inserts a word into the trie. */
+        void insert(string word, int weight) {
+            WordFilterTrieNode* p = _root;
+            for(char c : word)
+            {
+                if(!p->_children[c-'a'])
+                {
+                    p->_children[c-'a'] = new WordFilterTrieNode;
+                }
+                p = p->_children[c-'a'];
+                p->max_weight = weight;
+            }
+            //p->_is_word = true;
+        }
+
+        /** Returns if the word is in the trie. */
+        int search(string word) {
+            WordFilterTrieNode* p = find(word);
+            return p?p->max_weight:-1;
+        }
+
+    private:
+        WordFilterTrieNode* _root;
+        WordFilterTrieNode* find(string word)
+        {
+            WordFilterTrieNode* p = _root;
+            for(char c : word)
+            {
+                if(p->_children[c-'a'])
+                    p = p->_children[c-'a'];
+                else
+                {
+                    p = NULL;
+                    break;
+                }
+            }
+            return p;
+        }
+    };
+private:
+    WordFilterTrie _prefixTrie;
+    WordFilterTrie _suffixTrie;
+    int _max;
+};
+
 #endif // TRIE_H
