@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <map>
 #include <unordered_map>
+#include <numeric>
 
 using namespace std;
 class DPRel

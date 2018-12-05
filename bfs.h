@@ -100,12 +100,40 @@ public:
         //q.push();
     }
 
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K)
-    {
-        //queue<pair<int, int>> q;
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        unordered_map<int, vector<pair<int, int>>> graph;
+        for(const auto& flight : flights)
+        {
+            graph[flight[0]].emplace_back(flight[1], flight[2]);
+        }
 
+        int res = INT_MAX;
+        queue<pair<int, int>> q;
+        q.push({src, 0});
+        int steps = 0;
+        while(!q.empty())
+        {
+            int size = q.size();
+            while(size--)
+            {
+                int cur  = q.front().first;
+                int cost = q.front().second;
+                if(cur == dst)
+                {
+                    res = min(res, cost);
+                }
+
+                for(const auto& p : graph[cur])
+                {
+                    if(cost + p.second > res) continue;
+                    q.push({p.first, cost+p.second});
+                }
+            }
+            if(steps++ > K) break;
+        }
+        return res == INT_MAX?-1:res;
     }
-
+    /*
     void bfs(int src, int dst, int K, )
     {
         if(src == dst)
@@ -113,6 +141,7 @@ public:
             return;
         }
     }
+    */
 };
 
 #endif // BFS_H

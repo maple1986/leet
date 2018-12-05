@@ -9,6 +9,7 @@
 #include <iostream>
 #include <bitset>
 #include <algorithm>
+#include <numeric>
 
 using namespace std;
 class backtrack

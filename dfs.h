@@ -6,6 +6,7 @@
 #include <string>
 #include <set>
 #include <unordered_map>
+#include <math.h>
 #include "balancetree.h"
 using namespace std;
 
