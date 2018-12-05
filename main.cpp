@@ -27,7 +27,7 @@ using namespace std;
 
 int main()
 {
-    TrieQuestion::test();
+    //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
     //binarySearchRel::test();
@@ -48,7 +48,7 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
+    DPRel::test();
     //NSum::test();
     //backtrack::test();
     //DFS::test();

@@ -143,6 +143,58 @@ public:
         return dp[i-1]>0?dp[i-1]:0;
     }
 
+    //"cbbd"
+
+    string longestPalindrome(string s)
+    {
+        int n = s.size();
+        if(n <= 1) return s;
+        int res = 1;
+        int left  = 0;
+        int right = 0;
+        vector<vector<int>> dp(n, vector<int>(n, 0));
+        for(int l=1; l<=n; ++l)
+        {
+            for(int i=0; i+l<=n; ++i)
+            {
+                int j =l+i-1;
+                if(i == j)
+                {
+                    dp[i][j] = 1;
+                    continue;
+                }
+                if(i+1 == j)
+                {
+                    dp[i][j] = (s[i]==s[j]?2:0);
+                    continue;
+                }
+                if(s[i] == s[j] && dp[i+1][j-1])
+                {
+                    dp[i][j] = dp[i+1][j-1]+2;
+                }
+                else
+                {
+                    dp[i][j] = 0;
+                }
+            }
+        }
+
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(res < dp[i][j])
+                {
+                    left = i;
+                    right = j;
+                    res = dp[i][j];
+                }
+            }
+        }
+
+        return s.substr(left, right-left+1);
+    }
+
     int longestPalindromeSubseq(string s)
     {
         int n = s.size();

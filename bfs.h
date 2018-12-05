@@ -76,9 +76,43 @@ public:
 
     int islandPerimeter(vector<vector<int>>& grid)
     {
+        if (grid.empty() || grid[0].empty()) return 0;
+        int m = grid.size(), n = grid[0].size(), res = 0;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(grid[i][j] == 0) continue;
+                res += 4;
+                if(i>0   && grid[i-1][j] == 1) res--;
+                if(i<m-1 && grid[i+1][j] == 1) res--;
+                if(j>0 && grid[i][j-1] == 1) res--;
+                if(j<n-1 && grid[i][j+1] == 1) res--;
+            }
+        }
+        return res;
+    }
+
+    int shortestPathLength(vector<vector<int>>& graph)
+    {
+
+        //queue<int> q;
+        //q.push();
+    }
+
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K)
+    {
+        //queue<pair<int, int>> q;
 
     }
 
+    void bfs(int src, int dst, int K, )
+    {
+        if(src == dst)
+        {
+            return;
+        }
+    }
 };
 
 #endif // BFS_H
