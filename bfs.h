@@ -133,15 +133,11 @@ public:
         }
         return res == INT_MAX?-1:res;
     }
-    /*
-    void bfs(int src, int dst, int K, )
+
+    int shortestBridge(vector<vector<int>>& A)
     {
-        if(src == dst)
-        {
-            return;
-        }
+
     }
-    */
 };
 
 #endif // BFS_H

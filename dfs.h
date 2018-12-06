@@ -503,6 +503,42 @@ public:
     {
 
     }
+
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K)
+    {
+        for(const auto& flight : flights)
+        {
+            _flightGraph[flight[0]].emplace_back(flight[1], flight[2]);
+        }
+        _findCheapestPriceVisited.assign(n, 0);
+        int res = INT_MAX;
+        _findCheapestPriceVisited[src] = 1;
+        dfs(src, dst, 0, K+1, res);
+        return res==INT_MAX?-1:res;
+    }
+
+    void dfs(int cur, int dst, int cost, int remainSteps, int& minCost)
+    {
+        if(cur == dst)
+        {
+            minCost = min(minCost, cost);
+            return;
+        }
+        if(remainSteps == 0) return;
+
+        for(const auto& e: _flightGraph[cur])
+        {
+            int next = e.first;
+            int nextCost = e.second;
+            if(cost + nextCost > minCost) continue;
+            if(_findCheapestPriceVisited[next]) continue;
+            _findCheapestPriceVisited[next] = 1;
+            dfs(next, dst, cost+nextCost, remainSteps-1, minCost);
+            _findCheapestPriceVisited[next] = 0;
+        }
+    }
+    unordered_map<int, vector<pair<int, int>>> _flightGraph;
+    vector<int> _findCheapestPriceVisited;
 };
 
 #endif // DFS_H

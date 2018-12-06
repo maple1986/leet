@@ -184,6 +184,22 @@ public:
         }
         return pre1.substr(0, index);
     }
+
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+        bool odd = (m+n)%2;
+        if(0 == m)
+        {
+            return odd?nums2[nums2.size()/2]:nums2[nums2.size()/2];
+        }
+        if(0 == n)
+        {
+
+        }
+
+    }
 };
 
 #endif // DIVIDEANDCONQUER_H

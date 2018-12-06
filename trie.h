@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_set>
+#include <unordered_map>
 using namespace std;
 
 class TrieNode
@@ -134,34 +135,37 @@ public:
     class WordFilterTrieNode
     {
     public:
-        WordFilterTrieNode():_children(26, NULL),max_weight(0)
+        WordFilterTrieNode(int value):_value(value)
         {
 
         }
 
         ~WordFilterTrieNode()
         {
+            /*
             for(WordFilterTrieNode* child : _children)
             {
                 if(child) delete child;
             }
+            */
         }
 
-        int max_weight;
-        vector<WordFilterTrieNode*> _children;
+        int _value;
+        unordered_map<string, WordFilterTrieNode*> _children;
     };
 
     WordFilter(vector<string> words) {
         for(int i=0; i<words.size(); ++i)
         {
             _prefixTrie.insert(words[i], i);
-            reverse(words[i].begin(), words[i].end());
-            _suffixTrie.insert(words[i], i);
+            //reverse(words[i].begin(), words[i].end());
+            //_suffixTrie.insert(words[i], i);
         }
         _max = words.size()-1;
     }
 
     int f(string prefix, string suffix) {
+        /*
         if(prefix.empty() && suffix.empty())
             return _max;
         if(prefix.empty())
@@ -169,6 +173,8 @@ public:
         if(suffix.empty())
             return _prefixTrie.search(prefix);
         return min(_suffixTrie.search(suffix), _prefixTrie.search(prefix));
+        */
+        return 0;
     }
 
 
@@ -176,7 +182,8 @@ public:
     class WordFilterTrie {
     public:
         /** Initialize your data structure here. */
-        WordFilterTrie():_root(new WordFilterTrieNode){
+        WordFilterTrie():_root(new WordFilterTrieNode(0))
+        {
 
         }
         ~WordFilterTrie()
@@ -186,31 +193,36 @@ public:
         /** Inserts a word into the trie. */
         void insert(string word, int weight) {
             WordFilterTrieNode* p = _root;
-            for(char c : word)
+            /*
+            for(int i=0, j=word.size()-1; i<word.size()-1; i++, j--);
             {
-                if(!p->_children[c-'a'])
+                if(!p->_children[make_pair(i, j)])
                 {
-                    p->_children[c-'a'] = new WordFilterTrieNode;
+                    p->_children[make_pair(i, j)] = new WordFilterTrieNode(weight);
                 }
-                p = p->_children[c-'a'];
-                p->max_weight = weight;
+                p->_children[make_pair(i, j)]->_value = weight;
+                p = p->_children[make_pair(i, j)];
             }
-            //p->_is_word = true;
+            */
         }
 
         /** Returns if the word is in the trie. */
-        int search(string word) {
-            WordFilterTrieNode* p = find(word);
-            return p?p->max_weight:-1;
+        int search(string prefix, string suffix) {
+            WordFilterTrieNode* p = find(prefix, suffix);
+            return p?p->_value:-1;
         }
 
     private:
         WordFilterTrieNode* _root;
-        WordFilterTrieNode* find(string word)
+        WordFilterTrieNode* find(string prefix, string suffix)
         {
             WordFilterTrieNode* p = _root;
-            for(char c : word)
+            if(prefix.empty() && suffix.empty()) return _root;
+            int length = max(prefix.length(), suffix.length());
+            /*
+            while()
             {
+                char pre = length>prefix.length()
                 if(p->_children[c-'a'])
                     p = p->_children[c-'a'];
                 else
@@ -219,12 +231,12 @@ public:
                     break;
                 }
             }
+            */
             return p;
         }
     };
 private:
     WordFilterTrie _prefixTrie;
-    WordFilterTrie _suffixTrie;
     int _max;
 };
 
