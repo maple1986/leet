@@ -146,11 +146,6 @@ public:
 
     }
 
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
-    {
-
-    }
-
     string longestCommonPrefix(vector<string>& strs)
     {
         int n = strs.size();
@@ -189,16 +184,34 @@ public:
     {
         int m = nums1.size();
         int n = nums2.size();
-        bool odd = (m+n)%2;
+        //bool odd = (m+n)%2;
+        int total = m+n;
         if(0 == m)
         {
-            return odd?nums2[nums2.size()/2]:nums2[nums2.size()/2];
+            if(total%2)
+            {
+                return nums2[total/2];
+            }
+            else {
+                int median1 = nums2[total/2];
+                int median2 = nums2[total/2-1];
+                return static_cast<double>(median1)/static_cast<double>(median2);
+            }
         }
         if(0 == n)
         {
-
+            if(total%2)
+            {
+                return nums1[total/2];
+            }
+            else {
+                int median1 = nums1[total/2];
+                int median2 = nums1[total/2-1];
+                return static_cast<double>(median1)/static_cast<double>(median2);
+            }
         }
 
+        return 0.f;
     }
 };
 
