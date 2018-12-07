@@ -28,4 +28,8 @@ void sortrel::test()
     vector<int> nums1 = {1,7,11};
     vector<int> nums2 = {2,4,6};
     sortl.kSmallestPairs1(nums1, nums2, 3);
+    vector<int> nums3 = { 61, 17, 29, 22, 34, 60, 72, 21, 50, 1, 62 };
+    sortl.bubbleSort(nums3);
+
+    int i = 0;
 }

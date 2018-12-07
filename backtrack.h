@@ -968,6 +968,44 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
             cur.pop_back();
         }
     }
+
+    vector<vector<string>> partition(string s)
+    {
+        vector<vector<string>> res;
+        vector<string> cur;
+        dfs(s, 0, cur, res);
+        return res;
+    }
+
+    void dfs(string& s, int start, vector<string>& cur, vector<vector<string>>& res)
+    {
+        if(start >= s.length())
+        {
+            res.push_back(cur);
+            return;
+        }
+        for(int len=1; len<=s.length()-start; ++len)
+        {
+            string str = s.substr(start, len);
+            if(!isPalindrome(str)) continue;
+            cur.push_back(str);
+            dfs(s, start+len, cur, res);
+            cur.pop_back();
+        }
+
+    }
+
+    bool isPalindrome(string& s)
+    {
+        int len = s.length();
+        if(0 == len) return true;
+        int l = 0, r = len-1;
+        while(l < r)
+        {
+            if(s[l++] != s[r--]) return false;
+        }
+        return true;
+    }
 };
 
 #endif // BACKTRACK_H

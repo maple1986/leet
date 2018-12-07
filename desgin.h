@@ -172,4 +172,6 @@ private:
     queue<pair<vector<int>::iterator, vector<int>::iterator>> q;
     vector<vector<int>> _vecs;
 };
+
+
 #endif // DESGIN_H

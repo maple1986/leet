@@ -179,40 +179,6 @@ public:
         }
         return pre1.substr(0, index);
     }
-
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
-    {
-        int m = nums1.size();
-        int n = nums2.size();
-        //bool odd = (m+n)%2;
-        int total = m+n;
-        if(0 == m)
-        {
-            if(total%2)
-            {
-                return nums2[total/2];
-            }
-            else {
-                int median1 = nums2[total/2];
-                int median2 = nums2[total/2-1];
-                return static_cast<double>(median1)/static_cast<double>(median2);
-            }
-        }
-        if(0 == n)
-        {
-            if(total%2)
-            {
-                return nums1[total/2];
-            }
-            else {
-                int median1 = nums1[total/2];
-                int median2 = nums1[total/2-1];
-                return static_cast<double>(median1)/static_cast<double>(median2);
-            }
-        }
-
-        return 0.f;
-    }
 };
 
 #endif // DIVIDEANDCONQUER_H

@@ -50,5 +50,8 @@ void backtrack::test()
     res = bt.generateAbbreviations(word);
     res = bt.generateParenthesis(3);
     //bt.nextPermutation(nums1);
+    string s = "abcd";
+    vector<vector<string>> res2 = bt.partition(s);
+
     i=0;
 }

@@ -395,6 +395,20 @@ public:
         return res;
     }
 
+    vector<int> bubbleSort(vector<int>& nums)
+    {
+        if(nums.size() < 2) return nums;
+        for(int len = nums.size(); len > 1; len--)
+        {
+            for(int i=0; i<len-1; ++i)
+            {
+                if(nums[i] > nums[i+1])
+                    swap(nums[i], nums[i+1]);
+            }
+        }
+        return nums;
+    }
+
 };
 
 #endif // SORTREL_H

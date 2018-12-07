@@ -457,6 +457,46 @@ public:
         return res;
     }
 
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+        if(m > n) return findMedianSortedArrays(nums2, nums1);
+        int total = m+n;
+        if(0 == m)
+        {
+            if(total%2)
+            {
+                return nums2[total/2];
+            }
+            else {
+                int median1 = nums2[total/2];
+                int median2 = nums2[total/2-1];
+                return static_cast<double>(median1)/static_cast<double>(median2);
+            }
+        }
+        int l = 0, r = m-1;
+        int k = (total+1)/2, m1 = 0, m2 = k;
+        while(l <= r)
+        {
+            m1 = l + (r-l)/2;
+            m2 = k - m1;
+            if(nums1[m1] < nums2[m2])
+            {
+                l = m1+1;
+            }
+            else if(nums1[m1] > nums2[m2])
+            {
+                r = m1-1;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+    }
+
 };
 
 #endif // BINARYSEARCHREL_H
