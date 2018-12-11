@@ -539,6 +539,96 @@ public:
     }
     unordered_map<int, vector<pair<int, int>>> _flightGraph;
     vector<int> _findCheapestPriceVisited;
+
+    int maxVacationDays(vector<vector<int>> &flights, vector<vector<int>> &days) {
+        // Write your code here
+        for(int i=0; i<flights.size(); ++i)
+        {
+            for(int j=0; j<flights[i].size(); ++j)
+            {
+                if(flights[i][j] == 1)
+                {
+                    _flights[i].emplace_back(j);
+                }
+            }
+        }
+        int res = 0;
+        int cur = 0;
+        dfs(0, 0, days, cur, res);
+        for(int dst : _flights[0])
+        {
+            cur += days[dst][0];
+            dfs(dst, 1, days, cur, res);
+            cur -= days[dst][0];
+        }
+        return res;
+    }
+
+    void dfs(int start, int week, vector<vector<int>>& days, int cur, int& res)
+    {
+        if(week == days[0].size())
+        {
+            res = max(res, cur);
+            return;
+        }
+        cur += days[start][week];
+        dfs(start, week+1, days, cur, res);
+        cur -= days[start][week];
+        for(int dst : _flights[start])
+        {
+            cur += days[dst][week];
+            dfs(dst, week+1, days, cur, res);
+            cur -= days[dst][week];
+        }
+        return;
+    }
+
+    unordered_map<int, vector<int>> _flights;
+    vector<vector<int>> _mem;
+
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.empty() || matrix[0].empty()) return 0;
+        _mem.assign(matrix.size(), vector<int>(matrix[0].size(), 0));
+        int res = 1;
+        for(int i=0; i<matrix.size(); ++i)
+        {
+            for(int j=0; j<matrix[0].size(); ++j)
+            {
+                int cur = dfs1(matrix, i, j);
+                res = max(res, cur);
+            }
+        }
+        return res;
+    }
+
+    int dfs1(vector<vector<int>>& matrix, int x, int y)
+    {
+        if(x<0||x>=matrix.size()||y<0||y>=matrix[0].size())
+        {
+            return 0;
+        }
+        if(_mem[x][y] > 0) return _mem[x][y];
+        /*
+        if(matrix[x][y] <= matrix[x+1][y] && matrix[x][y] <= matrix[x-1][y] && matrix[x][y] <= matrix[x][y-1] && matrix[x][y] <= matrix[x][y+1])
+        {
+            return 1;
+        }
+        */
+        int ans = 1;
+        if(x+1<matrix.size() && matrix[x][y] > matrix[x+1][y])
+            ans = max(ans, dfs1(matrix, x+1, y)+1);
+        if(x-1 >=0 &&matrix[x][y] > matrix[x-1][y])
+            ans = max(ans, dfs1(matrix, x-1, y)+1);
+        if(y-1 >=0 &&matrix[x][y] > matrix[x][y-1])
+            ans = max(ans, dfs1(matrix, x, y-1)+1);
+        if(y+1 <matrix[0].size() &&matrix[x][y] > matrix[x][y+1])
+            ans = max(ans, dfs1(matrix, x, y+1)+1);
+        _mem[x][y] = ans;
+        return ans;
+    }
+
+    //vector<vector<int>> _mem;
+
 };
 
 #endif // DFS_H

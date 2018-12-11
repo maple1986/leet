@@ -45,12 +45,12 @@ int main()
 
     */
     //ListSolutions::test();
-    //MathRel::test();
+    MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    backtrack::test();
+    //backtrack::test();
     //DFS::test();
     //BalanceTree::test();
     //hashRel::test();

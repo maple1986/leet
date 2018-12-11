@@ -163,6 +163,32 @@ public:
         }
         return stoi(res);
     }
+
+    bool isRectangleCover(vector<vector<int>>& rectangles) {
+        if(rectangles.empty()) return false;
+        int xmin = INT_MAX, ymin= INT_MAX, xmax = 0, ymax = 0;
+        for(const auto& e : rectangles)
+        {
+            xmin = min(xmin, e[0]);
+            ymin = min(ymin, e[1]);
+            xmax = max(xmax, e[2]);
+            ymax = max(ymax, e[3]);
+        }
+        bool findMin = false, findMax = false;
+        for(const auto& e : rectangles)
+        {
+            if(e[0] == xmin && e[1] == ymin) findMin = true;
+            if(e[2] == xmax && e[3] == ymax) findMax = true;
+        }
+        if(!(findMin&&findMax)) return false;
+        int size = (ymax-ymin)*(xmax-xmin);
+        if(!size) return false;
+        for(const auto& e : rectangles)
+        {
+            size -= (e[3]-e[1])*(e[2]-e[0]);
+        }
+        return size == 0;
+    }
 };
 
 #endif // MATHREL_H

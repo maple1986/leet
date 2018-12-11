@@ -36,6 +36,8 @@ void DFS::test()
     vector<vector<int>> relation1 = {{1,1,0},{1,1,0},{0,0,1}};
     int i = dfs.findCircleNum1(relation);
     i = dfs.numSquares(12);
+    vector<vector<int>> matrix = {{9,9,4},{6,6,8},{2,2,1}};
+    i = dfs.longestIncreasingPath(matrix);
     i = 0;
 }
 

@@ -458,52 +458,27 @@ private:
     TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post)
     {
         int n = pre.size();
-        if(0 == n) return NULL;
-        vector<TreeNode*> treenodes;
-        treenodes.push_back(new TreeNode(pre[0]));
-        for(int i=1, j=pre.size()-2; i<pre.size(); ++i)
+        if(0 == n) return nullptr;
+        for(int i=0; i<post.size(); ++i)
         {
-            TreeNode* tmp = new TreeNode[pre[i]];
-            while(pre[i] == post[j])
-            {
-                i++;
-                j--;
-            }
-
+            _postIndex[post[i]] = i;
         }
-        return NULL;
+        return constructFromPrePostHelper(pre, 0, pre.size()-1, post, 0, post.size()-1);
     }
 
-
-    TreeNode* constructFromPrePost2(vector<int>& pre, vector<int>& post)
+    TreeNode* constructFromPrePostHelper(vector<int>& pre,int preStart,int preEnd,vector<int>& post, int postStart, int postEnd)
     {
-
+        if(preStart > preEnd) return NULL;
+        TreeNode* root = new TreeNode(pre[preStart]);
+        if(preStart == preEnd) return root;
+        int leftRootIndex = _postIndex[pre[preStart+1]];
+        int leftTreeLen   = leftRootIndex - postStart + 1;
+        root->left = constructFromPrePostHelper(pre, preStart+1, preStart+leftTreeLen, post, postStart, leftRootIndex);
+        root->right= constructFromPrePostHelper(pre, preStart+leftTreeLen+1, preEnd, post, leftRootIndex+1, postEnd-1);;
+        return root;
     }
 
-    TreeNode* constructFromPrePostHelper(vector<int>& pre, int& left, vector<int>& post)
-    {
-        if(left >= pre.size())
-        {
-            return NULL;
-        }
-
-
-        TreeNode* root = new TreeNode(pre[left]);
-        /*
-        if(pre[left] == post[right])
-        {
-            root = new TreeNode(pre[left]);
-            left++;
-            right--;
-            constructFromPrePostHelper(pre, left, post, right);
-        }
-        */
-        //else
-        //{
-
-        //}
-        return NULL;
-    }
+    unordered_map<int, int> _postIndex;
 
     vector<vector<int>> pathSumII(TreeNode* root, int sum)
     {
