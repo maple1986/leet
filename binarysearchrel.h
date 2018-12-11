@@ -494,9 +494,23 @@ public:
                 break;
             }
         }
-
     }
 
+    //Given nums = [5, 2, 6, 1]
+    //Return the array [2, 1, 1, 0].
+    vector<int> countSmaller(vector<int>& nums)
+    {
+        vector<int> sortedNums;
+        vector<int> res;
+        for(int i=nums.size()-1; i>=0; --i)
+        {
+            auto index = lower_bound(sortedNums.begin(), sortedNums.end(), nums[i]);
+            res.push_back(distance(index, sortedNums.begin()));
+            sortedNums.insert(index, nums[i]);
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
 };
 
 #endif // BINARYSEARCHREL_H

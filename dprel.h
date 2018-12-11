@@ -823,7 +823,6 @@ public:
         return max(cur1, cur2);
     }
 
-
     int lengthOfLIS(vector<int>& nums)
     {
         if(nums.empty()) return 0;

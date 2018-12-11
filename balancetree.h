@@ -455,24 +455,6 @@ private:
         return res;
     }
 
-    TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post)
-    {
-        int n = pre.size();
-        if(0 == n) return NULL;
-        vector<TreeNode*> treenodes;
-        treenodes.push_back(new TreeNode(pre[0]));
-        for(int i=1, j=pre.size()-2; i<pre.size(); ++i)
-        {
-            TreeNode* tmp = new TreeNode[pre[i]];
-            while(pre[i] == post[j])
-            {
-                i++;
-                j--;
-            }
-
-        }
-        return NULL;
-    }
 
 
     TreeNode* constructFromPrePost2(vector<int>& pre, vector<int>& post)
@@ -480,30 +462,6 @@ private:
 
     }
 
-    TreeNode* constructFromPrePostHelper(vector<int>& pre, int& left, vector<int>& post)
-    {
-        if(left >= pre.size())
-        {
-            return NULL;
-        }
-
-
-        TreeNode* root = new TreeNode(pre[left]);
-        /*
-        if(pre[left] == post[right])
-        {
-            root = new TreeNode(pre[left]);
-            left++;
-            right--;
-            constructFromPrePostHelper(pre, left, post, right);
-        }
-        */
-        //else
-        //{
-
-        //}
-        return NULL;
-    }
 
     vector<vector<int>> pathSumII(TreeNode* root, int sum)
     {
@@ -1722,6 +1680,84 @@ private:
         }
         return res;
     }
+
+    TreeNode* constructFromPrePost1(vector<int>& pre, vector<int>& post)
+    {
+        int n = pre.size();
+        for(int i=0; i<post.size(); ++i)
+        {
+            _treenode[post[i]] = i;
+        }
+        return build(pre, post, 0, n-1, n);
+    }
+
+    TreeNode* build(vector<int> &pre, vector<int> &post, int preindex, int postindex, int len)
+    {
+        if(0 == len) return NULL;
+        TreeNode* root = new TreeNode(pre[preindex]);
+        if(1 == len) return root;
+        int index = postindex;
+        for(int i=postindex; i>=0; --i)
+        {
+            if(post[i] == pre[preindex+1])
+            {
+                index = i;
+            }
+        }
+        int leftlen = postindex - index;
+        int rightlen = len - leftlen;
+        root->left = build(pre, post, preindex+1, index, leftlen);
+        root->right = build(pre, post, preindex+1+leftlen, index+1, rightlen);
+        return root;
+    }
+
+    TreeNode* build1(vector<int> &pre, vector<int> &post, int preStart, int preEnd, int postStart, int postEnd)
+    {
+        if(preStart > preEnd) return NULL;
+        TreeNode* root = new TreeNode(pre[preStart]);
+        if(preEnd == preStart) return root;
+        int leftRoot = _treenode[post[preStart+1]];
+        int leftlen = leftRoot - postStart + 1;
+        //int rightlen = preEnd - preStart - leftlen;
+        root->left = build1(pre, post, preStart+1, preStart+leftlen, postStart, leftRoot);
+        root->right = build1(pre, post, preStart+leftlen+1, preEnd, leftRoot+1, postEnd);
+        return root;
+    }
+
+    unordered_map<int, int> _treenode;
+
+    TreeNode *constructFromPrePost3(vector<int> &pre, vector<int> &post)
+    {
+        if (pre.size() == 0) return nullptr;
+        stack<TreeNode *> st;
+        TreeNode *root = new TreeNode(pre[0]);
+        st.push(root);
+        int j = 0;
+        TreeNode *node = nullptr;
+        for(int i=1;i<=pre.size();++i){
+            while (st.top()->val == post[j]) {
+                node = st.top();
+                st.pop();
+                printf("pop %d\n",node->val);
+                if(st.empty())
+                    return root;
+                if (st.top()->left == nullptr) {
+                    st.top()->left = node;
+                    printf("%d left child is %d\n", st.top()->val, node->val);
+                } else {
+                    st.top()->right = node;
+                    printf("%d right child is %d\n", st.top()->val, node->val);
+                }
+                j++;
+                printf("j: %d\n",j);
+            }
+            if (i < pre.size()){
+                st.push(new TreeNode(pre[i]));
+                printf("push %d\n",pre[i]);
+            }
+        }
+    }
+
 };
 
 #endif // BALANCETREE_H

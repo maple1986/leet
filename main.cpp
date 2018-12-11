@@ -29,7 +29,7 @@ int main()
 {
     //TrieQuestion::test();
     //array1::test();
-    //TwoPointer::test();
+    TwoPointer::test();
     //binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
@@ -50,7 +50,7 @@ int main()
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    backtrack::test();
+    //backtrack::test();
     //DFS::test();
     //BalanceTree::test();
     //hashRel::test();
