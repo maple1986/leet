@@ -31,5 +31,7 @@ void sortrel::test()
     vector<int> nums3 = { 61, 17, 29, 22, 34, 60, 72, 21, 50, 1, 62 };
     sortl.bubbleSort(nums3);
 
+    vector<int> num4 = {2,4,3,5,1};
+    sortl.reversePairs(num4);
     int i = 0;
 }

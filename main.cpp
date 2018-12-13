@@ -29,9 +29,9 @@ int main()
 {
     //TrieQuestion::test();
     //array1::test();
-    TwoPointer::test();
+    //TwoPointer::test();
     //binarySearchRel::test();
-    //sortrel::test();
+    sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
 

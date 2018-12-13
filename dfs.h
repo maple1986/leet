@@ -655,6 +655,28 @@ public:
         dp[i][j] = res;
         return res;
     }
+
+    bool validTree(int n, vector<vector<int>> &edges) {
+        if(edges.empty() && n == 1) return true;
+        if(edges.empty()) return false;
+        unordered_map<int, vector<int>> _graph;
+        for(auto& edge : edges)
+        {
+            _graph[edge[0]].push_back(edge[1]);
+            _graph[edge[1]].push_back(edge[0]);
+        }
+        for(int i=1; i<=n; ++i)
+        {
+            if(!_graph.count(i)) return false;
+        }
+        vector<int> visited(n, 0);
+        dfs(_graph, 0, visited);
+    }
+
+    void dfs()
+    {
+
+    }
 };
 
 #endif // DFS_H
