@@ -428,6 +428,54 @@ public:
     {
 
     }
+
+    int findMinArrowShots(vector<pair<int, int>>& points) {
+        if(points.empty()) return 0;
+        sort(points.begin(), points.end(), [&](pair<int, int> left, pair<int, int> right)
+        {
+            return left.second < right.second;
+        });
+        int res = 0;
+        for(int i=0; i<points.size(); ++i)
+        {
+            for(int j=0; j<points.size(); ++j)
+            {
+
+            }
+        }
+        return res;
+    }
+//[[3,9],[7,12],[3,8],[6,8],[9,10],[2,9],[0,9],[3,9],[0,6],[2,8]]
+    int findMinArrowShots2(vector<pair<int, int>>& points) {
+        if(points.empty()) return 0;
+        sort(points.begin(), points.end(), [&](pair<int, int> left, pair<int, int> right)
+        {
+            if(left.first == right.first)
+            {
+                return left.second < right.second;
+            }
+            return left.first < right.first;
+        });
+        int res = 1;
+        pair<int, int> cur = points[0];
+        for(int i=1; i<points.size(); ++i)
+        {
+            if(cur.second >= points[i].first)
+            {
+                cur.first = points[i].first;
+                if(cur.second > points[i].second)
+                {
+                    cur.second = points[i].second;
+                }
+            }
+            else
+            {
+                cur = points[i];
+                res++;
+            }
+        }
+        return res;
+    }
 };
 
 #endif // SORTREL_H

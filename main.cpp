@@ -45,7 +45,7 @@ int main()
 
     */
     //ListSolutions::test();
-    MathRel::test();
+    //MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();

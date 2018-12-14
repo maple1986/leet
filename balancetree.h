@@ -1775,6 +1775,11 @@ private:
         }
     }
 
+    string SerializeAndDe(TreeNode* root)
+    {
+
+    }
+
 };
 
 #endif // BALANCETREE_H

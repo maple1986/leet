@@ -33,5 +33,7 @@ void sortrel::test()
 
     vector<int> num4 = {2,4,3,5,1};
     sortl.reversePairs(num4);
+    vector<pair<int, int>> balls = {{9,12},{1,10},{4,11},{8,12},{3,9},{6,9},{6,7}};
+    sortl.findMinArrowShots2(balls);
     int i = 0;
 }

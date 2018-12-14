@@ -670,10 +670,10 @@ public:
             if(!_graph.count(i)) return false;
         }
         vector<int> visited(n, 0);
-        dfs(_graph, 0, visited);
+        dfs(_graph, 1, visited);
     }
 
-    void dfs()
+    void dfs(unordered_map<int, vector<int>>& graph, int cur, vector<int>& visited)
     {
 
     }
