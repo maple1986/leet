@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     hashtable.cpp \
     graph1.cpp \
     array1.cpp \
-    trie.cpp
+    trie.cpp \
+    intervalrel.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -63,4 +64,5 @@ HEADERS += \
     hashtable.h \
     graph1.h \
     array1.h \
-    trie.h
+    trie.h \
+    intervalrel.h

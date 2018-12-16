@@ -23,6 +23,7 @@
 #include "desgin.h"
 #include "array1.h"
 #include "trie.h"
+#include "intervalrel.h"
 using namespace std;
 
 int main()
@@ -31,7 +32,7 @@ int main()
     //array1::test();
     //TwoPointer::test();
     //binarySearchRel::test();
-    sortrel::test();
+    //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
 
@@ -40,10 +41,8 @@ int main()
     PowerofN::test();
     MSRA::test();
     MyAtoi::test();
-
-
-
     */
+    IntervalRel::test();
     //ListSolutions::test();
     //MathRel::test();
     //sortrel::test();
