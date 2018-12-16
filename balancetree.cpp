@@ -75,6 +75,8 @@ void BalanceTree::test()
     vector<int> pre = {1, 2, 4, 5, 3, 6, 7};
     vector<int> post = {4, 5, 2, 6, 3, 7, 1};
     bt.constructFromPrePost3(pre, post);
+    TreeNode* tree8 = bt.generateTree("[10,5,-3,3,2,null,11,3,-2,null,1]");
+    bt.pathSum32(tree8, 8);
     j = 0;
 }
 

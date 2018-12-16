@@ -42,7 +42,7 @@ int main()
     MSRA::test();
     MyAtoi::test();
     */
-    IntervalRel::test();
+    //IntervalRel::test();
     //ListSolutions::test();
     //MathRel::test();
     //sortrel::test();
@@ -51,7 +51,7 @@ int main()
     //NSum::test();
     //backtrack::test();
     //DFS::test();
-    //BalanceTree::test();
+    BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();
     return 0;

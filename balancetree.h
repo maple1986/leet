@@ -547,6 +547,55 @@ private:
     }
     */
 
+    int pathSum3(TreeNode* root, int sum) {
+        if(!root) return 0;
+        vector<int> curr;
+        curr.push_back(0);
+        int res = 0;
+        dfs(root, sum, curr, res);
+        return res;
+    }
+
+    void dfs(TreeNode*root, int sum, vector<int>& curr, int& res)
+    {
+        if(!root) return;
+
+        curr.push_back(root->val + curr.back());
+        for(int i=0; i<curr.size()-1; ++i)
+        {
+            if(curr.back()-curr[i] == sum) res++;
+        }
+
+        dfs(root->left, sum, curr, res);
+        dfs(root->right, sum, curr, res);
+        curr.pop_back();
+        return;
+    }
+
+    int pathSum32(TreeNode* root, int sum) {
+        if(!root) return 0;
+        unordered_map<int, int> prefixSum;
+        prefixSum[0]++;
+        int res = 0;
+        dfs(root, sum, 0, prefixSum, res);
+        return res;
+    }
+
+    void dfs(TreeNode*root, int sum, int pre, unordered_map<int, int>& prefixSum, int& res)
+    {
+        if(!root) return;
+        int curr = pre + root->val;
+        if(prefixSum.count(sum-curr))
+        {
+            res += prefixSum[sum-curr];
+        }
+        prefixSum[curr]++;
+        dfs(root->left, sum, curr, prefixSum, res);
+        dfs(root->right, sum, curr, prefixSum, res);
+        prefixSum[curr]--;
+        return;
+    }
+
     int kthSmallest(TreeNode* root, int k)
     {
         int lchild_count = NumofChildren(root->left);
@@ -1359,6 +1408,34 @@ private:
         if(!root1 && !root2) return true;
         if(!root1 || !root2) return false;
         return root1->val == root2->val && isMirror(root1->left, root2->right) && isMirror(root1->right, root2->left);
+    }
+
+    bool isSymmetric_it(TreeNode* root) {
+        if(!root) return true;
+
+        queue<TreeNode*> q;
+        q.push(root);
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            while(size--)
+            {
+                TreeNode* node1 =  q.front();
+                q.pop();
+                TreeNode* node2 =  q.front();
+                q.pop();
+                if(!node1 && !node2) continue;
+                if(!node1 || !node2) return false;
+                if(node1->val != node2->val)
+                    return false;
+                q.push(node1->left);
+                q.push(node2->right);
+                q.push(node1->right);
+                q.push(node2->left);
+            }
+        }
+        return true;
     }
 
     vector<int> boundaryOfBinaryTree(TreeNode* root)
