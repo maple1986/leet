@@ -91,7 +91,7 @@ public:
 #include <map>
 #include <unordered_set>
 #include <unordered_map>
-
+#include <sstream>
 using namespace std;
 
 struct TreeNode {
@@ -1775,11 +1775,50 @@ private:
         }
     }
 
-    string SerializeAndDe(TreeNode* root)
-    {
-
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res;
+        serialize(root, res);
+        return res;
     }
 
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        istringstream in(data);
+        return deserialize(in);
+    }
+
+    void serialize(TreeNode* root, string& str)
+    {
+        write(root, str);
+        if(!root) return;
+        serialize(root->left, str);
+        serialize(root->right, str);
+    }
+
+    TreeNode* deserialize(istringstream& in)
+    {
+        TreeNode* root = read(in);
+        if(!root) return root;
+        root->left = deserialize(in);
+        root->right = deserialize(in);
+        return root;
+    }
+
+    void write(TreeNode* root, string& str)
+    {
+        if(!root) str += "# ";
+        else str += to_string(root->val) + " ";
+        return;
+    }
+
+    TreeNode* read(istringstream& in)
+    {
+        string s;
+        in >> s;
+        if(s == "#") return NULL;
+        else return new TreeNode(stoi(s));
+    }
 };
 
 #endif // BALANCETREE_H
