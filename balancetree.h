@@ -1819,6 +1819,26 @@ private:
         if(s == "#") return NULL;
         else return new TreeNode(stoi(s));
     }
+
+    int longestUnivaluePath(TreeNode* root)
+    {
+        if(!root) return 0;
+        int res = 0;
+        dfs(root, INT_MAX, 0, res);
+        return res;
+    }
+
+    int dfs(TreeNode *root, int pre, int curr, int &res)
+    {
+        if(!root) return;
+        if(pre == root->val) curr++;
+
+        int left  = dfs(root->left, root->val, curr, res);
+        int right = dfs(root->right, root->val, curr, res);
+        res = max(res, left+right);
+        return curr;
+    }
+
 };
 
 #endif // BALANCETREE_H
