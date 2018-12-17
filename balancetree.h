@@ -1897,23 +1897,55 @@ private:
         else return new TreeNode(stoi(s));
     }
 
-    int longestUnivaluePath(TreeNode* root)
+    int longestUnivaluePath4(TreeNode* root)
     {
         if(!root) return 0;
+        unordered_map<TreeNode*, int> mem;
+        queue<TreeNode*> q;
+        q.push(root);
         int res = 0;
-        dfs(root, INT_MAX, 0, res);
+        while(!q.empty())
+        {
+            int size = q.size();
+            while (size--)
+            {
+                TreeNode* curr = q.front();
+                q.pop();
+                int v = 0;
+                dfs(curr, NULL, v, mem);
+                //mem[curr] = v;
+                res = max(res, v);
+                if(curr->left) q.push(curr->left);
+                if(curr->right) q.push(curr->right);
+            }
+        }
+
         return res;
     }
 
-    int dfs(TreeNode *root, int pre, int curr, int &res)
+    void dfs(TreeNode *root, int* pre, int& curr, unordered_map<TreeNode*, int>& mem)
     {
         if(!root) return;
-        if(pre == root->val) curr++;
-
-        int left  = dfs(root->left, root->val, curr, res);
-        int right = dfs(root->right, root->val, curr, res);
-        res = max(res, left+right);
-        return curr;
+        if(mem.count(root))
+        {
+            curr = mem[root];
+            return;
+        }
+        if(!pre)
+        {
+            pre = &(root->val);
+        }
+        else if(*pre == root->val)
+        {
+            curr++;
+        }
+        else
+        {
+            return;
+        }
+        dfs(root->left, pre, curr, mem);
+        dfs(root->right, pre, curr, mem);
+        return;
     }
 
 };

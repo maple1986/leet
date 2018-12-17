@@ -77,6 +77,8 @@ void BalanceTree::test()
     bt.constructFromPrePost3(pre, post);
     TreeNode* tree8 = bt.generateTree("[10,5,-3,3,2,null,11,3,-2,null,1]");
     bt.pathSum32(tree8, 8);
+    TreeNode* tree9 = bt.generateTree("[1,4,5,4,4,null,5]");
+    bt.longestUnivaluePath4(tree9);
     j = 0;
 }
 
