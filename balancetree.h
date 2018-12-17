@@ -1948,6 +1948,35 @@ private:
         return;
     }
 
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        if(!root) return {};
+        unordered_map<long, int> ids;
+        unordered_map<int, int> counts;
+        vector<TreeNode*> res;
+        getid(root, ids, counts, res);
+        return res;
+    }
+
+    int getid(TreeNode* root, unordered_map<long, int>& ids, unordered_map<int, int>& counts, vector<TreeNode*>& res)
+    {
+        if(!root) return 0;
+        long key = root->val << 32 | getid(root->left, ids, counts, res) << 16 | getid(root->right, ids, counts, res);
+        if(ids.count(key))
+        {
+            if(++counts[key] == 2)
+            {
+                res.push_back(root);
+            }
+            return ids[key];
+        }
+        else
+        {
+            int id = ids.size() + 1;
+            ids[key] = id;
+            counts[id]++;
+            return id;
+        }
+    }
 };
 
 #endif // BALANCETREE_H
