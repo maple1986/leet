@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <set>
+
 using namespace std;
 class NSum
 {
@@ -31,17 +32,70 @@ public:
         return res;
     }
 
-    vector<int> twoSum2(vector<int>& nums, int target) {
-        vector<int> res;
-        multiset<int> hashset;
+    vector<int> twoSum22(vector<int>& nums, int target)
+    {
+        unordered_map<int, int> hash;
         for(int i=0; i<nums.size(); ++i)
         {
-            hashset.insert(nums[i]);
-            //hashset[nums[i]] = i;
+            if(hash.count(target-nums[i]))
+            {
+                return {hash[target-nums[i]]+1, i+1};
+            }
+            hash[nums[i]] = i;
         }
-        return res;
+        return {};
     }
 
+    vector<int> twoSum23(vector<int>& nums, int target)
+    {
+        if(nums.empty()) return {};
+        int l = 0, r = nums.size()-1;
+        while(l < r)
+        {
+            if(nums[l] + nums[r] > target)
+            {
+                r--;
+            }
+            else if(nums[l] + nums[r] < target)
+            {
+                l++;
+            }
+            else
+            {
+                return {l+1, r+1};
+            }
+        }
+        return {};
+    }
+
+    vector<vector<int>> threeSum1(vector<int>& nums)
+    {
+        vector<vector<int>> triple;
+        if(nums.size() < 3) return {};
+        sort(nums.begin(), nums.end());
+        for(int i=0; i<nums.size(); ++i)
+        {
+            int target = -nums[i];
+
+            int l = i+1, r = nums.size()-1;
+            while(l < r)
+            {
+                if(nums[l] + nums[r] > target)
+                {
+                    r--;
+                }
+                else if(nums[l] + nums[r] < target)
+                {
+                    l++;
+                }
+                else
+                {
+                    triple.push_back({i, l, r});
+                }
+            }
+        }
+        return triple;
+    }
 
     vector<vector<int>> threeSum(vector<int>& nums)
     {
@@ -172,6 +226,30 @@ public:
             }
         }
         return count;
+    }
+
+    int threeSumSmaller(vector<int> &nums, int target)
+    {
+        // Write your code here
+        if(nums.size() < 3) return 0;
+        multimap<int, int> dict;
+        int res = 0;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            //dict[nums[i]].push_back(i);
+        }
+        for(int i=0; i<nums.size()-2; ++i)
+        {
+            for(int j=i+1; j<nums.size()-1; ++j)
+            {
+                int newTarget = target - nums[i] - nums[j];
+                if(dict.lower_bound(newTarget) != dict.begin())
+                {
+
+                }
+            }
+        }
+        return res;
     }
 };
 

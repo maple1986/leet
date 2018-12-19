@@ -4,6 +4,7 @@
 #include <set>
 #include <string>
 #include <unordered_map>
+#include <map>
 
 using namespace std;
 class TwoPointer
@@ -48,7 +49,6 @@ public:
         }
         return maxlen;
     }
-
 };
 
 #endif // TWOPOINTER_H
