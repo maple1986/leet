@@ -48,10 +48,10 @@ int main()
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
-    //NSum::test();
+    NSum::test();
     //backtrack::test();
     //DFS::test();
-    BalanceTree::test();
+    //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();
     return 0;
