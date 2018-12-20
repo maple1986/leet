@@ -1131,6 +1131,54 @@ public:
 
     vector<int> _sums;
     vector<vector<int>> m_;
+
+
+    bool wordBreak(string& s, vector<string>& wordDict)
+    {
+        if(wordDict.empty() || s.empty()) return false;
+        int n = s.size();
+        unordered_set<string> wordDictIndex(wordDict.begin(), wordDict.end());
+        vector<int> dp(n+1, 0);
+        dp[0] = 1;
+        for(int i=1; i<=n; ++i)
+        {
+            for(int j=0; j<i; ++j)
+            {
+                string s1 = s.substr(j, i-j);
+                if(wordDictIndex.count(s1) && dp[j])
+                {
+                    dp[i] = 1;
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    vector<string> wordBreak2(string s, vector<string>& wordDict) {
+        if(wordDict.empty() || s.empty()) return {};
+        int n = s.size();
+        unordered_map<string, int> wordDictIndex;
+        for(int i=0; i<wordDict.size(); ++i)
+        {
+            wordDictIndex[wordDict[i]] = i;
+        }
+        vector<vector<int>> dp(n+1, vector<int>());
+        dp[0] = {-1};
+
+        for(int i=1; i<=n; ++i)
+        {
+            for(int j=0; j<i; ++j)
+            {
+                string s1 = s.substr(j, i-j);
+                if(wordDictIndex.count(s1) && !dp[j].empty())
+                {
+                    vector<int> tmp = dp[j];
+                    for()
+                }
+            }
+        }
+        return {};
+    }
 };
 
 #endif // DPREL_H

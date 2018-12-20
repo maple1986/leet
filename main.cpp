@@ -47,8 +47,8 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
-    NSum::test();
+    DPRel::test();
+    //NSum::test();
     //backtrack::test();
     //DFS::test();
     //BalanceTree::test();

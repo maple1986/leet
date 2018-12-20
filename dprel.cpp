@@ -45,5 +45,8 @@ void DPRel::test()
     i = dprel.numFactoredBinaryTrees(num10);
     vector<int> num11 = {3,2,3,1,5,2,5,1};
     i = dprel.maxLen(num11);
+    string s1 = "leetcode";
+    vector<string> dict = {"leet", "code"};
+    i = dprel.wordBreak(s1, dict);
     i = i+1;
 }
