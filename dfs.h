@@ -677,6 +677,38 @@ public:
     {
 
     }
+
+    vector<string> wordBreak2(string s, vector<string>& wordDict) {
+        unordered_set<string> wordSearch(wordDict.begin(), wordDict.end());
+        //wordSearch[""] = {""};
+        return wordBreak(s, wordSearch);
+    }
+
+    vector<string> wordBreak(string s, unordered_set<string>& wordSearch) {
+        if(_mem1.count(s)) return _mem1[s];
+        vector<string> res;
+        for(int i = 0; i<s.size(); ++i)
+        {
+            string left = s.substr(0, i);
+            string right = s.substr(i);
+            if(wordSearch.count(right))
+            {
+                vector<string> tmp = wordBreak(left, wordSearch);
+                if(!tmp.empty())
+                {
+                    for(string & str: tmp)
+                    {
+                        str += " " + right;
+                    }
+                    res.insert(res.end(), tmp.begin(), tmp.end());
+                }
+            }
+        }
+        _mem1[s].swap(res);
+        return _mem1[s];
+    }
+
+    unordered_map<string, vector<string>> _mem1;
 };
 
 #endif // DFS_H

@@ -220,7 +220,7 @@ public:
 
     int threeSumMulti(vector<int>& A, int target) {
         if(A.size() < 3) return 0;
-        const int mod = pow(10, 9) + 7;
+        const int mod = 1e9 + 7;
         sort(A.begin(), A.end());
         unordered_map<int, int> counts;
         for(int num : A)
@@ -319,7 +319,7 @@ public:
     int threeSum2(vector<int>& nums, int target)
     {
         if(nums.size() < 3) return 0;
-        const int mod = pow(10, 9) + 7;
+        const int mod = 1e9 + 7;
         int res = 0;
         unordered_map<int, int> counts;
         for(int num : nums)

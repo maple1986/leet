@@ -368,6 +368,8 @@ int BalanceTree::ladderLength(string beginWord, string endWord, vector<string> &
     return 0;
 }
 
+
+
 int BalanceTree::ladderLength1(string beginWord, string endWord, vector<string> &wordList)
 {
     queue<string> qf;

@@ -144,6 +144,44 @@ public:
     int ladderLength1(string beginWord, string endWord, vector<string>& wordList);
     vector<vector<string> > findLadders(string beginWord, string endWord, vector<string>& wordList);
     vector<vector<string> > findLadders2(string beginWord, string endWord, vector<string>& wordList);
+
+    int ladderLength2(string beginWord, string endWord, vector<string> &wordList)
+    {
+        queue<string> q;
+        queue<string> next;
+        q.push(beginWord);
+        int step = 0;
+        while (!q.empty())
+        {
+            step++;
+            while(!q.empty())
+            {
+                string str = q.front();
+                q.pop();
+                vector<string>::iterator it = wordList.begin();
+                while(it != wordList.end())
+                {
+                    if(1 == WordGap(str, *it))
+                    {
+                        if(0 == (*it).compare(endWord))
+                        {
+                            return step;
+                        }
+                        next.push(*it);
+                        it = wordList.erase(it++);
+                    }
+                    else
+                    {
+                        it++;
+                    }
+                }
+            }
+            q = next;
+        }
+        return 0;
+    }
+
+
 private:
     int WordGap(string &left, string &right);
     StringTreeNode* generateTree(string beginWord, vector<string>& wordList);
