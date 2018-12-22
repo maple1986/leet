@@ -38,6 +38,10 @@ void DFS::test()
     i = dfs.numSquares(12);
     vector<vector<int>> matrix = {{9,9,4},{6,6,8},{2,2,1}};
     i = dfs.longestIncreasingPath(matrix);
+    vector<int> coins = {3,5,7,8,9,10,11};
+    vector<int> coins1 = {1,2,5};
+    i = dfs.coinChange(coins1, 11);
+    i = dfs.change(11, coins1);
     i = 0;
 }
 

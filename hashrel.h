@@ -225,6 +225,51 @@ public:
     {
 
     }
+
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        unordered_map<int, int> counter;
+        for(int num : nums)
+        {
+            if(counter.count(num)) continue;
+            if(!counter.count(num-1) && !counter.count(num+1))
+            {
+                counter[num] = 1;
+            }
+            else if(counter.count(num-1) && counter.count(num+1))
+            {
+                int l = counter[num-1];
+                int r = counter[num+1];
+                int n = l + r + 1;
+                counter[num-l] = n;
+                counter[num+r] = n;
+                counter[num]   = max(l, r) + 1;
+            }
+            else
+            {
+                if(counter.count(num-1))
+                {
+                    int l = counter[num-1];
+                    int n = l + 1;
+                    counter[num-l] = n;
+                    counter[num] = n;
+                }
+                else
+                {
+                    int r = counter[num+1];
+                    int n = r + 1;
+                    counter[num+r] = n;
+                    counter[num] = n;
+                }
+            }
+        }
+        int res = 1;
+        for(auto& c : counter)
+        {
+            res = max(res, c.second);
+        }
+        return res;
+    }
 };
 
 

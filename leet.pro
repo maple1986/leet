@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     graph1.cpp \
     array1.cpp \
     trie.cpp \
-    intervalrel.cpp
+    intervalrel.cpp \
+    constructrel.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -65,4 +66,5 @@ HEADERS += \
     graph1.h \
     array1.h \
     trie.h \
-    intervalrel.h
+    intervalrel.h \
+    constructrel.h

@@ -24,6 +24,7 @@
 #include "array1.h"
 #include "trie.h"
 #include "intervalrel.h"
+#include "constructrel.h"
 using namespace std;
 
 int main()
@@ -47,10 +48,11 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    DPRel::test();
+    //DPRel::test();
     //NSum::test();
     //backtrack::test();
-    //DFS::test();
+    constructRel::test();
+    DFS::test();
     //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();

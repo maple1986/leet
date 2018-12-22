@@ -189,6 +189,8 @@ public:
         }
         return size == 0;
     }
+
+
 };
 
 #endif // MATHREL_H

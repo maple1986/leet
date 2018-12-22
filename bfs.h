@@ -143,6 +143,19 @@ public:
 
     }
 
+    vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
+        unordered_map<int, vector<int>> graph;
+        for(auto & edge : edges)
+        {
+            graph[edge.first].push_back(edge.second);
+            graph[edge.second].push_back(edge.first);
+        }
+
+
+
+    }
+
+
 };
 
 #endif // BFS_H

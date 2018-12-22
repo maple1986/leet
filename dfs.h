@@ -709,6 +709,129 @@ public:
     }
 
     unordered_map<string, vector<string>> _mem1;
+
+    int change2(int amount, vector<int>& coins) {
+        if(amount == 0) return 0;
+        int res = 0;
+        sort(coins.begin(), coins.end());
+        vector<int> cur;
+        vector<vector<int>> total;
+        dfs1(coins, 0, 0, amount, res, cur, total);
+        return res;
+    }
+
+    void dfs1(vector<int>& coins, int start, int sub, int amount, int& res, vector<int>& cur, vector<vector<int>>& total)
+    {
+        if(sub > amount) return;
+        if(sub == amount)
+        {
+            res++;
+            total.push_back(cur);
+            return;
+        }
+        for(int i=start; i<coins.size(); ++i)
+        {
+            cur.push_back(coins[i]);
+            dfs1(coins, i, sub+coins[i], amount, res, cur, total);
+            cur.pop_back();
+        }
+        return;
+    }
+
+    int coinChange2(vector<int>& coins, int amount) {
+        if(amount = 0) return 1;
+        if(coins.empty()) return -1;
+        sort(coins.rbegin(), coins.rend());
+        int res = INT_MAX;
+        dfs(coins, 0, 0, amount, 0, res);
+        return res == INT_MAX?-1:res;
+    }
+
+    void dfs(vector<int>& coins, int start, int sub, int amount, int cur, int& res)
+    {
+        if(sub > amount) return;
+        if(cur >= res) return;
+        if(amount == sub)
+        {
+            res = min(res, cur);
+            return;
+        }
+        for(int i=start; i<coins.size(); ++i)
+        {
+            dfs(coins, i, sub+coins[i], amount, cur+1, res);
+        }
+        return;
+    }
+
+    int coinChange3(vector<int>& coins, int amount) {
+        if(amount == 0) return 0;
+        if(coins.empty()) return -1;
+        sort(coins.rbegin(), coins.rend());
+        int res = INT_MAX;
+        dfs2(coins, 0, amount, 0, res);
+        return res == INT_MAX?-1:res;
+    }
+
+    void dfs2(vector<int>& coins, int start, int amount, int cur, int& res)
+    {
+        if(amount == 0)
+        {
+            res = min(res, cur);
+            return;
+        }
+        if(start>=coins.size()) return;
+        if(0 > amount) return;
+        if(cur >= res) return;
+        for(int i=start; i<coins.size(); ++i)
+        {
+            int k = amount/coins[i];
+            for(int j=k; j>=0; --j)
+            {
+                dfs2(coins, i+1, amount-coins[i]*j, cur+j, res);
+            }
+        }
+        return;
+    }
+
+    int change(int amount, vector<int>& coins) {
+        if(amount == 0) return 1;
+        sort(coins.begin(), coins.end());
+        vector<vector<int>> mem(amount+1, vector<int>(coins.size(), -1));
+        //mem[0][] = 1;
+        return count(coins, 0, amount, mem);
+        //return res;
+    }
+
+    int count(vector<int>& coins, int start, int amount, vector<vector<int>>& mem)
+    {
+
+        if(amount < 0) return 0;
+        if(0 == amount)
+        {
+            return 1;
+        }
+        if(start >= coins.size())
+        {
+            return 0;
+        }
+        if(mem[amount][start] != -1) return mem[amount][start];
+        int cnt = 0;
+        for(int i=start; i<coins.size(); ++i)
+        {
+            if(coins[i] > amount) break;
+            int k = amount/coins[i];
+
+            while(k)
+            {
+                cnt += count(coins, i+1, amount-k*coins[i], mem);
+                k--;
+            }
+
+        }
+        mem[amount][start] = cnt;
+        return mem[amount][start];
+    }
+
 };
 
 #endif // DFS_H
