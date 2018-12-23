@@ -1217,7 +1217,82 @@ private:
     vector<int> findRedundantConnection(vector<vector<int>>& edges)
     {
         unordered_map<int, vector<int>> graph;
-        generateGraph(edges, graph);
+        //vector<int> visited(edges.size()+1, 0);
+        unordered_set<int> visited;
+        for(const auto& edge:edges)
+        {
+            int u = edge[0];
+            int v = edge[1];
+            if(hasConnection(graph, visited, u, v))
+            {
+                return edge;
+            }
+
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+            visited.clear();
+        }
+        return {};
+    }
+
+    bool hasConnection(unordered_map<int, vector<int>>& graph, unordered_set<int>& vistied, int u, int v)
+    {
+        if(u == v) return true;
+        if(!graph.count(u) || !graph.count(v)) return false;
+        vistied.insert(u);
+        for(int next : graph[u])
+        {
+            if(vistied.count(next)) continue;
+            if(hasConnection(graph, vistied, next, v))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //[[1,2],[1,3],[2,3]]
+    vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
+        unordered_map<int, vector<int>> graph;
+        unordered_set<int> visited;
+        int n = edges.size();
+        for(const auto& edge:edges)
+        {
+            int u = edge[0];
+            int v = edge[1];
+            graph[u].push_back(v);
+        }
+        int root = 0;
+        for(int i=1; i<=n; ++i)
+        {
+            if(!graph.count(i)) root = i;
+        }
+        if(root == 0)
+        {
+
+        }
+        queue<int> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size = q.size();
+            while(size--)
+            {
+                int cur = q.front();
+                q.pop();
+                for(int next : graph[cur])
+                {
+                    if(visited.count(next))
+                    {
+                        return { cur, next};
+                    }
+                    visited.insert(next);
+                    q.push(next);
+                }
+            }
+        }
+
+        return {};
     }
 
     TreeNode* increasingBST(TreeNode* root)

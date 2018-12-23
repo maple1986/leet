@@ -24,4 +24,7 @@ void StringRel::test()
 
     vector<int> num3 ={4,3,2,7,8,2,3,1};
     str.findDisappearedNumbers(num3);
+    string A = "abcd", B ="cdabcdab";
+    int i = str.repeatedStringMatch(A, B);
+    i = 0;
 }

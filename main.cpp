@@ -25,10 +25,12 @@
 #include "trie.h"
 #include "intervalrel.h"
 #include "constructrel.h"
+#include "graph1.h"
 using namespace std;
 
 int main()
 {
+    Graph1::test();
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
@@ -51,8 +53,8 @@ int main()
     //DPRel::test();
     //NSum::test();
     //backtrack::test();
-    constructRel::test();
-    DFS::test();
+    //constructRel::test();
+    //DFS::test();
     //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();

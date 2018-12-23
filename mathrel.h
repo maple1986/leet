@@ -6,6 +6,9 @@
 #include <vector>
 #include <string>
 #include <numeric>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
 
 using namespace std;
 class MathRel
@@ -190,6 +193,36 @@ public:
         return size == 0;
     }
 
+
+    bool isReflected(vector<vector<int>> &points) {
+        // Write your code here
+        if(points.empty()) return true;
+        unordered_map<int, unordered_set<int>> yIndices;
+        int xMin = INT_MAX;
+        int xMax = INT_MIN;
+        for(const auto& pt:points)
+        {
+            yIndices[pt[1]].insert(pt[0]);
+            xMin = min(pt[0], xMin);
+            xMax = max(pt[0], xMax);
+        }
+        int x0 = xMin + xMax;
+        auto it = yIndices.begin();
+        for(; it != yIndices.end(); ++it)
+        {
+            auto& xs = it->second;
+            auto xindex = xs.begin();
+            for(; xindex != xs.end(); ++xindex)
+            {
+                int x = *xindex;
+                if(!xs.count(x0-x))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 };
 

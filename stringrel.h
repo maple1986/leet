@@ -867,6 +867,21 @@ public:
         return result;
     }
 
+    int repeatedStringMatch(string A, string B) {
+        int m = A.size(), n = B.size();
+        int mn = m;
+        string AB = A;
+        while(mn<n)
+        {
+            AB.append(A);
+            mn += m;
+        }
+        if(string::npos != AB.find(B)) return mn/m;
+        AB.append(A);
+        if(string::npos != AB.find(B)) return mn/m+1;
+        return -1;
+    }
+
 };
 
 #endif // STRINGREL_H
