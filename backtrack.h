@@ -717,22 +717,34 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
 
     string getPermutation(int n, int k)
     {
-        /*
         if(n == 1) return "1";
-        string res("");
-        int total = 1;
-        set<int> candidates;
+        string cur, res;
+        vector<int> v(10, 0);
+        int count = 0;
+        getKth(n, k, cur, count, res, v);
+        return res;
+    }
+
+    void getKth(int n, int k, string& cur, int& count, string& res, vector<int>& v)
+    {
+        if(cur.length() == n)
+        {
+            if(++count == k)
+            {
+                res = cur;
+                return;
+            }
+        }
         for(int i=1; i<=n; ++i)
         {
-            total *= i;
-            candidates.insert(i);
+            if(v[i]) continue;
+            cur += to_string(i);
+            v[i] = 1;
+            getKth(n, k, cur, count, res, v);
+            if(!res.empty()) return;
+            v[i] = 0;
+            cur.pop_back();
         }
-        while(total)
-        {
-            total = total/
-        }
-        */
-        return "";
     }
 
     vector<string> restoreIpAddresses(string s)
