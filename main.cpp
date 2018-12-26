@@ -30,7 +30,7 @@ using namespace std;
 
 int main()
 {
-    Graph1::test();
+    //Graph1::test();
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
@@ -52,7 +52,7 @@ int main()
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    //backtrack::test();
+    backtrack::test();
     //constructRel::test();
     //DFS::test();
     //BalanceTree::test();

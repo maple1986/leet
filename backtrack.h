@@ -1018,6 +1018,73 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         }
         return true;
     }
+
+    string getPermutation1(int n, int k) {
+        if(1 == n)return "1";
+        vector<int> visited(n+1, 0);
+        string res;
+        dfs(k, n, visited, res);
+        for(int i=1; i<=n; ++i)
+        {
+            if(!visited[i])
+                res += to_string(i);
+        }
+
+        return res;
+    }
+
+    void dfs(int k, int n, vector<int>& visited, string& res)
+    {
+        if(1 == n)
+        {
+            return;
+        }
+        int fra = 1;
+        for(int i=1; i<=n-1; ++i)
+        {
+            fra *=i;
+        }
+        int cur = int(ceil(double(k)/fra));
+        cur = getKthValid(visited, cur);
+        res += to_string(cur);
+        visited[cur] = 1;
+        if(k%fra == 0)
+        {
+            dfs(fra, n-1, visited, res);
+        }
+        else
+        {
+            dfs(k%fra, n-1, visited, res);
+        }
+    }
+
+    int getKthValid(vector<int>& visited, int k)
+    {
+        for(int i=1; i<visited.size(); ++i)
+        {
+            if(!visited[i])
+            {
+                if(--k == 0)
+                {
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
+    vector<string> restoreIpAddresses(string s)
+    {
+
+    }
+
+    void split(string&s, int pos)
+    {
+        for(int pos = 0; pos<s.length()||pos<4; ++p)
+        {
+
+        }
+    }
 };
 
 #endif // BACKTRACK_H
