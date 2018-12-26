@@ -52,6 +52,6 @@ void backtrack::test()
     //bt.nextPermutation(nums1);
     string s = "abcd";
     vector<vector<string>> res2 = bt.partition(s);
-
+    s = bt.getPermutation1(3, 2);
     i=0;
 }
