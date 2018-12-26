@@ -10,6 +10,7 @@
 #include <bitset>
 #include <algorithm>
 #include <numeric>
+#include <cmath>
 
 using namespace std;
 class backtrack
@@ -746,7 +747,7 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
             cur.pop_back();
         }
     }
-
+    /*
     vector<string> restoreIpAddresses(string s)
     {
         vector<string> res;
@@ -764,7 +765,7 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         }
         //if(depth == 4 && s.)
     }
-
+    */
     vector<vector<string>> solveNQueens(int n)
     {
         vector<vector<string>> res;
@@ -1073,18 +1074,101 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return 0;
     }
 
-    vector<string> restoreIpAddresses(string s)
-    {
-
-    }
-
-    void split(string&s, int pos)
-    {
-        for(int pos = 0; pos<s.length()||pos<4; ++p)
+    bool exist(vector<vector<char>>& board, string word) {
+        if(board.empty() || board[0].empty() || word.empty()) return false;
+        int m = board.size();
+        int n = board[0].size();
+        for(int i=0; i<m; ++i)
         {
-
+            for(int j=0; j<n; ++j)
+            {
+                //if(board[i][j] == word[0])
+                //{
+                    vector<vector<int>> visited(m, vector<int>(n, 0));
+                    //visited[i][j] = 1;
+                    if(dfs(i, j, m, n, visited, word, 0, board))
+                    {
+                        return true;
+                    }
+                //}
+            }
         }
+        return false;
     }
+
+    vector<int> directions = {-1, 0, 1, 0, -1};
+
+    bool dfs(int i, int j, int m, int n, vector<vector<int>>& visited, string& word, int cur, vector<vector<char>>& board)
+    {
+        if(cur == word.size())
+        {
+            return true;
+        }
+        if(i<0 || i>=m || j<0 || j>=n || visited[i][j]) return false;
+        if(board[i][j] != word[cur]) return false;
+        visited[i][j] = 1;
+        for(int k=0; k<directions.size()-1; ++k)
+        {
+            int i0 = i+directions[k];
+            int j0 = j+directions[k+1];
+            if(dfs(i0, j0, m, n, visited, word, cur+1, board))
+            {
+                return true;
+            }
+        }
+        visited[i][j] = 0;
+        return false;
+    }
+
+    vector<string> restoreIpAddresses(string s) {
+        if(s.length()>12 || s.length()<4) return {};
+        vector<string> res;
+        string cur;
+        dfs(1, 0, s, cur, res);
+        return res;
+    }
+
+    void dfs(int depth, int start, string& s, string& cur, vector<string>& res)
+    {
+        if(start >= s.length()) return;
+        if(depth == 4)
+        {
+            string rest = s.substr(start);
+            if(validIp(rest))
+            {
+                cur += "." + rest;
+                printf("ip = %s\n", cur.c_str());
+                res.push_back(cur);
+            }
+            return;
+        }
+        for(int i=start; i<min(start+3, (int)s.length()); ++i)
+        {
+            string num = s.substr(start, i-start+1);
+            if(validIp(num))
+            {
+                int pos = cur.length();
+                if(depth != 1)
+                {
+                    cur += ".";
+                }
+                cur += num;
+                dfs(depth+1, i+1, s, cur, res);
+                cur = cur.substr(0, pos);
+            }
+        }
+        return;
+    }
+
+    bool validIp(string& s)
+    {
+        if(s.length() > 3 || s.length() < 1) return false;
+        if(s[0] == 0 && s.length()>1) return false;
+        int ip = stoi(s);
+        if(ip>=0 && ip <= 255) return true;
+        return false;
+    }
+
 };
 
 #endif // BACKTRACK_H

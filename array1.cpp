@@ -14,4 +14,6 @@ void array1::test()
     int i = 0;
     i = arr.nextGreaterElement(1999999999);
     i = 0;
+    vector<int> nums1= {1, 3, 2};
+    arr.nextPermutation1(nums1);
 }

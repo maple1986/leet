@@ -53,5 +53,12 @@ void backtrack::test()
     string s = "abcd";
     vector<vector<string>> res2 = bt.partition(s);
     s = bt.getPermutation1(3, 2);
+
+    vector<vector<char>> board = {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
+
+    string s1 = "ABCCED";
+    bool e = bt.exist(board, s1);
+    string s2 = "25525511135";
+    vector<string> res3 = bt.restoreIpAddresses(s2);
     i=0;
 }

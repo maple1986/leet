@@ -77,6 +77,37 @@ public:
         return;
     }
 
+    void nextPermutation1(vector<int>& nums) {
+        int n = nums.size();
+        if(n < 2) return;
+        int i = n-1;
+        int maxRight = -1;
+        for(; i>=0; --i)
+        {
+            maxRight = max(maxRight, nums[i]);
+            if(maxRight > nums[i])
+            {
+                break;
+            }
+        }
+        if(i < 0)
+        {
+            reverse(nums.begin(), nums.end());
+            return;
+        }
+        int j=n-1;
+        for(; j>i; --j)
+        {
+            if(nums[j]>nums[i])
+            {
+                break;
+            }
+        }
+        swap(nums[i], nums[j]);
+        reverse(nums.begin()+i+1, nums.end());
+        return;
+    }
+
     int findSwapRight(int num, vector<int>& lastNum)
     {
         if(num == 9)
