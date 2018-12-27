@@ -83,6 +83,38 @@ private:
         }
         return p;
     }
+
+    TrieNode* findwithWildChar(string word, int s)
+    {
+        TrieNode* p = _root;
+        for(int i=0; i<word.length(); ++i)
+        {
+            if(c == '.')
+            {
+                for(int j=0; j<26; ++j)
+                {
+                    if(p->_children[j])
+                    {
+                        if(findwithWildChar(word, i))
+                        {
+
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(p->_children[c-'a'])
+                    p = p->_children[c-'a'];
+                else
+                {
+                    p = NULL;
+                    break;
+                }
+            }
+        }
+        return p;
+    }
 };
 
 /**
@@ -238,6 +270,34 @@ public:
 private:
     WordFilterTrie _prefixTrie;
     int _max;
+};
+
+class WordDictionary {
+public:
+    /** Initialize your data structure here. */
+    WordDictionary() {
+        trieTree_ = new Trie();
+
+    }
+
+    /** Adds a word into the data structure. */
+    void addWord(string word) {
+        trieTree_->insert(word);
+    }
+
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    bool search(string word) {
+        if(string::npos == word.find('.'))
+        {
+            trieTree_->search(word);
+        }
+        else
+        {
+
+        }
+    }
+
+    Trie* trieTree_;
 };
 
 #endif // TRIE_H

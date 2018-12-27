@@ -1169,6 +1169,9 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return false;
     }
 
+    bool isMatch(string s, string p) {
+
+    }
 };
 
 #endif // BACKTRACK_H
