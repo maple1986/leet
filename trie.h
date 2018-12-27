@@ -84,12 +84,22 @@ private:
         return p;
     }
 
-    TrieNode* findwithWildChar(string word, int s)
+    bool findwithWildChar1(int pre, int cur, TrieNode* p, string word)
+    {
+        if(cur == word.length())
+        {
+            return p && p->_is_word;
+        }
+        return true;
+        //if(word[])
+    }
+
+    bool findwithWildChar(string word, int s)
     {
         TrieNode* p = _root;
         for(int i=0; i<word.length(); ++i)
         {
-            if(c == '.')
+            if(word[i] == '.')
             {
                 for(int j=0; j<26; ++j)
                 {
@@ -97,7 +107,7 @@ private:
                     {
                         if(findwithWildChar(word, i))
                         {
-
+                            return true;
                         }
                     }
                 }
@@ -108,12 +118,16 @@ private:
                     p = p->_children[c-'a'];
                 else
                 {
-                    p = NULL;
-                    break;
+                    return false;
                 }
             }
         }
-        return p;
+        return true;
+    }
+
+    bool bt(int s, TrieNode* p)
+    {
+        return true;
     }
 };
 
