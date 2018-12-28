@@ -1169,8 +1169,84 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
         return false;
     }
 
-    bool isMatch(string s, string p) {
+    /*
+    p:
+        while(p)
+        if(p == '.')
+            s++
+        if(p == '*')
+            for()
+              isMatch(s, p)
+        else if(p == s)
+            {
+                continue;
+            }
+        return s.empty();
+    */
 
+    bool isMatch(string s, string p) {
+        trim(p);
+        return isMatch(s, 0, p, 0);
+    }
+
+    void trim(string& p)
+    {
+        for(int i=0; i<p.length();)
+        {
+            if(i>0 && p[i] == '*' && p[i-1] == '*')
+            {
+                p.erase(p.begin()+i, p.begin()+i+1);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
+    /*
+"adceb"
+"*a*b"
+*/
+
+    bool isMatch(string s, int si, string p, int pi)
+    {
+        if(si == s.size())
+        {
+            if(pi == p.size())
+            {
+                return true;
+            }
+            else
+            {
+                while(pi<p.size() && p[pi++] == '*')
+                if(pi == p.size()) return true;
+                return false;
+            }
+        }
+        if(pi == p.size())
+        {
+            if(p[pi-1] == '*') return true;
+            return false;
+        }
+        if(p[pi] != '*')
+        {
+            if(p[pi] == s[si] || p[pi] == '?')
+            {
+                return isMatch(s, si+1, p, pi+1);
+            }
+            return false;
+        }
+        else
+        {
+            for(int i=si; i<s.size(); ++i)
+            {
+                if(isMatch(s, i, p, pi+1))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 };
 

@@ -114,8 +114,8 @@ private:
             }
             else
             {
-                if(p->_children[c-'a'])
-                    p = p->_children[c-'a'];
+                if(p->_children[word[i]-'a'])
+                    p = p->_children[word[i]-'a'];
                 else
                 {
                     return false;

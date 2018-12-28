@@ -3,11 +3,13 @@
 
 #include <vector>
 #include <string>
+#include <unordered_set>
 using namespace std;
 class BitsRel
 {
 public:
     BitsRel();
+    static void test();
     vector<vector<int>> subsets(vector<int>& nums)
     {
         vector<vector<int>> ret;
@@ -79,6 +81,24 @@ public:
         }
     }
     */
+
+    int countPrimeSetBits(int L, int R)
+    {
+        int res = 0;
+        unordered_set<int> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};
+        for(int i=L; i<=R; ++i)
+        {
+            int countOnes = 0;
+            int n = i;
+            while(n)
+            {
+                if(n&1) countOnes++;
+                n = n>>1;
+            }
+            if(primes.count(countOnes)) res++;
+        }
+        return res;
+    }
 };
 
 #endif // BITSREL_H

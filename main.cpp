@@ -26,6 +26,7 @@
 #include "intervalrel.h"
 #include "constructrel.h"
 #include "graph1.h"
+#include "bitsrel.h"
 using namespace std;
 
 int main()
@@ -38,7 +39,7 @@ int main()
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
-
+    //BitsRel::test();
     //StringRel::test();
     /*
     PowerofN::test();

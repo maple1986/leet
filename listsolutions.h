@@ -5,6 +5,7 @@
 #include <set>
 #include <stack>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 //Definition for singly-linked list.
 struct ListNode {
@@ -175,7 +176,28 @@ public:
 
     RandomListNode *copyRandomList(RandomListNode *head)
     {
-
+        if(!head) return NULL;
+        unordered_map<RandomListNode*, RandomListNode*> mp;
+        RandomListNode dummy(0);
+        RandomListNode* copy = &dummy;
+        RandomListNode* origin = head;
+        while(origin)
+        {
+            copy->next = new RandomListNode(origin->label);
+            mp[origin] = copy->next;
+            origin = origin->next;
+            copy = copy->next;
+        }
+        origin = head;
+        while(origin)
+        {
+            if(origin->random)
+            {
+                mp[origin]->random = mp[origin->random];
+            }
+            origin = origin->next;
+        }
+        return dummy.next;
     }
 
     Node* flatten(Node* head) {
@@ -557,7 +579,6 @@ public:
         while(cur->next) cur = cur->next;
         return cur;
     }
-
 };
 
 #endif // LISTSOLUTIONS_H

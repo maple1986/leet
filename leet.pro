@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     array1.cpp \
     trie.cpp \
     intervalrel.cpp \
-    constructrel.cpp
+    constructrel.cpp \
+    unionfind.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -67,4 +68,5 @@ HEADERS += \
     array1.h \
     trie.h \
     intervalrel.h \
-    constructrel.h
+    constructrel.h \
+    unionfind.h

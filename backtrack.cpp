@@ -60,5 +60,8 @@ void backtrack::test()
     bool e = bt.exist(board, s1);
     string s2 = "25525511135";
     vector<string> res3 = bt.restoreIpAddresses(s2);
+    string s3 ="babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb";
+    string s4 = "b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a";
+    e = bt.isMatch(s3, s4);
     i=0;
 }
