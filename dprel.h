@@ -1179,6 +1179,16 @@ public:
         }
         return {};
     }
+
+    int maxEnvelopes(vector<pair<int, int>>& envelopes)
+    {
+        int n = envelopes.size();
+        if(n <= 1) return n;
+    }
+
+    string encode(string &s) {
+
+    }
 };
 
 #endif // DPREL_H

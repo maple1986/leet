@@ -167,6 +167,9 @@ public:
         return true;
     }
 
+    vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
+
+    }
 };
 
 #endif // GRAPH1_H

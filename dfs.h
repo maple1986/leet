@@ -832,6 +832,30 @@ public:
         return mem[amount][start];
     }
 
+    int numberOfPatterns(int m, int n) {
+        vector<vector<int>> dp(10, vector<int>(10, 0));
+        int sum = 0;
+        for(int i=1; i<=9; ++i)
+        {
+            dp[i][i] = 1;
+            if(m == 1) sum += 9;
+        }
+        for(int i=2; i<=n; ++i)
+        {
+
+
+            for(int i=1; i<=9; ++i)
+            {
+                for(int j=i; j<=9; ++j)
+                {
+                    sum += dp[i][j];
+                }
+            }
+        }
+
+
+        return sum;
+    }
 };
 
 #endif // DFS_H

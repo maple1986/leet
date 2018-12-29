@@ -410,6 +410,10 @@ public:
         }
         return res;
     }
+
+    vector<string> wordsAbbreviation(vector<string> &dict) {
+        // write your code here
+    }
 };
 
 #endif // SORTREL_H

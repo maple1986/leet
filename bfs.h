@@ -154,8 +154,67 @@ public:
 
 
     }
+    /*
+     * Your input
+[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]
+Output
+[[0,1,0],[1,0,1],[1,1,1],[0,1,0]]
+Expected
+[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]
+    */
+    //define 0, 1, 2, 3 2 live->dead -1 dead->live
+    void gameOfLife(vector<vector<int>>& board) {
+        if(board.empty() || board[0].empty()) return;
+        int m = board.size();
+        int n = board[0].size();
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                check(board, i, j);
+            }
+        }
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(board[i][j] == 2) board[i][j] = 0;
+                if(board[i][j] == -1) board[i][j] = 1;
+            }
+        }
+        return;
+    }
 
+    vector<pair<int, int>> directions_ = {{0,1}, {0,-1},{1, 0}, {-1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
+    void check(vector<vector<int>>& board, int i, int j)
+    {
+        int surround = 0;
+        int m = board.size();
+        int n = board[0].size();
+        for(const auto& d : directions_)
+        {
+            int dx = i+d.first;
+            int dy = j+d.second;
+            if(dx>=0 && dx<m && dy>=0 && dy<n && board[dx][dy]>=1)
+                surround++;
+        }
+        if(board[i][j])
+        {
+            if(surround < 2 || surround > 3)
+            {
+                board[i][j] = 2;
+            }
+        }
+        else
+        {
+            if(surround == 3)
+            {
+                board[i][j] = -1;
+            }
+        }
+        return;
+    }
 };
 
 #endif // BFS_H
