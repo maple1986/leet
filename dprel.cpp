@@ -17,7 +17,7 @@ void DPRel::test()
     dprel.maxProfit_cooldown(nums2);
     //dprel.longestPalindromeSubseq("bbbab");
     dprel.minFlipsMonoIncr2("00110");
-
+    dprel.minFlipsMonoIncr1("00110");
     vector<int> num3 = {0,1,1,0};
     dprel.minCostClimbingStairs(num3);
 
@@ -48,5 +48,7 @@ void DPRel::test()
     string s1 = "leetcode";
     vector<string> dict = {"leet", "code"};
     i = dprel.wordBreak(s1, dict);
+    vector<vector<int>> vv1 = {{0,0,0},{0,1,0},{0,0,0}};
+    i = dprel.uniquePathsWithObstacles(vv1);
     i = i+1;
 }

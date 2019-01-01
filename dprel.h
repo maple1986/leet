@@ -1189,6 +1189,70 @@ public:
     string encode(string &s) {
 
     }
+
+    int minFlipsMonoIncr1(string S) {
+        int n = S.length();
+        if(n<=1) return 0;
+        vector<int> dp0(n+1, 0);
+        vector<int> dp1(n+1, 0);
+        //dp0[0] = S[0]-'0';
+        for(int i=0; i<n; ++i)
+        {
+            dp0[i+1] = dp0[i] + S[i] - '0';
+        }
+        //dp1[n] = '1' - S[n-1];
+        for(int i=n-1; i>=0; --i)
+        {
+            dp1[i] = dp1[i+1] + '1' - S[i];
+        }
+        int res = n;
+        for(int i=0; i<=n; ++i)
+        {
+            res = min(res, dp0[i] + dp1[i]);
+        }
+
+        return res;
+    }
+
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        if(obstacleGrid.empty() || obstacleGrid[0].empty()) return 0;
+        int n = obstacleGrid.size();
+        int m = obstacleGrid[0].size();
+        vector<vector<int>> mem(n, vector<int>(m, 0));
+        if(obstacleGrid[0][0] == 1) return 0;
+        mem[0][0] = 1;
+
+        for(int i=1; i<m; ++i)
+        {
+            if(obstacleGrid[0][i] == 1 || mem[0][i-1] == 0)
+                mem[0][i] = 0;
+            else mem[0][i] = 1;
+        }
+
+        for(int i=1; i<n; ++i)
+        {
+            if(obstacleGrid[i][0] == 1 || mem[i-1][0] == 0)
+                mem[i][0] = 0;
+            else mem[i][0] = 1;
+        }
+
+
+        for(int i=1; i<n; ++i)
+        {
+            for(int j=1; j<m; ++j)
+            {
+                if(obstacleGrid[i][j] == 0)
+                {
+                    mem[i][j] = mem[i-1][j] + mem[i][j-1];
+                }
+                else
+                {
+                    mem[i][j] = 0;
+                }
+            }
+        }
+        return mem[n-1][m-1];
+    }
 };
 
 #endif // DPREL_H
