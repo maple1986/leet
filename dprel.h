@@ -8,7 +8,7 @@
 #include <map>
 #include <unordered_map>
 #include <numeric>
-
+#include "utils.h"
 using namespace std;
 class DPRel
 {
@@ -72,13 +72,6 @@ public:
     int maxProfit(vector<int>& prices)
     {
         if(prices.empty()) return 0;
-//        int num = prices.size();
-//        auto max_it = max_element(prices.begin(), prices.end());
-//        auto min_it = max_element(prices.begin(), prices.end());
-//        if(max_it - min_it > 0)
-//        {
-//            return *max_it - *min_it;
-//        }
         vector<int> dp(prices.size(), 0);
         for(int i=1; i<prices.size(); ++i)
         {
@@ -87,8 +80,28 @@ public:
         }
         int res = *max_element(dp.begin(), dp.end());
         return res>0?res:0;
+        /*
+        if(prices.empty()) return 0;
+        //vector<int> dp(prices.size(), 0);
+        int lowest = prices[0];
+        int maxpro = 0;
+        for(int i=1; i<prices.size(); ++i)
+        {
+            //int delta = prices[i] - prices[i-1] + dp[i-1];
+            //dp[i] = delta>0?delta:0;
+            if(prices[i] > lowest)
+            {
+                maxpro = max(maxpro, prices[i]-lowest);
+            }
+            else
+            {
+                lowest = prices[i];
+            }
+        }
+        return maxpro;
+        */
     }
-    int maxProfit2(vector<int>& prices) {
+    int maxProfit12(vector<int>& prices) {
         if(prices.size() == 0) return 0;
         int result = 0;
         int cur_min = prices[0];
@@ -100,6 +113,45 @@ public:
             result = prices[i] - cur_min > result ? prices[i] - cur_min : result;
         }
         return result;
+    }
+
+    int maxProfit2(vector<int>& prices) {
+        if(prices.size() < 2) return 0;
+        int res = 0;
+        for(int i=1; i<prices.size(); ++i)
+        {
+            int delta = prices[i] - prices[i-1];
+            if(delta > 0) res += delta;
+        }
+        return res;
+    }
+
+    int maxProfit3(vector<int>& prices) {
+        if(prices.size() < 2) return 0;
+        int res = 0;
+        int k = 2;
+        int n = prices.size();
+        vector<vector<int>> profits(k+1, vector<int>(n, 0));
+        for(int i=1; i<=k; ++i)
+        {
+            for(int j=0; j<prices.size(); ++j)
+            {
+                for(int s=0; s<j; ++s)
+                {
+                    int tmp = prices[j]-prices[s]+profits[k-1][s];
+                    profits[k][j] = max(profits[k][j], tmp);
+                }
+
+            }
+            Utils::printVV(profits);
+        }
+
+        return *max_element(profits[k].begin(), profits[k].end());
+    }
+
+    int maxProfit(vector<int>& prices, int fee)
+    {
+
     }
 
     int maxSubArray(vector<int>& nums)
@@ -1252,6 +1304,29 @@ public:
             }
         }
         return mem[n-1][m-1];
+    }
+
+    int maxCoins(vector<int>& nums) {
+        int n = nums.size();
+        nums.insert(nums.begin(), 1);
+        nums.push_back(1);
+
+        vector<vector<int>> count(n+2, vector<int>(n+2, 0));
+        for(int l=1; l<=n; ++l)
+        {
+            for(int i=1; i<=n-l+1; ++i)
+            {
+                int j = i+l-1;
+                for(int k=i; k<=j; ++k)
+                {
+                    int cur = count[i][k-1] + count[k+1][j] + nums[i-1]*nums[k]*nums[j+1];
+                    printf("len[%d], s[%d], c[%d]\n", l, i, cur);
+                    count[i][j] = max(count[i][j], cur);
+                }
+                Utils::printVV(count);
+            }
+        }
+        return count[1][n];
     }
 };
 

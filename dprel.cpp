@@ -50,5 +50,9 @@ void DPRel::test()
     i = dprel.wordBreak(s1, dict);
     vector<vector<int>> vv1 = {{0,0,0},{0,1,0},{0,0,0}};
     i = dprel.uniquePathsWithObstacles(vv1);
+    vector<int> num12 = {3, 1, 5, 8};
+    //i = dprel.maxCoins(num12);
+    vector<int> num13 = {3,3,5,0,0,3,1,4};
+    i = dprel.maxProfit3(num13);
     i = i+1;
 }
