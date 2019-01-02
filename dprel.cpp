@@ -52,7 +52,7 @@ void DPRel::test()
     i = dprel.uniquePathsWithObstacles(vv1);
     vector<int> num12 = {3, 1, 5, 8};
     //i = dprel.maxCoins(num12);
-    vector<int> num13 = {3,3,5,0,0,3,1,4};
+    vector<int> num13 = {1,2,3,4,5};
     i = dprel.maxProfit3(num13);
     i = i+1;
 }

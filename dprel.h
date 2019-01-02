@@ -125,7 +125,7 @@ public:
         }
         return res;
     }
-
+    //{3,3,5,0,0,3,1,4};
     int maxProfit3(vector<int>& prices) {
         if(prices.size() < 2) return 0;
         int res = 0;
@@ -138,10 +138,11 @@ public:
             {
                 for(int s=0; s<j; ++s)
                 {
-                    int tmp = prices[j]-prices[s]+profits[k-1][s];
-                    profits[k][j] = max(profits[k][j], tmp);
+                    int tmp = prices[j]-prices[s]+profits[i-1][s];
+                    profits[i][j] = max(profits[i][j], tmp);
+                    profits[i][j] = max(profits[i][j], profits[i][j-1]);
                 }
-
+                //Utils::printV(profits[i]);
             }
             Utils::printVV(profits);
         }
