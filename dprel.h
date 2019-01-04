@@ -455,7 +455,7 @@ public:
     }
 
 
-    int numWays(int n, int k) {
+    int numWays2(int n, int k) {
         if(n == 0) return 0;
         if(n == 1) return k;
         if(n == 2) return k*k;
@@ -1368,6 +1368,92 @@ public:
         }
         return count[1][n];
     }
+    vector<int> cheapestJump(vector<int> &A, int B) {
+        int n = A.size();
+        if(!n|| !B) return {};
+        vector<int> dp(n, -1);
+        dp[0] = A[0];
+        vector<vector<int>> steps(n, vector<int>());
+        steps[0] = {1};
+        /*
+        for(int i=1; i<=B; ++i)
+        {
+            if(A[i] != -1 && dp[0] != -1)
+            {
+                dp[i] = dp[0] + A[i];
+                steps[i].push_back(1);
+                steps[i].push_back(i+1);
+            }
+
+        }
+        */
+        for(int i=1; i<n; ++i)
+        {
+            if(A[i] != -1)
+            {
+                for(int j=i-B; j<i; ++j)
+                {
+                    if(j<0) continue;
+                    if(dp[j] != -1)
+                    {
+                        //dp[i] = (dp[i]==-1)?dp[j]+A[i]:min(dp[i], dp[j]+A[i]);
+                        if(dp[i] == -1)
+                        {
+                            dp[i] = dp[j]+A[i];
+                            steps[i] = steps[j];
+                            steps[i].push_back(i+1);
+                        }
+                        else
+                        {
+                            if(dp[i] > dp[j] + A[i])
+                            {
+                                steps[i] = steps[j];
+                                steps[i].push_back(i+1);
+                                dp[i] = dp[j] + A[i];
+                            }
+                            else if(dp[i] == dp[j] + A[i])
+                            {
+                                if(steps[i].size()-1 < steps[j].size())
+                                {
+                                    steps[i] = steps[j];
+                                    steps[i].push_back(i+1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Utils::printV(steps[n-1]);
+        return steps[n-1];
+    }
+
+    string minWindow(string &S, string &T) {
+        // Write your code here
+        if(T.length() == 0 || S.length() == 0) return "";
+        if(T.length() > S.length()) return "";
+        int n = S.length();
+        vector<int> dp(n, 0);
+        dp[0] = (T[0] == S[0]?1:0);
+        for(int i=1; i<n; ++i)
+        {
+            if(dp[i-1] >= T.length())
+            {
+                dp[i] = T.length();
+                continue;
+            }
+            if(S[i] == T[dp[i-1]])
+            {
+                dp[i] = dp[i-1]+1;
+            }
+            else dp[i] = dp[i-1];
+        }
+        Utils::printV(dp);
+        if(dp[n-1] < T.length()) return "";
+
+        return "";
+    }
 };
+
 
 #endif // DPREL_H

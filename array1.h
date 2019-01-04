@@ -238,6 +238,37 @@ public:
         }
         return -1;
     }
+
+    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k)
+    {
+        int n = nums.size();
+        if(n < 3*k) return {};
+        if(n == 3*k) return {0, k, 2*k};
+        vector<int> prefixSum(n+1, 0);
+        for(int i=0; i<n; ++i)
+        {
+            prefixSum[i+1] = prefixSum[i] + nums[i];
+        }
+        vector<int> kSum(n-k, 0);
+        for(int i=0; i<n-k+1; ++i)
+        {
+            int j=i+k;
+            kSum[i] = prefixSum[j]-prefixSum[i];
+        }
+        vector<int> left(n-2*k, 0);
+        left[0] = kSum[0];
+        for(int i=1; i<n-2*k; ++i)
+        {
+            left[i] = max(left[i-1], kSum[i]);
+        }
+
+        vector<int> right(n, 0);
+        right[2*k] = kSum[2*k];
+        for(int i=1; i<n-2*k; ++i)
+        {
+            right[i+2*k] = max(right[i+2*k-1], kSum[2*k+1]);
+        }
+    }
 };
 
 #endif // ARRAY1_H

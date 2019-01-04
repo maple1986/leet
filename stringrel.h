@@ -885,7 +885,7 @@ public:
     vector<string> generatePossibleNextMoves(string &s) {
         if(s.length() < 2) return {};
         vector<string> res;
-        for(i=1; i<s.length(); ++i)
+        for(int i=1; i<s.length(); ++i)
         {
             if(s[i] == '+' && s[i-1] == '+')
             {

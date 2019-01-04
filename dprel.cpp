@@ -54,5 +54,10 @@ void DPRel::test()
     //i = dprel.maxCoins(num12);
     vector<int> num13 = {1,2,3,4,5};
     i = dprel.maxProfit3(num13);
+    vector<int> num14 = {0,0,0,0,0,0};
+    dprel.cheapestJump(num14, 3);
+    string in1 = "jmeqksfrsdcmsiwvaovztaqenprpvnbstl";
+    string in2 = "ms";
+    string si = dprel.minWindow(in1, in2);
     i = i+1;
 }
