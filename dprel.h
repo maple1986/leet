@@ -1433,22 +1433,26 @@ public:
         if(T.length() == 0 || S.length() == 0) return "";
         if(T.length() > S.length()) return "";
         int n = S.length();
+        int t = T.length();
         vector<int> dp(n, 0);
-        dp[0] = (T[0] == S[0]?1:0);
-        for(int i=1; i<n; ++i)
+        for(int l=t; l<=n; ++l)
         {
-            if(dp[i-1] >= T.length())
+            dp[0]=(T[0] == S[0]?1:0);
+            for(int i=1; i<t; ++i)
             {
-                dp[i] = T.length();
-                continue;
+                if(dp[i-1] >= T.length())
+                {
+                    dp[i] = T.length();
+                    continue;
+                }
+                if(S[i] == T[dp[i-1]])
+                {
+                    dp[i] = dp[i-1]+1;
+                }
+                else dp[i] = dp[i-1];
             }
-            if(S[i] == T[dp[i-1]])
-            {
-                dp[i] = dp[i-1]+1;
-            }
-            else dp[i] = dp[i-1];
         }
-        Utils::printV(dp);
+        //Utils::printV(dp);
         if(dp[n-1] < T.length()) return "";
 
         return "";
