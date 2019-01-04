@@ -182,6 +182,31 @@ public:
         return res>0?res:*max_element(nums.begin(), nums.end());
     }
 
+    int maxSubArray12(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        int maxEndingHere = nums[0];
+        int maxSofar = nums[0];
+        for(int i=1; i<nums.size(); ++i)
+        {
+            maxEndingHere = maxEndingHere>0?maxEndingHere+nums[i]:nums[i];
+            maxSofar = max(maxSofar, maxEndingHere);
+        }
+        return maxSofar;
+    }
+
+    int maxSubArray13(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        vector<int> dp(nums.size(), 0);
+        dp[0] = nums[0];
+        int res = dp[0];
+        for(int i=1; i<nums.size(); ++i)
+        {
+            dp[i] = dp[i-1]>0?dp[i-1]+nums[i]:nums[i];
+            res = max(res, dp[i]);
+        }
+        return res;
+    }
+
     int maxProfit_cooldown(vector<int>& prices)
     {
         if(prices.empty()) return 0;
@@ -425,6 +450,20 @@ public:
         for (int i = 3; i <= n; ++i)
         {
             dp[i] = (dp[i-1] + dp[i-2])*(k-1);
+        }
+        return dp[n];
+    }
+
+
+    int numWays(int n, int k) {
+        if(n == 0) return 0;
+        if(n == 1) return k;
+        if(n == 2) return k*k;
+        vector<int> dp(n+1, 0);
+        dp[1] = k, dp[2] = k*k;
+        for(int i=3; i<=n; ++i)
+        {
+            dp[i] = dp[i-1]*(k-1) + dp[i-2]*(k-1);
         }
         return dp[n];
     }

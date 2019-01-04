@@ -882,6 +882,20 @@ public:
         return -1;
     }
 
+    vector<string> generatePossibleNextMoves(string &s) {
+        if(s.length() < 2) return {};
+        vector<string> res;
+        for(i=1; i<s.length(); ++i)
+        {
+            if(s[i] == '+' && s[i-1] == '+')
+            {
+                s[i] = '-', s[i-1] = '-';
+                res.push_back(s);
+                s[i] = '+', s[i-1] = '+';
+            }
+        }
+        return res;
+    }
 };
 
 #endif // STRINGREL_H

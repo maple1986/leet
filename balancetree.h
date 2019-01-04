@@ -1765,6 +1765,26 @@ private:
          return nums;
      }
 
+     int closestValue12(TreeNode * root, double target) {
+
+     }
+
+     void inorder(TreeNode *root, double target, int& candi1, int& candi2)
+     {
+         if(!root) return;
+         inorder(root->left, target, candi1, candi2);
+         if(root->val > target)
+         {
+             candi2 = root->val;
+             return;
+         }
+         else
+         {
+             candi1 = root->val;
+         }
+         inorder(root->right, target, candi1, candi2);
+     }
+
      vector<int> closestKValues2(TreeNode * root, double target, int k)
      {
          vector<int> nums;
