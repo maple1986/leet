@@ -92,6 +92,7 @@ public:
 #include <unordered_set>
 #include <unordered_map>
 #include <sstream>
+#include <utils.h>
 using namespace std;
 
 struct TreeNode {
@@ -2109,6 +2110,52 @@ private:
             counts[id]++;
             return id;
         }
+    }
+
+    int kEmptySlots(vector<int> &flowers, int k) {
+        // Write your code here
+        int n = flowers.size();
+        if(n < 2) return -1;
+        vector<int> garden(n+1, 0);
+        for(int i=0; i<n; ++i)
+        {
+            garden[flowers[i]] = i+1;
+        }
+        //Utils::printV(flowers);
+        //Utils::printV(garden);
+        int res = INT_MAX;
+        for(int i=1; i<=n; ++i)
+        {
+            if(i+k+1 <= n)
+            {
+                for(int j=i+1; j<=i+k; ++j)
+                {
+                    if(garden[j] < garden[i] || garden[j] < garden[i+k+1])
+                    {
+                        break;
+                    }
+                    if(j == i+k)
+                    {
+                        res = min(max(garden[i], garden[i+k+1]), res);
+                    }
+                }
+            }
+            if(i-k-1 >=1)
+            {
+                for(int j=i-k; j<=i-1; ++j)
+                {
+                    if(garden[j] < garden[i] || garden[j] < garden[i-k-1])
+                    {
+                        break;
+                    }
+                    if(j == i-1)
+                    {
+                        res = min(max(garden[i], garden[i-k-1]), res);
+                    }
+                }
+            }
+        }
+        return res == INT_MAX?-1:res;
     }
 };
 

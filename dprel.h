@@ -1428,33 +1428,36 @@ public:
         return steps[n-1];
     }
 
+    int matched(string &S, int endIndex, string &T, int s) {
+        for(int i=0; i != endIndex && s < T.length(); ++i)
+        {
+            if(S[i] == T[s]) s++;
+        }
+        return s;
+    }
+
     string minWindow(string &S, string &T) {
         // Write your code here
-        if(T.length() == 0 || S.length() == 0) return "";
-        if(T.length() > S.length()) return "";
         int n = S.length();
         int t = T.length();
-        vector<int> dp(n, 0);
+        if(n == 0 || t == 0) return "";
+        if(t > n) return "";
+        if(t == n) return S==T?S:"";
+        vector<int> dp0(n, 0);
         for(int l=t; l<=n; ++l)
         {
-            dp[0]=(T[0] == S[0]?1:0);
-            for(int i=1; i<t; ++i)
+            vector<int> dp1(n, 0);
+            for(int i=0; i<n-l; ++i)
             {
-                if(dp[i-1] >= T.length())
+                dp1[i] = matched(S, i+t, T, dp0[i]);
+                if(dp1[i] == t)
                 {
-                    dp[i] = T.length();
-                    continue;
+                    dp1[i] == t;
                 }
-                if(S[i] == T[dp[i-1]])
-                {
-                    dp[i] = dp[i-1]+1;
-                }
-                else dp[i] = dp[i-1];
             }
+            dp0.swap(dp1);
+            Utils::printV(dp0);
         }
-        //Utils::printV(dp);
-        if(dp[n-1] < T.length()) return "";
-
         return "";
     }
 };

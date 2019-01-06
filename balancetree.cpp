@@ -79,6 +79,8 @@ void BalanceTree::test()
     bt.pathSum32(tree8, 8);
     TreeNode* tree9 = bt.generateTree("[1,4,5,4,4,null,5]");
     bt.longestUnivaluePath4(tree9);
+    vector<int> flowers ={3,9,2,8,1,6,10,5,4,7};
+    j = bt.kEmptySlots(flowers, 1);
     j = 0;
 }
 
