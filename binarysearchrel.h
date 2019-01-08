@@ -63,7 +63,7 @@ public:
     }
 
 
-    int kthSmallest(vector<vector<int>>& matrix, int k)
+    int kthSmallest1(vector<vector<int>>& matrix, int k)
     {
         priority_queue<int> maxheap;
         int n = matrix.size();
@@ -297,6 +297,7 @@ public:
         while(left < right)
         {
             int mid = left + (right-left)/2;
+            printf("left[%d], right[%d], mid[%d]\n", left, right, mid);
             if(abs(arr[mid+k]-x) <= abs(arr[right+k]-x))
             {
                 right = mid;
@@ -510,6 +511,164 @@ public:
         }
         reverse(res.begin(), res.end());
         return res;
+    }
+    //808201
+    bool isPerfectSquare(int num) {
+        if(num == 1) return true;
+        int l = 1, r = num/2+1;
+        while(l<r)
+        {
+            long long mid = l+(r-l)/2, target = mid*mid;
+            if(target<num)
+            {
+                l = mid+1;
+            }
+            else if(target>num)
+            {
+                r = mid;
+            }
+            else return true;
+        }
+        return false;
+    }
+
+    int kthSmallest(vector<vector<int>>& matrix, int k)
+    {
+        if(matrix.empty() || matrix[0].empty())
+        {
+            return 0;
+        }
+        int l = matrix[0][0], r = matrix.back().back();
+        while(l<=r)
+        {
+            int mid = l+(r-l)/2;
+            int pos = 0;
+            for(int i=0; i<matrix.size(); ++i)
+            {
+                auto it = upper_bound(matrix[i].begin(), matrix[i].end(), mid);
+                pos += distance(matrix[i].begin(), it);
+            }
+            if(pos < k)
+            {
+                l = mid+1;
+            }
+            else// if(pos > k)
+            {
+                r = mid-1;
+            }
+        }
+        return l;
+    }
+    //1, 2, 4, 5, 6, 9
+    //[0, 1, 1, 1, 1]
+    int findLowerBound(vector<int>& nums, int target) {
+        int left = 0, right = nums.size();
+        while (left < right) {
+            static int round = 1;
+            int mid = left + (right - left) / 2;
+            printf("round%d, l=%d, r=%d, mid=%d, val=%d\n", round++, left, right, mid, nums[mid]);
+            if (nums[mid] < target) left = mid + 1;
+            else right = mid;
+        }
+        return right;
+    }
+
+    int triangleNumber(vector<int>& nums)
+    {
+        int n = nums.size();
+        if(n < 3) return 0;
+        sort(nums.begin(), nums.end());
+        int count = 0;
+        for(int i=0; i<n-2; ++i)
+        {
+            for(int j=i+1; j<n-1; ++j)
+            {
+                int sum = nums[i]+nums[j];
+                int left = j+1, right = n;
+                while (left<right) {
+                    int mid = left+(right-left)/2;
+                    if(nums[mid] >= sum)
+                    {
+                        right = mid;
+                    }
+                    else left = mid+1;
+                }
+                if(right-j-1>0)
+                {
+                    count += right-j-1;
+                }
+            }
+        }
+        return count;
+    }
+
+    vector<int> findClosestElements2(vector<int>& arr, int k, int x) {
+        int n = arr.size();
+        if(n==0 || n<k) return {};
+        auto it = lower_bound(arr.begin(), arr.end(), x);
+        vector<int> res;
+        if(it == arr.begin())
+        {
+            res.assign(arr.begin(), arr.begin()+k);
+            return res;
+        }
+        else if(it == arr.end())
+            return vector<int>(arr.rbegin(), arr.rbegin()+k);
+        else
+        {
+            int l = it-arr.begin()-1;
+            int r = it-arr.begin();
+            while(k--)
+            {
+                if(l < 0) res.push_back(arr[r++]);
+                else if(r>=n) res.push_back(arr[l--]);
+                else
+                {
+                    if(abs(arr[l]-x) <= abs(x-arr[r]))
+                    {
+                        res.push_back(arr[l--]);
+                    }
+                    else
+                    {
+                        res.push_back(arr[r++]);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    int smallestDistancePair(vector<int>& nums, int k)
+    {
+        vector<int> distance(1000001, 0);
+        int n = nums.size();
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=i+1; j<n; ++j)
+            {
+                distance[abs(nums[j]-nums[i])]++;
+            }
+        }
+        n = distance.size();
+        for(int i=0; i<n; ++i)
+        {
+            k -= distance[i];
+            if(k <= 0)
+                return i;
+        }
+        return -1;
+    }
+
+    int smallestDistancePair(vector<int>& nums, int k)
+    {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        int l = 0, r = nums[n-1]-nums[0]+1;
+        while(l<r)
+        {
+            int mid = l+(r-l)/2;
+
+        }
     }
 };
 

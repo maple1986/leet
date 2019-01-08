@@ -1460,6 +1460,98 @@ public:
         }
         return "";
     }
+    //[9,3,6,2,7]
+    int longestIncreasingSubsequence(vector<int> &nums) {
+        if(nums.empty()) return 0;
+        int n = nums.size();
+        vector<int> dp(n, 1);
+        //dp[0] = 1;
+        int ans = 1;
+        for(int i=1; i<n; ++i)
+        {
+            for(int j=0; j<i; ++j)
+            {
+                if(nums[i]>nums[j])
+                {
+                    dp[i] = max(dp[i], dp[j]+1);
+                }
+            }
+            ans = max(ans, dp[i]);
+        }
+        return ans;
+    }
+    //[1,3,5,4,7]
+    int findNumberOfLIS(vector<int> &nums) {
+        if(nums.empty()) return 0;
+        int n = nums.size();
+        vector<pair<int, int>> dp(n, {1,1});
+        int ans = 1;
+        for(int i=1; i<n; ++i)
+        {
+            for(int j=0; j<i; ++j)
+            {
+                if(nums[i]>nums[j])
+                {
+                    //dp[i] = max(dp[i], dp[j]+1);
+                    if(dp[j].first+1 > dp[i].first)
+                    {
+                        dp[i].first = dp[j].first+1;
+                        dp[i].second= dp[j].second;
+                    }
+                    else if(dp[j].first+1 == dp[i].first)
+                    {
+                        dp[i].second += dp[j].second;
+                    }
+                }
+            }
+            ans = max(ans, dp[i].first);
+        }
+        int res = 0;
+        for(int i=0; i<n; ++i)
+        {
+            if(dp[i].first == ans)
+                res += dp[i].second;
+        }
+        return res;
+    }
+
+    int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
+        if(matrix.empty() || matrix[0].empty())
+            return 0;
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<int>> sum(m+1, vector<int>(n+1, 0));
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                sum[i][j+1] = sum[i][j]+matrix[i][j];
+            }
+        }
+        int maxArea = 0;
+        vector<int> res(n+1, 0);
+        for(int l=1; l<=m; ++l)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                for(int i=0; i+l<m; ++i)
+                {
+
+                }
+            }
+        }
+        return maxArea;
+    }
+
+    int splitArray(vector<int>& nums, int m)
+    {
+        int n = nums.size();
+        if(n < m) return 0;
+        vector<vector<int>> dp();
+        for(int i=0; i<n; ++i)
+        {
+
+        }
+    }
 };
 
 

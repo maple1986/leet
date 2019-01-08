@@ -35,7 +35,7 @@ int main()
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    //binarySearchRel::test();
+    binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
@@ -56,7 +56,7 @@ int main()
     //backtrack::test();
     //constructRel::test();
     //DFS::test();
-    BalanceTree::test();
+    //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();
     return 0;
