@@ -896,6 +896,10 @@ public:
         }
         return res;
     }
+
+    vector<int> wordsCompression(vector<string> &s) {
+        // Write your code here
+    }
 };
 
 #endif // STRINGREL_H

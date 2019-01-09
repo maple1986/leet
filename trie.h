@@ -29,6 +29,51 @@ public:
     vector<TrieNode*> _children;
 };
 
+class BNode
+{
+public:
+    BNode():children_(2, NULL) ,is_word(false)
+    {
+
+    }
+
+    ~BNode()
+    {
+        for(BNode* child : children_)
+        {
+            if(child) delete child;
+        }
+    }
+    vector<BNode*> children_;
+    bool is_word;
+};
+class BTrie {
+public:
+    BTrie():root_(new BNode){
+
+    }
+    ~BTrie()
+    {
+        if(root_) delete root_;
+    }
+
+    void insert(string& bstring)
+    {
+        BNode* p = root_;
+        for(char c : bstring)
+        {
+            if(!p->children_[c-'0'])
+            {
+                p->children_[c-'0'] = new BNode;
+            }
+            p = p->children_[c-'0'];
+        }
+        p->is_word = true;
+    }
+
+    BNode* root_;
+};
+
 class Trie {
 public:
     /** Initialize your data structure here. */
@@ -174,6 +219,39 @@ public:
         }
         return best;
     }
+
+
+    int getMaxAns(BNode* root, unordered_map<BNode*, int>& mem, int& res)
+    {
+        if(!root) return 0;
+        if(mem[root]) return mem[root];
+        int left  = getMaxAns(root->children_[0], mem, res);
+        int right = getMaxAns(root->children_[1], mem, res);
+        if(left != 0 && right != 0)
+        {
+            res = max(res, left + right);
+        }
+        if(root->is_word)
+        {
+            res = max(res, left);
+            res = max(res, right);
+        }
+        mem[root] = max(left, right) + 1;
+        return mem[root];
+    }
+
+    int getAns(vector<string> &s) {
+        // Write your code here
+        BTrie btrie;
+        for(string& word :s)
+        {
+            btrie.insert(word);
+        }
+        unordered_map<BNode*, int> mem;
+        int res = 0;
+        getMaxAns(btrie.root_, mem, res);
+        return res;
+    }
 };
 
 class WordFilter {
@@ -313,5 +391,8 @@ public:
 
     Trie* trieTree_;
 };
+
+
+
 
 #endif // TRIE_H

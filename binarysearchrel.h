@@ -659,7 +659,7 @@ public:
         return -1;
     }
 
-    int smallestDistancePair(vector<int>& nums, int k)
+    int smallestDistancePair2(vector<int>& nums, int k)
     {
         sort(nums.begin(), nums.end());
         int n = nums.size();
