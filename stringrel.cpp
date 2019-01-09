@@ -26,5 +26,7 @@ void StringRel::test()
     str.findDisappearedNumbers(num3);
     string A = "abcd", B ="cdabcdab";
     int i = str.repeatedStringMatch(A, B);
+    i = str.Sunday("substringsearching", "search");
+    str.wordsCompression2({A, B});
     i = 0;
 }
