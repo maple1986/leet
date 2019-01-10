@@ -992,6 +992,71 @@ public:
         }
         return ans;
     }
+
+    int repeatedString(string &A, string &B) {
+        // write your code here
+        int N = A.size(), M = B.size();
+        if(N == 0) return -1;
+        //int res = M/N;
+        string C(A);
+        int L = N;
+        while(L < M)
+        {
+            C += A;
+            L += N;
+        }
+        if(C.find(B) != string::npos)
+            return L/N;
+        else
+        {
+            C += A;
+            if(C.find(B) != string::npos) return L/N+1;
+            return -1;
+        }
+    }
+
+    string inputStream(string &inputA, string &inputB) {
+        // Write your code here
+        int m = inputA.length()-1, n = inputB.length()-1;
+        while(m>=0 && n>=0)
+        {
+            if(previous(inputA, m) != previous(inputB, n))
+            {
+                return "NO";
+            }
+        }
+        if(m < 0 && n < 0) return "YES";
+        if(m>=0 && 0 == previous(inputA, m)) return "YES";
+        if(n>=0 && 0 == previous(inputB, n)) return "YES";
+        return "NO";
+    }
+
+    char previous(string& input, int& index)
+    {
+        if(input[index] != '<')
+        {
+            index--;
+            return input[index];
+        }
+        else
+        {
+            int cnt = 1;
+            while(cnt || index >=0)
+            {
+                if(input[index--] != '<')
+                {
+                    cnt--;
+                }
+                else
+                {
+                    cnt++;
+                }
+            }
+            if(index>=0) return input[index];
+            return 0;
+        }
+
+    }
 };
 
 #endif // STRINGREL_H
