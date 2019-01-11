@@ -29,5 +29,12 @@ void StringRel::test()
     string a="abc";
     string b="c";
     str.canGetString(a,b);
+    i = str.Sunday("substringsearching", "search");
+    str.wordsCompression2({A, B});
+    string C = "jcwsijl", D = "sijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljc";
+    i = str.repeatedString(C, D);
+    string a1="abcde<<";
+    string a2="abcd<e<";
+    string res = str.inputStream(a1, a2);
     i = 0;
 }
