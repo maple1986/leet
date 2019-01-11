@@ -26,5 +26,8 @@ void StringRel::test()
     str.findDisappearedNumbers(num3);
     string A = "abcd", B ="cdabcdab";
     int i = str.repeatedStringMatch(A, B);
+    string a="abc";
+    string b="c";
+    str.canGetString(a,b);
     i = 0;
 }

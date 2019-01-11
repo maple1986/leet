@@ -174,4 +174,52 @@ private:
 };
 
 
+class ZigzagIterator24
+{
+public:
+    static void test();
+    ZigzagIterator24(vector<vector<int>>& vecs) {
+        x = 0;
+        y = 0;
+        _vecs = vecs;
+    }
+
+    /*
+         * @return: An integer
+         */
+    int next() {
+        // write your code here
+        return _vecs[y++][x];
+    }
+
+    /*
+         * @return: True if has next
+         */
+    bool hasNext() {
+        // write your code here
+        while(!_vecs.empty())
+        {
+            if(y >= _vecs.size())
+            {
+                y = 0;
+                x++;
+            }
+            if(_vecs[y].size() <= x)
+            {
+                _vecs.erase(_vecs.begin()+y);
+            }
+            else
+            {
+                break;
+            }
+        }
+        return !_vecs.empty();
+    }
+
+private:
+    int x;
+    int y;
+    vector<vector<int>> _vecs;
+};
+
 #endif // DESGIN_H

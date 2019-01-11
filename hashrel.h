@@ -270,10 +270,28 @@ public:
         }
         return res;
     }
+
+    string sameNumber(vector<int> &nums, int k) {
+        // Write your code here
+        if(nums.empty()) return "NO";
+        unordered_map<int, vector<int>> hmap;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            hmap[nums[i]].push_back(i);
+        }
+        auto it = hmap.begin();
+        while(it != hmap.end())
+        {
+            if(it->second.size() < 2)
+                continue;
+            for(int i=1; i<it->second.size(); ++i)
+            {
+                if((it->second[i] - it->second[i-1]) < k)
+                   return "YES";
+            }
+        }
+        return "NO";
+    }
 };
-
-
-
-
 
 #endif // HASHREL_H

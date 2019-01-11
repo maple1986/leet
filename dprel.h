@@ -1552,6 +1552,60 @@ public:
 
         }
     }
+
+    int numDecodings2(string s) {
+        int n = s.length();
+        if(n == 0 || s[0] == '0') return 0;
+        const int Mod = 10e9 + 7;
+        vector<long> dp(n, 0);
+        if(s[0] == '*') dp[0] = 9;
+        else dp[0] = 1;
+        for(int i=1; i<n; ++i)
+        {
+            if(s[i] == '0') dp[i] = 0;
+            else if(isdigit(s[i])) dp[i] = dp[i-1];
+            else dp[i] = 9*dp[i-1];
+
+            if(s[i-1] != '*' && s[i] != '*')
+            {
+                int twodigit = (s[i-1]-'0')*10 + s[i]-'0';
+                if(twodigit>=10 && twodigit<=26)
+                {
+                    if(i>1)
+                        dp[i] += dp[i-2];
+                    else dp[i] += 1;
+                }
+            }
+            else if(s[i-1] == '*' && s[i] == '*')
+            {
+                if(i>1)
+                    dp[i] += dp[i-2]*15;
+                else
+                    dp[i] += 15;
+            }
+            else if(s[i-1] == '*')
+            {
+                if(s[i] >= 0 && s[i] <= 6)
+                {
+                    dp[i] += dp[i-2]*2;
+                }
+            }
+            else
+            {
+                if(s[i-1] == 1)
+                {
+                    dp[i] += dp[i-2]*9;
+                }
+                else if(s[i-1] == 2)
+                {
+                    dp[i] += dp[i-2]*6;
+                }
+            }
+
+        }
+        return dp[n-1]%Mod;
+
+    }
 };
 
 

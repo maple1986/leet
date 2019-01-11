@@ -900,6 +900,50 @@ public:
     vector<int> wordsCompression(vector<string> &s) {
         // Write your code here
     }
+
+    vector<vector<int>> twitchWords(string &str) {
+        int n = str.length();
+        if(n < 3) return {};
+        vector<int> se(2, 0);
+        vector<vector<int>> res;
+        for(int i=1; i<n; ++i)
+        {
+            if(str[i-1] == str[i])
+            {
+                se[1] = i;
+            }
+            else
+            {
+                if(se[1]-se[0]>=2)
+                {
+                    res.push_back(se);
+                }
+                se[0] = i;
+            }
+        }
+        if(se[1]-se[0]>=2)
+        {
+            res.push_back(se);
+        }
+        return res;
+    }
+
+    bool canGetString(string &s, string &t) {
+        int m = s.length();
+        int n = t.length();
+        if(n == 0) return true;
+        if(n > m) return false;
+        int i, j = 0;
+        while(i<m && j<n)
+        {
+            if(s[i] == t[j])
+            {
+                j++;
+            }
+            i++;
+        }
+        return j == n;
+    }
 };
 
 #endif // STRINGREL_H
