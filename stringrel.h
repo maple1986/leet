@@ -933,7 +933,7 @@ public:
         int n = t.length();
         if(n == 0) return true;
         if(n > m) return false;
-        int i, j = 0;
+        int i=0, j = 0;
         while(i<m && j<n)
         {
             if(s[i] == t[j])
@@ -943,6 +943,7 @@ public:
             i++;
         }
         return j == n;
+    }
     //const int maxNum = 1005;
     //int shift[maxNum];
     int Sunday(const string& T, const string& P) {
@@ -984,7 +985,7 @@ public:
 
     int match(string &s, string &p, int &concat_idx){
         if( p.size() == 0 ) return s.size();
-        int next[p.size()] = {0};
+        vector<int> next(p.size(), 0);
         next[0] = -1;
         int i = 0, j = -1;
         while( i < p.size()){

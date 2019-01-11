@@ -1604,7 +1604,25 @@ public:
 
         }
         return dp[n-1]%Mod;
+    }
 
+    int LeastSubsequences(vector<int> &arrayIn) {
+        int n = arrayIn.size();
+        if(n <= 1) return n;
+        vector<int> ends(n, -1);
+        ends[0] = arrayIn[0];
+        int len = 0;
+        for(int i=1; i<arrayIn.size(); ++i)
+        {
+            if(arrayIn[i] < ends[0]) ends[0] = arrayIn[i];
+            else if(arrayIn[i] >= ends[len]) ends[++len] = arrayIn[i];
+            else
+            {
+                auto it = upper_bound(ends.begin(), ends.begin()+len, arrayIn[i]);
+                *it = arrayIn[i];
+            }
+        }
+        return len+1;
     }
 };
 

@@ -215,6 +215,62 @@ Expected
         }
         return;
     }
+
+    vector<vector<int>> policeDistance(vector<vector<int>> &matrix ) {
+        if(matrix.empty() || matrix[0].empty()) return matrix;
+        int m = matrix.size();
+        int n = matrix[0].size();
+        //vector<vector<int>> res(matrix);
+        queue<pair<int, int>> q;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(matrix[i][j] == 1)
+                {
+                    q.push({i, j});
+                    matrix[i][j] = -2;
+                }
+            }
+        }
+        int step = 1;
+        while(!q.empty())
+        {
+            int size = q.size();
+            while(size--)
+            {
+                pair<int, int> cood = q.front();
+                int x = cood.first, y = cood.second;
+                q.pop();
+                vector<int> dx = {0, 1, 0, -1};
+                vector<int> dy = {1, 0,-1, 0};
+                for(int i=0; i<dx.size(); ++i)
+                {
+                    int nx = x + dx[i];
+                    int ny = y + dy[i];
+                    if(nx>=0 && nx<m && ny>=0 && ny<n && matrix[nx][ny] == 0)
+                    {
+                        //res[nx][ny] = step;
+                        matrix[nx][ny] = step;
+                        q.push({nx, ny});
+                    }
+                }
+            }
+            step++;
+        }
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(matrix[i][j] == -2)
+                {
+                    //q.push({i, j});
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        return matrix;
+    }
 };
 
 #endif // BFS_H

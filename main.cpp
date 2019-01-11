@@ -31,7 +31,7 @@ using namespace std;
 
 int main()
 {
-    //Graph1::test();
+    Graph1::test();
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
@@ -40,7 +40,7 @@ int main()
     //NumofOnes::test();
     //SortAlg::test();
     //BitsRel::test();
-    StringRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();

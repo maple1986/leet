@@ -170,6 +170,40 @@ public:
     vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
 
     }
+
+    bool isCyclicGraph(vector<int> &start, vector<int> &end) {
+        unordered_map<int, vector<int>> graph;
+        for(int i=0; i<start.size(); ++i)
+        {
+            graph[start[i]].push_back(end[i]);
+        }
+        for(int s: start)
+        {
+            unordered_set<int> vistied;
+            if(dfs(s, vistied, graph))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool dfs(int start, unordered_set<int>& visited, unordered_map<int, vector<int>>& graph)
+    {
+        if(visited.count(start))
+        {
+            return true;
+        }
+        visited.insert(start);
+        if(!graph.count(start))
+            return false;
+        for(int i: graph[start])
+        {
+            if(dfs(i, visited, graph))
+                return true;
+        }
+        return false;
+    }
 };
 
 #endif // GRAPH1_H

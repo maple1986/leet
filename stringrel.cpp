@@ -23,12 +23,12 @@ void StringRel::test()
     str.countGroups1(emails);
 
     vector<int> num3 ={4,3,2,7,8,2,3,1};
-    str.findDisappearedNumbers(num3);
+    //str.findDisappearedNumbers(num3);
     string A = "abcd", B ="cdabcdab";
     int i = str.repeatedStringMatch(A, B);
     string a="abc";
     string b="c";
-    str.canGetString(a,b);
+    bool b1= str.canGetString(a,b);
     i = str.Sunday("substringsearching", "search");
     str.wordsCompression2({A, B});
     string C = "jcwsijl", D = "sijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljc";
