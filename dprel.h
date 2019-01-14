@@ -1545,13 +1545,63 @@ public:
     int splitArray(vector<int>& nums, int m)
     {
         int n = nums.size();
-        if(n < m) return 0;
-        vector<vector<int>> dp();
+        vector<vector<int>> mem_(m+1, vector<int>(n, INT_MAX));
+        vector<int> sum_(n, 0);
+        sum_[0] = nums[0];
+        for(int i=1; i<n; ++i)
+        {
+            sum_[i] = sum_[i-1] + nums[i];
+        }
+        if(m == 1) return sum_[n-1];
         for(int i=0; i<n; ++i)
         {
-
+            mem_[1][i] = sum_[i];
         }
+        for(int i=2; i<=m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                for(int k=0; k<j; ++k)
+                {
+                    if(k<i-2) continue;
+                    mem_[i][j] = min(mem_[i][j], max(mem_[i-1][k], sum_[j] - sum_[k]));
+                }
+            }
+        }
+        //Utils::printVV(mem_);
+        return mem_[m][n-1];
     }
+
+    int splitArray2(vector<int>& nums, int m) {
+        int n = nums.size();
+        //dp[i][k] means max sum of k parts of elements 0..i
+        vector<vector<long>> dp(n, vector<long>(m+1, INT_MAX));
+        //sum array is used to calculate range sum of i..j
+        vector<long> sum(n, 0);
+        for (int i = 0; i < n; i++) {
+            sum[i] = i == 0 ?nums[0] :(sum[i-1] + nums[i]);
+        }
+        // build dp from 0 to n-1 emelents
+        for (int i = 0; i < nums.size(); i++) {
+            //elements from 0 to indexi can be divided to i+1 parts mostly;
+            int maxDivide = min(m, i+1);
+            //for each dividing choice
+            for (int k = 1; k <= maxDivide; k++) {
+                if (k == 1) {
+                    dp[i][k] = sum[i];
+                    continue;
+                }
+                //divide 0..i to k parts, so i can be with i-1; i-1, i-2...; i-1, i-2..k-1;
+                for (int j = i; j >= k-1; j--) {//0..k-2 can be divided to mostly k-1 parts
+                    long partsum = sum[i] - sum[j] + nums[j];
+                    if (partsum > dp[i][k]) break; //early termination
+                    dp[i][k] = min(dp[i][k], max(partsum, dp[j-1][k-1]));
+                }
+            }
+        }
+        return dp[n-1][m];
+    }
+
 
     int numDecodings2(string s) {
         int n = s.length();

@@ -670,6 +670,54 @@ public:
 
         }
     }
+
+    bool isPossible(vector<int>& nums) {
+        int n = nums.size();
+        if(n < 3) return false;
+        //vector<int> ends(n, -1);
+        //vector<int> count(n, 0);
+        int maxNum = nums[0], minNum = nums[0];
+        for(int num: nums)
+        {
+            maxNum = max(maxNum, nums[i]);
+            //minNum = min(minNum, nums[i]);
+        }
+        vector<multiset<int>> bucket(maxNum+1);
+        //unordered_map<int, int> ends;
+        //ends[nums[0]] = 1;
+        //bucket[nums[0]].insert(1);
+        for(int i=0; i<n; ++i)
+        {
+            if(bucket[nums[i]].empty())
+            {
+                bucket[nums[i]].insert(1);
+            }
+            else
+            {
+
+            }
+            /*
+            for(int j=0; j<=len; ++j)
+            {
+                if(nums[i] == ends[j]+1)
+                {
+                    ends[j] = nums[i];
+                    count[j]++;
+                }
+                else
+                {
+                    ends[++len] = nums[i];
+                    count[len]  = 1;
+                }
+            }
+            */
+        }
+        for(int j=0; j<=len; ++j)
+        {
+            if(count[j] < 3) return false;
+        }
+        return true;
+    }
 };
 
 #endif // BINARYSEARCHREL_H

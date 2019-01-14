@@ -13,7 +13,7 @@ using namespace std;
 struct UndirectedGraphNode {
     int label;
     vector<UndirectedGraphNode *> neighbors;
-    UndirectedGraphNode(int x) : label(x) {};
+    UndirectedGraphNode(int x) : label(x) {}
 };
 
 class Graph1
@@ -131,6 +131,26 @@ public:
         return mp[node];
     }
 
+
+    UndirectedGraphNode *cloneGraph2(UndirectedGraphNode *node) {
+        //if(!node) return NULL;
+        unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> mptable;
+        return dfs(node, mptable);
+    }
+
+    UndirectedGraphNode *dfs(UndirectedGraphNode *node, unordered_map<UndirectedGraphNode*, UndirectedGraphNode*>& mptable)
+    {
+        if(!node) return NULL;
+        if(mptable[node]) return mptable[node];
+        UndirectedGraphNode* copy = new UndirectedGraphNode(node->label);
+        mptable[node] = copy;
+        for(auto& nb: node->neighbors)
+        {
+            copy->neighbors.push_back(dfs(nb, mptable));
+        }
+        return copy;
+    }
+
     bool validTree(int n, vector<vector<int>> &edges) {
         // write your code here
         if(n == 0) return false;
@@ -168,7 +188,57 @@ public:
     }
 
     vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
+        unordered_map<int, vector<int>> graph;
+        for(int i=0; i<edges.size(); ++i)
+        {
+            graph[edges[i].first].push_back(edges[i].second);
+            graph[edges[i].second].push_back(edges[i].first);
+        }
+        queue<int> q;
+        for(auto& v: graph)
+        {
+            if(v.second.size() == 1)
+                q.push(v.first);
+        }
+        while(!q.empty())
+        {
+            int v = q.front();q.pop();
 
+        }
+
+    }
+    //topologic
+    bool isCyclicGraph1(vector<int> &start, vector<int> &end) {
+        unordered_map<int, vector<int>> graph;
+        unordered_map<int, int> indgree;
+        for(int i=0; i<start.size(); ++i)
+        {
+            graph[start[i]].push_back(end[i]);
+            indgree[end[i]]++;
+        }
+        queue<int> q;
+        for(auto& v: graph)
+        {
+            if(!indgree.count(v.first))
+            {
+                q.push(v.first);
+            }
+        }
+        while(!q.empty())
+        {
+            int v = q.front(); q.pop();
+            for(int e: graph[v])
+            {
+                indgree[e]--;
+                if(indgree[e]==0) q.push(e);
+            }
+        }
+        for(auto& v: indgree)
+        {
+            if(indgree[v.first] != 0)
+                return true;
+        }
+        return false;
     }
 
     bool isCyclicGraph(vector<int> &start, vector<int> &end) {

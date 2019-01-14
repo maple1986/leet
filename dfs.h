@@ -657,25 +657,34 @@ public:
     }
 
     bool validTree(int n, vector<vector<int>> &edges) {
-        if(edges.empty() && n == 1) return true;
-        if(edges.empty()) return false;
-        unordered_map<int, vector<int>> _graph;
+        vector<vector<int>> graph(n);
         for(auto& edge : edges)
         {
-            _graph[edge[0]].push_back(edge[1]);
-            _graph[edge[1]].push_back(edge[0]);
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
         }
+        unordered_set<int> visited;
+        bool res = dfs1(graph, -1, 0, visited);
+        /*
         for(int i=1; i<=n; ++i)
         {
-            if(!_graph.count(i)) return false;
+            if(visited.count(i)) continue;
+
         }
-        vector<int> visited(n, 0);
-        dfs(_graph, 1, visited);
+        */
+        return res && visited.size() == n;
     }
 
-    void dfs(unordered_map<int, vector<int>>& graph, int cur, vector<int>& visited)
+    bool dfs1(vector<vector<int>>& graph, int pre, int cur, unordered_set<int>& visited)
     {
-
+        if(visited.count(cur)) return false;
+        visited.insert(cur);
+        for(int i :graph[cur])
+        {
+            if(i == pre) continue;
+            if(!dfs1(graph, cur, i, visited)) return false;
+        }
+        return true;
     }
 
     vector<string> wordBreak2(string s, vector<string>& wordDict) {

@@ -31,11 +31,11 @@ using namespace std;
 
 int main()
 {
-    Graph1::test();
+    //Graph1::test();
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    //binarySearchRel::test();
+    binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();

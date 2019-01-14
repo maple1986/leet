@@ -35,5 +35,7 @@ void binarySearchRel::test()
     salaries = bs.findClosestElements2(v6, 4, 4);
     vector<int> v7 = {1,3,1};
     cap = bs.smallestDistancePair(v7, 1);
+    vector<int> v8 = {1,2,3,3,4,5};
+    bres1 = bs.isPossible(v8);
     int i = 0;
 }

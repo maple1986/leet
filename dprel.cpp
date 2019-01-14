@@ -59,5 +59,7 @@ void DPRel::test()
     string in1 = "jmeqksfrsdcmsiwvaovztaqenprpvnbstl";
     string in2 = "ms";
     string si = dprel.minWindow(in1, in2);
+    vector<int> num15 = {1, 4, 4};
+    i = dprel.splitArray(num15, 3);
     i = i+1;
 }
