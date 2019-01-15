@@ -27,10 +27,12 @@
 #include "constructrel.h"
 #include "graph1.h"
 #include "bitsrel.h"
+#include "unionfind.h"
 using namespace std;
 
 int main()
 {
+    UnionFind1::test();
     //Graph1::test();
     //TrieQuestion::test();
     //array1::test();
