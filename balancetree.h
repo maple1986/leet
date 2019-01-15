@@ -1215,6 +1215,11 @@ private:
         return;
     }
 
+    vector<int> findRedundantConnection1(vector<vector<int>>& edges)
+    {
+
+    }
+
     vector<int> findRedundantConnection(vector<vector<int>>& edges)
     {
         unordered_map<int, vector<int>> graph;
@@ -1382,16 +1387,18 @@ private:
         int m = grid[0].size();
         if(0 == m) return 0;
         int res = 0;
+        //vector<vector<int>> visited(m, vector<int>(n, 0));
         for(int i=0; i<n; ++i)
         {
             for(int j=0; j<m; ++j)
             {
-                if(grid[i][j] != '1')
+                if(grid[i][j] != '1')// || visited[i][j])
                 {
                     continue;
                 }
                 else
                 {
+                    //visited[i][j] = 1;
                     dfs(grid, i, j, m, n);
                     res++;
                 }

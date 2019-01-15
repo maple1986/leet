@@ -679,7 +679,7 @@ public:
         int maxNum = nums[0], minNum = nums[0];
         for(int num: nums)
         {
-            maxNum = max(maxNum, nums[i]);
+            maxNum = max(maxNum, num);
             //minNum = min(minNum, nums[i]);
         }
         vector<multiset<int>> bucket(maxNum+1);
@@ -712,10 +712,12 @@ public:
             }
             */
         }
+        /*
         for(int j=0; j<=len; ++j)
         {
             if(count[j] < 3) return false;
         }
+        */
         return true;
     }
 };

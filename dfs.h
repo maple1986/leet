@@ -865,6 +865,178 @@ public:
 
         return sum;
     }
+
+
+    void wallsAndGates(vector<vector<int>>& rooms) {
+        for (int i = 0; i < rooms.size(); ++i) {
+            for (int j = 0; j < rooms[i].size(); ++j) {
+                if (rooms[i][j] == 0) dfs(rooms, i, j, 0);
+            }
+        }
+    }
+    void dfs(vector<vector<int>>& rooms, int i, int j, int val) {
+        if (i < 0 || i >= rooms.size() || j < 0 || j >= rooms[i].size() || rooms[i][j] < val) return;
+        rooms[i][j] = val;
+        dfs(rooms, i + 1, j, val + 1);
+        dfs(rooms, i - 1, j, val + 1);
+        dfs(rooms, i, j + 1, val + 1);
+        dfs(rooms, i, j - 1, val + 1);
+    }
+
+    int minTotalDistance(vector<vector<int>>& grid)
+    {
+        if(grid.empty() || grid[0].empty()) return 0;
+        int m = grid.size(); int n = grid[0].size();
+        vector<int> rows, cols;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(grid[i][j] == 1)
+                {
+                    rows.push_back(i);
+                    cols.push_back(j);
+                }
+            }
+        }
+        if(cols.empty()) return 0;
+        sort(cols.begin(), cols.end());
+        int l=0, r=rows.size()-1;
+        int sum = 0;
+        while(l<r)
+        {
+            sum += rows[r--] - rows[l++];
+            sum += cols[r--] - cols[l++];
+        }
+        return sum;
+    }
+
+    void solve(vector<vector<char> >& board) {
+        if(board.empty() || board[0].empty()) return;
+        int m = board.size(); int n = board[0].size();
+        for(int i=0; i<board[0].size(); ++i)
+        {
+            if(board[0][i] == 'O')
+            {
+                dfs(board, 0, i);
+            }
+            if(board[m-1][i] == 'O')
+            {
+                dfs(board, m-1, i);
+            }
+        }
+        for(int i=1; i<m-1; ++i)
+        {
+            if(board[i][0] == 'O')
+            {
+                dfs(board, i, 0);
+            }
+            if(board[i][n-1] == 'O')
+            {
+                dfs(board, i, n-1);
+            }
+        }
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(board[i][j] == 'O')
+                    board[i][j] = 'X';
+                if(board[i][j] == '$')
+                    board[i][j] = 'O';
+            }
+        }
+        return;
+    }
+
+    void dfs(vector<vector<char> >& board, int i, int j)
+    {
+        if(i<0 || j<0 || i>=board.size() || j>=board[0].size()) return;
+        if(board[i][j] != 'O') return;
+        board[i][j] = '$';
+        dfs(board, i + 1, j);
+        dfs(board, i - 1, j);
+        dfs(board, i, j + 1);
+        dfs(board, i, j - 1);
+    }
+
+    int shortestDistance(vector<vector<int>> &grid) {
+        // write your code here
+        if(grid.empty() || grid[0].empty()) return 0;
+        int m = grid.size(); int n = grid[0].size();
+        vector<pair<int, int>> houses;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(grid[i][j] == 1)
+                {
+                    houses.push_back({i, j});
+                }
+            }
+        }
+        int res = INT_MAX;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(grid[i][j] == 0)
+                {
+                    int sum = 0;
+                    for(auto& h: houses)
+                    {
+                        sum += calcDistance(h.first, h.second, i, j);
+                    }
+                    res = min(res, sum);
+                }
+            }
+        }
+        return res == INT_MAX?-1: res;
+    }
+    int calcDistance(int dx, int dy, int sx, int sy)
+    {
+        return abs(dy-sy)+abs(dx-sx);
+    }
+
+    int shortestDistance2(vector<vector<int>> &grid) {
+        if(grid.empty() || grid[0].empty()) return 0;
+        int m = grid.size(); int n = grid[0].size();
+        vector<int> rows(n, 0);
+        vector<int> cols(m, 0);
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(grid[i][j] == 1)
+                {
+                    rows[i] = rows[i-1]+1;
+                    cols[i] = cols[j-1]+1;
+                }
+                else
+                {
+                    rows[i] = rows[i-1];
+                    cols[i] = cols[j-1];
+                }
+            }
+        }
+        int res = INT_MAX;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(grid[i][j] == 0)
+                {
+                    int temp = calcDistance(rows, cols, i, j);
+                    res = min(res, temp);
+                }
+            }
+        }
+        return res == INT_MAX?-1: res;
+    }
+    int calcDistance(vector<int>& rows, vector<int>& cols, int x, int y)
+    {
+        return 0;
+    }
 };
 
 #endif // DFS_H
