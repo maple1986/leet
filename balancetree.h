@@ -1215,11 +1215,6 @@ private:
         return;
     }
 
-    vector<int> findRedundantConnection1(vector<vector<int>>& edges)
-    {
-
-    }
-
     vector<int> findRedundantConnection(vector<vector<int>>& edges)
     {
         unordered_map<int, vector<int>> graph;

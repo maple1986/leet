@@ -32,7 +32,7 @@ using namespace std;
 
 int main()
 {
-    UnionFind1::test();
+    UnionFindSln::test();
     //Graph1::test();
     //TrieQuestion::test();
     //array1::test();
