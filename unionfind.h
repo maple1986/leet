@@ -141,6 +141,8 @@ class UnionFindSln
         vector<vector<char>> grid = {{'1'}, {'0'}, {'1'}, {'0'}, {'1'}, {'1'}};
         UnionFindSln uf;
         int i = uf.numIslands(grid);
+        vector<vector<int>> edges = {{2,1},{3,1},{4,2},{1,4}};
+        vector<int> j = uf.findRedundantDirectedConnection(edges);
     }
 
     int numIslands(vector<vector<char>> &grid)
@@ -201,10 +203,10 @@ class UnionFindSln
         }
         return {};
     }
-
+    //[[2,1],[3,1],[4,2],[1,4]]
     vector<int> findRedundantDirectedConnection(vector<vector<int>> &edges)
     {
-        UnionFindDirected uf(edges.size());
+        UnionFindDirected uf(edges.size()+1);
         for(auto& edge: edges)
         {
             //int p0 = uf.Find(edge[0]);

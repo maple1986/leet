@@ -4,6 +4,7 @@
         "queue": "cpp",
         "unordered_set": "cpp",
         "xiosbase": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "xstring": "cpp"
     }
 }

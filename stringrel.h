@@ -1098,7 +1098,81 @@ public:
             if(index>=0) return input[index];
             return 0;
         }
+    }
 
+    int expressiveWords(string S, vector<string>& words) {
+        int m = S.length();
+        int n = words.size();
+        if(n == 0) return 0;
+        int res = 0;
+        if(m == 0)
+        {
+            for(string& w: words)
+            {
+                if(w.empty()) res++;
+            }
+            return res;
+        }
+        vector<pair<char, int>> encodeS;
+        encodeS.push_back({S[0], 1});
+        for(int i=1; i<m; ++i)
+        {
+            if(S[i] == S[i-1]) encodeS.back().second++;
+            else encodeS.push_back({S[i], 1});
+        }
+        for(string& w: words)
+        {
+            if(w.size() > m || w.empty()) continue;
+            vector<pair<char, int>> encodeW;
+            encodeW.push_back({w[0], 1});
+            for(int i=1; i<w.size(); ++i)
+            {
+                if(w[i] == w[i-1]) encodeW.back().second++;
+                else encodeW.push_back({w[i], 1});
+            }
+            if(encodeW.size() != encodeS.size())
+                continue;
+            int matched = 0;
+            for(int i=0; i<encodeS.size(); ++i)
+            {
+                if(encodeW[i].first != encodeS[i].first)
+                    break;
+                if(encodeW[i].second == encodeS[i].second || (encodeS[i].second>=3 && encodeW[i].second<=encodeS[i].second))
+                {
+                    matched++;
+                }
+                else break;
+            }
+            if(matched == encodeS.size())
+                res++;
+            //if(canExpand(encodeS, w)) res++;
+        }
+        return res;
+    }
+    //two points
+    int expressiveWords2(string S, vector<string>& words) {
+        int res = 0;
+        for (string & word : words) {
+            int j = 0;
+            int i = 0;
+            for (; i < S.length();) {
+                if (S[i] == word[j]) {
+                    i++;
+                    j++;
+                    continue;
+                }
+
+                if (i > 0 && S[i] == S[i-1] && i < S.length()-1 && S[i] == S[i+1]) { // prev, curr and next
+                    i++;
+                } if (i > 1 && S[i] == S[i-1] && S[i] == S[i-2]) { // curr, prev, prevprev : all same
+                    i++;
+                } else {
+                    break;
+                }
+            }
+            if (i == S.length() && j == word.length()) res++;
+        }
+        return res;
     }
 };
 

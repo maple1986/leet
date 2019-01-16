@@ -5,6 +5,10 @@ void StringRel::test()
     string num1("99");
     string num2("9");
     StringRel str;
+
+    string S = "heeellooo";
+    vector<string> words = {"hello", "hi", "helo"};
+    int i = str.expressiveWords(S, words);
     //str.multiply(num1, num2);
     //str.validWordAbbreviation("internationalization", "i12iz4n");
     //printf("res=[%d]\n",str.canPermutePalindrome("abcc"));
@@ -25,7 +29,7 @@ void StringRel::test()
     vector<int> num3 ={4,3,2,7,8,2,3,1};
     //str.findDisappearedNumbers(num3);
     string A = "abcd", B ="cdabcdab";
-    int i = str.repeatedStringMatch(A, B);
+    i = str.repeatedStringMatch(A, B);
     string a="abc";
     string b="c";
     bool b1= str.canGetString(a,b);
@@ -36,5 +40,6 @@ void StringRel::test()
     string a1="abcde<<";
     string a2="abcd<e<";
     string res = str.inputStream(a1, a2);
+
     i = 0;
 }
