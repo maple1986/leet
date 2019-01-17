@@ -1037,6 +1037,40 @@ public:
     {
         return 0;
     }
+
+
+    int swimInWater(vector<vector<int>>& grid) {
+        int N = grid.size();
+        if(grid[0][0] == N*N-1 || grid[N-1][N-1] == N*N-1)
+            return N*N-1;
+        int l = 0, r = N*N;
+        while(l < r)
+        {
+            int mid = l+(r-l)/2;
+
+            vector<vector<int>> visited(N, vector<int>(N, 0));
+            bool canSwin = dfs(0, 0, mid, grid, visited);
+            if(canSwin)
+            {
+                r = mid;
+            }
+            else
+            {
+                l = mid+1;
+            }
+        }
+        return l;
+    }
+
+    bool dfs(int x, int y, int h, vector<vector<int>>& grid, vector<vector<int>>& visited)
+    {
+        if(x<0 || y<0 || x>=grid.size() || y>= grid.size() || visited[x][y])
+            return false;
+        if(grid[x][y] < h) return false;
+        if(x == grid.size()-1 && y == grid.size()-1) return true;
+        visited[x][y] = 1;
+        return dfs(x-1, y, h, grid, visited) || dfs(x+1, y, h, grid, visited) || dfs(x, y-1, h, grid, visited) || dfs(x, y+1, h, grid, visited);
+    }
 };
 
 #endif // DFS_H
