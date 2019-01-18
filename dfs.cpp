@@ -42,6 +42,8 @@ void DFS::test()
     vector<int> coins1 = {1,2,5};
     i = dfs.coinChange(coins1, 11);
     i = dfs.change(11, coins1);
+    vector<vector<int>> stones = {{0,0},{0,1},{1,0},{1,2},{2,1},{2,2}};
+    i = dfs.removeStones(stones);
     i = 0;
 }
 

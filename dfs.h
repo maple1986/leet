@@ -1037,6 +1037,46 @@ public:
     {
         return 0;
     }
+
+    int removeStones(vector<vector<int>>& stones) {
+        if(stones.size() <= 1) return 0;
+        int n = stones.size();
+        vector<int> visited(n, 0);
+        unordered_map<int, vector<int>> rows;
+        unordered_map<int, vector<int>> cols;
+        for(int i=0; i<stones.size(); ++i)
+        {
+            rows[stones[i][0]].push_back(i);
+            cols[stones[i][1]].push_back(i);
+        }
+        int components = 0;
+        for(int i=0; i<stones.size(); ++i)
+        {
+            if(visited[i]) continue;
+            dfs(stones, i, rows, cols, visited);
+            components++;
+        }
+        return n-components;
+    }
+
+    void dfs(vector<vector<int>>& stones, int i, unordered_map<int, vector<int>>& rows, unordered_map<int, vector<int>>& cols, vector<int>& visited)
+    {
+        if(visited[i]) return;
+        visited[i] = 1;
+        int x = stones[i][0];
+        int y = stones[i][1];
+        for(int j=0; j<rows[x].size(); ++j)
+        {
+            dfs(stones, rows[x][j], rows, cols, visited);
+            //visited[rows[x][j]] = 1;
+        }
+        for(int j=0; j<cols[y].size(); ++j)
+        {
+            dfs(stones, cols[y][j], rows, cols, visited);
+            //visited[cols[y][j]] = 1;
+        }
+        return;
+    }
 };
 
 #endif // DFS_H

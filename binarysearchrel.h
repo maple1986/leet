@@ -37,29 +37,29 @@ public:
         return l;
     }
 
-    int kthSmallest3(vector<vector<int>> &matrix, int k)
-    {
-        // write your code here
-        priority_queue<int> pq;
-        for(int i = 0; i<matrix.size(); ++i)
+    int kthSmallest3(vector<vector<int>>& matrix, int k) {
+        int n = matrix.size();
+        int row = 0, col = n-1;
+        
+        while(true)
         {
-            for(int j=0; j<matrix[0].size(); ++j)
+            int cnt_le = 0, cnt_lt = 0;
+            for(int i=0, j=n-1, p=n-1;i<n; ++i)
             {
-                if(pq.size() >= k)
-                {
-                    if(matrix[i][j] < pq.top())
-                    {
-                        pq.push(matrix[i][j]);
-                        pq.pop();
-                    }
-                }
-                else
-                {
-                    pq.push(matrix[i][j]);
-                }
+                while(j>=0 && matrix[i][j] > matrix[row][col]) j--;
+                    cnt_le += (j+1);
+                
+                while(p>=0 && matrix[i][p] >= matrix[row][col]) p--;
+                    cnt_lt += (p+1);
+            }
+            if (cnt_le < k) {         // candidate solution too small so increase it
+                row++; 
+            } else if (cnt_lt >= k) { // candidate solution too large so decrease it
+                col--;
+            } else {// candidate solution equal to the kth smallest element so return
+                return matrix[row][col];
             }
         }
-        return pq.top();
     }
 
 

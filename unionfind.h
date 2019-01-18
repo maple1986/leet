@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 class UnionFind
@@ -70,6 +71,12 @@ class UnionFind2
             }
         }
         return true;
+    }
+
+    int getrank(int x)
+    {
+        int px = Find(x);
+        return ranks[px];
     }
 
   private:
@@ -143,6 +150,8 @@ class UnionFindSln
         int i = uf.numIslands(grid);
         vector<vector<int>> edges = {{2,1},{3,1},{4,2},{1,4}};
         vector<int> j = uf.findRedundantDirectedConnection(edges);
+        vector<int> row = {0, 2, 1, 3};
+        i = uf.minSwapsCouples(row);
     }
 
     int numIslands(vector<vector<char>> &grid)
@@ -216,5 +225,78 @@ class UnionFindSln
         }
         return {};
     }
+
+    int removeStones(vector<vector<int>>& stones) {
+        //unordered_map<int, pair<int, int>> rows;
+        //unordered_map<int, pair<int, int>> cols;
+        UnionFind2 uf(20000);
+        for(auto& stone: stones)
+        {
+            int x = stone[0];
+            int y = stone[1];
+            uf.Union(stone[0], stone[1]+10000);
+            /*
+            int id = x*10000+y;
+            if(!rows.count(x))
+                rows[x] = {x, y};
+            else
+            {
+                int id2 = rows[x].first*10000+rows[x].second;
+                uf.Union(id, id2);
+            }
+            if(!cols.count(y))
+                cols[y] = {x, y};
+            {
+                int id2 = cols[x].first*10000+cols[x].second;
+                uf.Union(id, id2);
+            }
+            */
+        }
+        unordered_set<int> roots;
+        for(auto& stone: stones)
+        {
+            /*
+            int x = stone[0];
+            int y = stone[1];
+            int id = x*10000+y;
+            */
+            roots.insert(uf.Find(stone[0]));
+        }
+        return stones.size()-roots.size();
+    }
+
+    int minSwapsCouples(vector<int>& row) {
+        int n = row.size();
+        UnionFind2 uf(n);
+        for(int i=0; i<n; i+=2)
+        {
+            int first = row[i];
+            int second = row[i+1];
+            uf.Union(first, second);
+            if(first&1)
+                uf.Union(first, first-1);
+            else
+                uf.Union(first, first+1);
+            if(second&1)
+                uf.Union(second, second-1);
+            else
+                uf.Union(second, second+1);
+        }
+        int res = 0;
+        unordered_set<int> seen;
+        for(int i=0; i<n; i++)
+        {
+            int px = uf.Find(row[i]);
+            if(seen.count(px)) continue;
+            seen.insert(px);
+            int rank = uf.getrank(px);
+            if(rank != 2)
+            {
+                res += rank/2-1;
+            }
+        }
+        return res;
+    }
+
 };
 #endif // UNIONFIND_H

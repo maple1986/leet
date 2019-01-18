@@ -13,7 +13,8 @@ void binarySearchRel::test()
     vector<int> line2 = {10, 11, 12, 13, 14, 15};
     matrix.push_back(line1);
     matrix.push_back(line2);
-    bs.kthSmallest(matrix, 7);
+    vector<vector<int>> matrix1 = {{1,5,9},{10,11,13},{12,13,15}};
+    bs.kthSmallest3(matrix1, 8);
 
     vector<int> v1 = {5,7,7,8,8,10};
     vector<int> v2 = {-1};
