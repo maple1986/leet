@@ -57,7 +57,7 @@ int main()
     //NSum::test();
     //backtrack::test();
     //constructRel::test();
-    //DFS::test();
+    DFS::test();
     //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();
