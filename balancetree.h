@@ -848,7 +848,7 @@ private:
         gernerateGraph(root->right, graph);
     }
 
-    void flatten(TreeNode* root)
+    void flatten2(TreeNode* root)
     {
         /*
         if(!root) return NULL;
@@ -2158,6 +2158,37 @@ private:
             }
         }
         return res == INT_MAX?-1:res;
+    }
+
+    void flatten(TreeNode* root) {
+        if(!root) return;
+        flattenHelper(root);
+    }
+
+    TreeNode* flattenHelper(TreeNode* root)
+    {
+        if(!root) return NULL;
+        if(!root->left && !root->right)
+            return root;
+        if(!root->left)
+        {
+            root->right = flattenHelper(root->right);
+        }
+        else if(!root->right)
+        {
+            root->right = flattenHelper(root->left);
+            root->left = NULL;
+        }
+        else
+        {
+            TreeNode* right = root->right;
+            root->right = flattenHelper(root->left);
+            root->left = NULL;
+            TreeNode* cur = root->right;
+            while(cur->right) cur = cur->right;
+            cur->right = flattenHelper(right);
+        }
+        return root;
     }
 };
 

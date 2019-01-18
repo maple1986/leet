@@ -1115,7 +1115,7 @@ public:
         }
         vector<pair<char, int>> encodeS;
         encodeS.push_back({S[0], 1});
-        for(int i=1; i<m; ++i)
+        for(int i=1; i<n; ++i)
         {
             if(S[i] == S[i-1]) encodeS.back().second++;
             else encodeS.push_back({S[i], 1});
@@ -1137,7 +1137,7 @@ public:
             {
                 if(encodeW[i].first != encodeS[i].first)
                     break;
-                if(encodeW[i].second == encodeS[i].second || (encodeS[i].second>=3 && encodeW[i].second<=encodeS[i].second))
+                if(encodeW[i].second == encodeS[i].second || (encodeS[i].second>=3 && encodeW[i].second<encodeS[i].second))
                 {
                     matched++;
                 }
@@ -1149,30 +1149,49 @@ public:
         }
         return res;
     }
-    //two points
-    int expressiveWords2(string S, vector<string>& words) {
-        int res = 0;
-        for (string & word : words) {
-            int j = 0;
-            int i = 0;
-            for (; i < S.length();) {
-                if (S[i] == word[j]) {
-                    i++;
-                    j++;
-                    continue;
-                }
 
-                if (i > 0 && S[i] == S[i-1] && i < S.length()-1 && S[i] == S[i+1]) { // prev, curr and next
-                    i++;
-                } if (i > 1 && S[i] == S[i-1] && S[i] == S[i-2]) { // curr, prev, prevprev : all same
-                    i++;
-                } else {
-                    break;
-                }
-            }
-            if (i == S.length() && j == word.length()) res++;
+    string findReplaceString(string S, vector<int>& indexes, vector<string>& sources, vector<string>& targets) {
+        if(S.empty() || indexes.empty()) return S;
+        /*
+        map<int, int> mpIndex;
+        for(int i=0; i<indexes.size(); ++i)
+        {
+            mpIndex[indexes[i]] = i;
         }
-        return res;
+        */
+        vector<pair<int, int>> mpIndex;
+        for(int i=0; i<indexes.size(); ++i)
+        {
+            mpIndex.push_back({indexes[i], i});
+        }
+        sort(mpIndex.rbegin(), mpIndex.rend());
+        int n = S.length();
+        auto it = mpIndex.begin();
+        for(; it != mpIndex.end(); ++it)
+        {
+            //if(matched(S, it->first, sources[it->second]))
+            //{
+                //S.replace(S.begin()+it->first, S.begin()+it->first+sources[it->second].length(), targets[it->second]);
+            int i = it->first, j = it->second;
+            if(S.substr(i, sources[j].length()) == sources[j])
+            {
+                //S.replace(S.begin()+it->first, S.begin()+it->first+sources[it->second].length(), targets[it->second]);
+                S = S.substr(0, i) + sources[j] + S.substr(i+sources[j].length());
+            }
+            //}
+        }
+        return S;
+    }
+
+    bool matched(string& S, int index, string& source)
+    {
+        int m = S.length(), n = source.length();
+        if(index + n > m) return false;
+        for(int i=0; i<n; ++i)
+        {
+            if(S[i+index] != source[i]) return false;            
+        }
+        return true;
     }
 };
 

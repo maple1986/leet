@@ -76,8 +76,49 @@ for (i = k; stream != null; i++) {
     if (p < k) reservoir[p] = stream[i];
 return reservoir;
     */
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return true;
+        vector<bool> res(n, false);
+        res[0] = true;
+        for(int i=0; i<n; ++i)
+        {
+            if(!res[i]) continue;
+            int sIdx = i, eIdx = min(n-1, i+nums[i]);
+            for(int j=sIdx; j<=eIdx; ++j)
+            {
+                res[j] = true;
+            }
+        }
+        return res[n-1];
+    }
+
+    bool canJumpGreedy(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return true;
+        int reach = 0;
+        for(int i=0; i<n; ++i)
+        {
+            if(i > reach || reach >= n-1) break;
+            reach = max(reach, i+nums[i]);
+        }
+        return reach >= n-1;
+    }
+
+    int canJump2(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return 0;
+        vector<int> dp(n, 0); 
+        for(int i=0; i<n; ++i)
+        {
+            
+        }
+        //return reach >= n-1?step:-1;
+    }
 private:
     std::map<int, int> _values;
+
+
 };
 
 #endif // GREEDY_H

@@ -5,6 +5,8 @@
         "unordered_set": "cpp",
         "xiosbase": "cpp",
         "xutility": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "xtree": "cpp",
+        "unordered_map": "cpp"
     }
 }

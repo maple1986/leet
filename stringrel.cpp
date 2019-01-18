@@ -39,7 +39,12 @@ void StringRel::test()
     i = str.repeatedString(C, D);
     string a1="abcde<<";
     string a2="abcd<e<";
-    string res = str.inputStream(a1, a2);
+    //string res = str.inputStream(a1, a2);
+    a1 = "abcd";
+    vector<int> indexes = {0, 2};
+    vector<string> source = {"a", "cd"};
+    vector<string> dest = {"eee", "ffff"};
 
+    string res = str.findReplaceString(a1, indexes, source, dest);
     i = 0;
 }

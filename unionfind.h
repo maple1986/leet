@@ -2,6 +2,7 @@
 #define UNIONFIND_H
 #include <string>
 #include <vector>
+#include <set>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -298,5 +299,53 @@ class UnionFindSln
         return res;
     }
 
+    vector<vector<string>> accountsMerge(vector<vector<string>> &accounts)
+    {
+        unordered_map<string, int> emailToId;
+        unordered_map<int, string> emailToUser;
+        int id = 0;
+        for(auto & a: accounts)
+        {
+            for(int i=1; i<a.size(); ++i)
+            {
+                if(!emailToId.count(a[i]))
+                {
+                    emailToId[a[i]] = id++;
+                }
+                emailToUser[emailToId[a[i]]] = a[0];
+            }
+        }
+        UnionFind2 uf(id);
+        for(auto & a: accounts)
+        {
+            for(int i=2; i<a.size(); ++i)
+            {
+                uf.Union(emailToId[a[i]], emailToId[a[i-1]]);
+            }
+        }
+        unordered_map<int, set<string>> res;
+        for(auto & a: accounts)
+        {
+            for(int i=1; i<a.size(); ++i)
+            {
+                int curId = uf.Find(emailToId[a[i]]);
+                //res[curId].push_back(a[i]);
+                if(res.count(curId))
+                    res[curId].insert(a[i]);
+                else
+                {
+                    res[curId].insert(emailToUser[curId]);
+                    res[curId].insert(a[i]);
+                }
+            }
+        }
+        vector<vector<string>> res2;
+        for(auto& g: res)
+        {
+            //vector<string> res3(g.second);
+            //res2.emplace_back(vector<string>(g.second));
+        }
+        return res2;
+    }
 };
 #endif // UNIONFIND_H
