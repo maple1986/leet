@@ -49,6 +49,45 @@ public:
         }
         return maxlen;
     }
+
+    string minWindow(string &S, string &T) {
+        // Write your code here
+        int m = S.length(), n = T.length();
+        if(m < n) return "";
+        int l=0, r=0, len=INT_MAX;
+        string res;
+        for(int r=0; r<m; ++r)
+        {
+            //if(isSubseq(S, l, r, T))
+            //{
+                while(isSubseq(S, l, r, T))
+                {
+                    if(r-l+1 < len)
+                    {
+                        len = r-l+1;
+                        res = S.substr(l, len);
+                    }
+                    l++;
+                }
+            //}
+        }
+        return len == INT_MAX?"":res;
+    }
+
+
+    bool isSubseq(string& S, int l, int r, string& T)
+    {
+        int m = r - l + 1;
+        int n = T.length();
+        if(m < n) return false;
+        int i=l, j=0;
+        for(; i<=r && j<n; ++i)
+        {
+            if(S[i] == T[j])
+                j++;
+        }
+        return j == n;
+    }
 };
 
 #endif // TWOPOINTER_H

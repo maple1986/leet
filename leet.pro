@@ -36,7 +36,8 @@ SOURCES += main.cpp \
     intervalrel.cpp \
     constructrel.cpp \
     unionfind.cpp \
-    utils.cpp
+    utils.cpp \
+    stackheapqueue.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -71,4 +72,5 @@ HEADERS += \
     intervalrel.h \
     constructrel.h \
     unionfind.h \
-    utils.h
+    utils.h \
+    stackheapqueue.h
