@@ -36,7 +36,7 @@ int main()
     //Graph1::test();
     //TrieQuestion::test();
     //array1::test();
-    TwoPointer::test();
+    //TwoPointer::test();
     //binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
@@ -53,7 +53,7 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
+    DPRel::test();
     //NSum::test();
     //backtrack::test();
     //constructRel::test();

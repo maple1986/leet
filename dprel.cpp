@@ -8,6 +8,10 @@ DPRel::DPRel()
 void DPRel::test()
 {
     DPRel dprel;
+    //int j = dprel.uniquePath(4, 5);
+    vector<int> cost = {1,1,2,2}, damage = {1,2,4,5};
+    int totalMoney = 4, totalDamage = 10;
+    dprel.cardGame(cost, damage, totalMoney, totalDamage);
     string s = dprel.longestPalindrome("abacab");
     vector<int> nums = {7,1,5,3,6,4};
     dprel.deleteAndEarn(nums);
