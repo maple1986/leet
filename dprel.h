@@ -1674,6 +1674,36 @@ public:
         }
         return len+1;
     }
+
+    int uniquePath(int height, int width) {
+        // Write your code here
+        int MOD = 1e9+7;
+        vector<vector<long>> dp(height+1, vector<long>(width+1, 0));
+        dp[1][1] = 1;
+        for(int i=0; i<height; ++i)
+        {
+            dp[i][1] = 1;
+        }
+        for(int i=0; i<width; ++i)
+        {
+            dp[1][i] = 1;
+        }
+        for(int i=2; i<=height; ++i)
+        {
+            for(int j=2; j<=width; ++j)
+            {
+                //dp[i][j] = dp
+            }
+        }
+    }
+
+    bool cardGame(vector<int> &cost, vector<int> &damage, int totalMoney, int totalDamage) {
+        // Write your code here
+        if(totalDamage == 0) return true;
+        if(totalMoney == 0) return false;
+        vector<vector<int>> dp(totalMoney+1, vector<int>(totalDamage+1, 0));
+        for(int i=1;)
+    }
 };
 
 

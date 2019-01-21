@@ -569,7 +569,7 @@ Expected
         // # write your code here
     }
 
-    int shortestDistance(vector<vector<int>> &grid)
+    int shortestDistanceBuildPostOffice(vector<vector<int>> &grid)
     {
         // write your code here
         if (grid.empty() || grid[0].empty())
@@ -577,14 +577,17 @@ Expected
         int m = grid.size();
         int n = grid[0].size();
         //vector<int> rows, cols;
-        vector<pair<int, int>> houses;
+        vector<int> rows(m, 0);
+        vector<int> cols(n, 0);
         for (int i = 0; i < m; ++i)
         {
             for (int j = 0; j < n; ++j)
             {
                 if (grid[i][j] == 1)
                 {
-                    houses.push_back({i, j});
+                    //houses.push_back({i, j});
+                    rows[i]++;
+                    cols[j]++;
                 }
             }
         }
@@ -596,10 +599,12 @@ Expected
                 if (grid[i][j] == 0)
                 {
                     int sum = 0;
+                    /*
                     for (auto &h : houses)
                     {
                         sum += calcDistance(h.first, h.second, i, j);
                     }
+                    */
                     res = min(res, sum);
                 }
             }
