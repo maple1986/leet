@@ -256,6 +256,17 @@ public:
         return res;
     }
 
+    vector<Interval> insert4(vector<Interval> &intervals, Interval newInterval) {
+        if(intervals.empty())
+        {
+            return {newInterval};
+        }
+        auto func = [](const Interval& l, const Interval& r)
+        {return l.start < r.start;}
+        auto it  = lower_bound(intervals.begin(), intervals.end(), fuc);
+        auto it2 = upper_bound(intervals.begin(), intervals.end(), fuc);
+    }
+
     static void test();
 };
 

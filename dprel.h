@@ -1680,25 +1680,29 @@ public:
         int MOD = 1e9+7;
         vector<vector<long>> dp(height+1, vector<long>(width+1, 0));
         dp[1][1] = 1;
-        for(int i=1; i<=min(height, width); ++i)
+        for(int i=0; i<height; ++i)
         {
-            dp[i][i] = 1;
+            dp[i][1] = 1;
         }
-        //Utils::printVV(dp);
-        for(int j=2; j<=width; ++j)
+        for(int i=0; i<width; ++i)
         {
-            for(int i=1; i<min(j, height); ++i)
+            dp[1][i] = 1;
+        }
+        for(int i=2; i<=height; ++i)
+        {
+            for(int j=2; j<=width; ++j)
             {
-                dp[i][j] = dp[i][j-1] + dp[i-1][j-1] + dp[i+1][j-1];
-                //Utils::printVV(dp);
+                //dp[i][j] = dp
             }
         }
-        //Utils::printVV(dp);
-        return dp[1][width]%MOD;
     }
 
     bool cardGame(vector<int> &cost, vector<int> &damage, int totalMoney, int totalDamage) {
         // Write your code here
+        if(totalDamage == 0) return true;
+        if(totalMoney == 0) return false;
+        vector<vector<int>> dp(totalMoney+1, vector<int>(totalDamage+1, 0));
+        //for(int i=1; i<=totalMoney)
         if(totalDamage == 0) return true;
         if(totalMoney == 0) return false;
         int m = cost.size();
@@ -1710,16 +1714,17 @@ public:
                 dp[i][j] = dp[i-1][j];
                 if(j >= cost[i-1])
                     dp[i][j] = max(dp[i][j], dp[i-1][j-cost[i-1]]+damage[i-1]);
-                Utils::printVV(dp);
+                //Utils::printVV(dp);
+                //if(dp[i][j] >= totalDamage) return true;
             }
         }
         Utils::printVV(dp);
-        int res = 0;
-        for(int i=1; i<=totalMoney; ++i)
-        {
-            res = max(dp[m][i], res);
-        }
-        return res >= totalDamage;
+        return false;
+    }
+
+    int putBox(vector<int> &box, vector<int> &position) {
+        // Write your code here
+        
     }
 };
 

@@ -1110,6 +1110,10 @@ public:
         visited[x][y] = 1;
         return dfs(x-1, y, h, grid, visited) || dfs(x+1, y, h, grid, visited) || dfs(x, y-1, h, grid, visited) || dfs(x, y+1, h, grid, visited);
     }
+
+    vector<vector<int>> magicSquare(int n) {
+        // Write your code here
+    }
 };
 
 #endif // DFS_H

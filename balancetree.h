@@ -655,6 +655,26 @@ private:
         return NumofChildren(root->left)+NumofChildren(root->right)+1;
     }
 
+    int kthSmallest1(TreeNode * root, int k) {
+        // write your code here
+        TreeNode * pre = NULL, *cur = root;
+        //int res = 0;
+        while(cur)
+        {
+            if(!cur->left)
+            {
+                if(--k == 0)
+                    return cur->val;
+                cur = cur->right;
+            }
+            else
+            {
+                pre = cur;
+                //while()
+            }
+        }
+        return -1;
+
     TreeNode* addOneRow(TreeNode* root, int v, int d)
     {
         if(!root) return NULL;
@@ -848,7 +868,7 @@ private:
         gernerateGraph(root->right, graph);
     }
 
-    void flatten2(TreeNode* root)
+    void flatten(TreeNode* root)
     {
         /*
         if(!root) return NULL;
@@ -2190,6 +2210,31 @@ private:
         }
         return root;
     }
+
+    void flatten1(TreeNode* root) {
+        if(!root) return;
+        while(root)
+        {
+            if(!root->left && !root->right)
+                return;
+            if(!root->left)
+            {
+                root = root->right;
+                continue;
+            }
+            if(!root->right)
+            {
+                root->right = root->left;
+                root->left  = NULL;
+                root = root->right;
+                continue;
+            }
+            else{
+                TreeNode* right = root->right;
+            }
+        }
+    }
+
 };
 
 #endif // BALANCETREE_H
