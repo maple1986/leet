@@ -669,11 +669,12 @@ private:
             }
             else
             {
-                pre = cur;
+                cur = cur->left;
                 //while()
             }
         }
         return -1;
+    }
 
     TreeNode* addOneRow(TreeNode* root, int v, int d)
     {
