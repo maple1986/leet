@@ -9,6 +9,9 @@ void StringRel::test()
     string S = "heeellooo";
     vector<string> words = {"hello", "hi", "helo"};
     int i = str.expressiveWords(S, words);
+    string s1 = "abc";//"abababababababa";
+    string word = "cde";//"cvb";
+    string ans = str.getAns(s1, word);
     //str.multiply(num1, num2);
     //str.validWordAbbreviation("internationalization", "i12iz4n");
     //printf("res=[%d]\n",str.canPermutePalindrome("abcc"));

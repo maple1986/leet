@@ -6,6 +6,7 @@
 #include <stack>
 #include <algorithm>
 #include <unordered_map>
+#include <unordered_set>
 using namespace std;
 //Definition for singly-linked list.
 struct ListNode {
@@ -579,6 +580,37 @@ public:
         while(cur->next) cur = cur->next;
         return cur;
     }
+
+    ListNode *detectCycle(ListNode *head) {
+        unordered_set<ListNode*> seen;
+        if(!head) return NULL;
+        while(head)
+        {
+            if(seen.count(head))
+                return head;
+            seen.insert(head);
+            head = head->next;
+        }
+        return NULL;
+    }
+    /*
+    2(L1+L2) = L1+L2+x+L2
+    2L1 + 2L2 = L1+2L2+x
+    => nx = L1
+    */
+    ListNode *detectCycle2(ListNode *head) {
+        unordered_set<ListNode*> seen;
+        if(!head) return NULL;
+        while(head)
+        {
+            if(seen.count(head))
+                return head;
+            seen.insert(head);
+            head = head->next;
+        }
+        return NULL;
+    }
+
 };
 
 #endif // LISTSOLUTIONS_H

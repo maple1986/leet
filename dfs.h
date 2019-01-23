@@ -1114,6 +1114,10 @@ public:
     vector<vector<int>> magicSquare(int n) {
         // Write your code here
     }
+
+    bool compute24(vector<double> &nums) {
+        // write your code here
+    }
 };
 
 #endif // DFS_H

@@ -1193,6 +1193,38 @@ public:
         }
         return true;
     }
+
+    string getAns(string &s, string &word) {
+        // Write a code here
+        int m = s.length(), n = word.length();
+        if(m == 0 && n == 0) return "yes";
+        if(m < n) return "no";
+        //if(s.find(word) != string::npos) return "yes";
+        
+        bool found = true;
+        for(int st=0; st<m-n+1; ++st)
+        {
+            vector<int> from(26, -1);
+            vector<int> to(26, -1);
+            int i = st;
+            for(int j=0; j<n; ++j, ++i)
+            {
+                if(from[word[j]-'a'] == s[i]) continue;
+                if(from[word[j]-'a'] == -1 && to[s[i]-'a'] == -1)
+                {
+                    from[word[j]-'a'] = s[i];
+                    to[s[i]-'a'] = word[j];
+                } 
+                else
+                {
+                    found = false;
+                    break;
+                }
+            }
+            if(found) return "yes";
+        }
+        return "no";
+    }
 };
 
 #endif // STRINGREL_H

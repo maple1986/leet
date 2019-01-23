@@ -1701,7 +1701,7 @@ public:
         // Write your code here
         if(totalDamage == 0) return true;
         if(totalMoney == 0) return false;
-        vector<vector<int>> dp(totalMoney+1, vector<int>(totalDamage+1, 0));
+        //vector<vector<int>> dp(totalMoney+1, vector<int>(totalDamage+1, 0));
         //for(int i=1; i<=totalMoney)
         if(totalDamage == 0) return true;
         if(totalMoney == 0) return false;

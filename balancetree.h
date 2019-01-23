@@ -869,7 +869,7 @@ private:
         gernerateGraph(root->right, graph);
     }
 
-    void flatten(TreeNode* root)
+    void flatten2(TreeNode* root)
     {
         /*
         if(!root) return NULL;
