@@ -944,6 +944,69 @@ public:
         }
         return j == n;
     }
+
+    void calc_next(const string& P, vector<int>& next)
+    {
+        next[0] = -1;
+        int k = -1;//k初始化为-1
+        for (int q = 1; q < P.length(); q++)
+        {
+            while (k > -1 && P[k + 1] != P[q])//如果下一个不同，那么k就变成next[k]，注意next[k]是小于k的，无论k取任何值
+            {
+                k = next[k];//往前回溯
+            } 
+            if (P[k + 1] == P[q])//如果相同，k++ 
+            {
+                k = k + 1;
+            }
+            next[q] = k;//这个是把算的k的值（就是相同的最大前缀和最大后缀长）赋给next[q]
+        }
+    }
+    
+
+    void calc_next1(const string& P, vector<int>& next)
+    {
+        
+        for(int i=1; i<P.size(); ++i)
+        {
+            int l = 0, r = l+1;
+            int match = 0;
+            while(r<i)
+            {
+                if(P[l++] == P[r++])
+                    match++;
+                else
+                {
+                    break;
+                }        
+            }
+            next[i] = match;
+        }
+
+    }
+
+    int KMP(const string& T, const string& P)
+    {
+        int m = T.size(), n = P.size();
+        if(n == 0) return 0;
+        if(m < n) return -1;
+        vector<int> next(n, 0);
+        calc_next(P, next);
+        int s = 0;
+        int j = 0;
+        while(s < m)
+        {
+            j = 0;
+            while(T[s+j] == P[j])
+            {
+                j++;
+                if(j>=n)
+                    return s;
+            }
+            j = next[j];
+        }
+        return -1;
+    }
     //const int maxNum = 1005;
     //int shift[maxNum];
     int Sunday(const string& T, const string& P) {

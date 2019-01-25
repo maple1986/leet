@@ -9,6 +9,9 @@ void StringRel::test()
     string S = "heeellooo";
     vector<string> words = {"hello", "hi", "helo"};
     int i = str.expressiveWords(S, words);
+    i = str.Sunday("substringsearching", "search");
+    i = str.KMP("cdeabab", "abab");
+    /*
     string s1 = "abc";//"abababababababa";
     string word = "cde";//"cvb";
     string ans = str.getAns(s1, word);
@@ -31,12 +34,13 @@ void StringRel::test()
 
     vector<int> num3 ={4,3,2,7,8,2,3,1};
     //str.findDisappearedNumbers(num3);
+    */
     string A = "abcd", B ="cdabcdab";
     i = str.repeatedStringMatch(A, B);
     string a="abc";
     string b="c";
     bool b1= str.canGetString(a,b);
-    i = str.Sunday("substringsearching", "search");
+
     str.wordsCompression2({A, B});
     string C = "jcwsijl", D = "sijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljcwsijljc";
     i = str.repeatedString(C, D);

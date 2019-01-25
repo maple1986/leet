@@ -1757,8 +1757,9 @@ public:
 
     int numOfPlan(int n, int totalProfit, int totalCost, vector<int> &a, vector<int> &b) {
         // Write your code here
-        int m = cost.size();
-        vector<vector<int>> dp(m+1, vector<int>(totalMoney+1, 0));
+        /*
+        int m = a.size();
+        vector<vector<int>> dp(m+1, vector<int>(totalCost+1, 0));
         for(int i=1; i<=m; ++i)
         {
             for(int j=1; j<=totalMoney; ++j)
@@ -1770,6 +1771,8 @@ public:
         }
         Utils::printVV(dp);
         return false;
+        */
+        return 0;
     }
 };
 

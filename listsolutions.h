@@ -611,6 +611,25 @@ public:
         return NULL;
     }
 
+    ListNode* removeElements(ListNode* head, int val) {
+        if(!head) return NULL;
+        ListNode dummy(0);
+        ListNode* cur = &dummy;
+        cur->next = head;
+        while(cur->next)
+        {
+            if(cur->next->val == val)
+                cur->next = cur->next->next;
+            else
+                cur = cur->next;  
+        }
+        return dummy.next;
+    }
+    //Given 1->2->3->4, reorder it to 1->4->2->3.
+    //Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+    void reorderList(ListNode* head) {
+        
+    }
 };
 
 #endif // LISTSOLUTIONS_H
