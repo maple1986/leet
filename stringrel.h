@@ -54,12 +54,45 @@ public:
 
     string longestCommonPrefix(vector<string>& strs)
     {
-        return "";
+        if(strs.empty() || strs.size() == 1) return "";
+        string prefix;
+        for(int i=0; i<strs[0].length(); ++i)
+        {
+            char c = strs[0][i];
+            for(int j=1; j<strs.size(); ++j)
+            {
+                if(i >= strs[j].size() || c != strs[j][i]) return prefix;
+            }
+            prefix += c;
+        }
+        return prefix;
     }
 
     string longestPalindrome(string s)
     {
-        return "";
+        int n = s.length();
+        if(n <= 1) return s;
+        unordered_map<char, int> counter;
+        for(char c: s)
+        {
+            counter[c]++;
+        }
+        auto it = counter.begin();
+        string res;
+        bool odd = false;
+        for(; it != counter.end(); ++it)
+        {
+            if(it->second%2 == 0)
+            {
+                string apd(it->first, it->second/2);
+                res = apd + res + apd;
+            }
+            else if(!odd)
+            {
+                //res.insert(res.length()/2, it->first);
+            }
+        }
+        return res;
     }
 
     bool isPalindrome(string& s, int right)
