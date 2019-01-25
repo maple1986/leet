@@ -1697,7 +1697,7 @@ public:
         }
     }
 
-    bool cardGame(vector<int> &cost, vector<int> &damage, int totalMoney, int totalDamage) {
+    bool cardGame2(vector<int> &cost, vector<int> &damage, int totalMoney, int totalDamage) {
         // Write your code here
         if(totalDamage == 0) return true;
         if(totalMoney == 0) return false;
@@ -1722,9 +1722,54 @@ public:
         return false;
     }
 
+    int pickFruits(vector<int> &arr) {
+        // Write your code here.
+        int n = arr.size();
+        if(n <= 2) return n;
+        int l = 0, r = 0;
+        int count = 2;
+        unordered_map<int, int> fruits;
+        int res = 0;
+        for(; r<n; ++r)
+        {
+            fruits[arr[r]]++;
+            while(fruits.size() > 2)
+            {
+                if(fruits[arr[l]]-- == 1)
+                {
+                    fruits.erase(arr[l]);
+                }
+                l++;
+            }
+            res = max(res, r-l+1);
+        }
+        return res;
+    }
+
     int putBox(vector<int> &box, vector<int> &position) {
         // Write your code here
         
+    }
+
+    int maintenance(int n, int m, vector<pair<int, int>> &badcomputers) {
+        // Write your code here
+    }
+
+    int numOfPlan(int n, int totalProfit, int totalCost, vector<int> &a, vector<int> &b) {
+        // Write your code here
+        int m = cost.size();
+        vector<vector<int>> dp(m+1, vector<int>(totalMoney+1, 0));
+        for(int i=1; i<=m; ++i)
+        {
+            for(int j=1; j<=totalMoney; ++j)
+            {
+                dp[i][j] = dp[i-1][j];
+                if(j >= cost[i-1])
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-cost[i-1]]+damage[i-1]);
+            }
+        }
+        Utils::printVV(dp);
+        return false;
     }
 };
 

@@ -18,3 +18,13 @@ void Utils::printVV(vector<vector<int> > &vv)
     }
     printf("\n");
 }
+
+void Utils::printVC(vector<char>& v)
+{
+
+}
+
+void Utils::printVVC(vector<vector<char>>& v)
+{
+
+}

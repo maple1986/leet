@@ -347,5 +347,51 @@ class UnionFindSln
         }
         return res2;
     }
+
+    int Find(vector<int>& parents, int x)
+    {
+        if(x != parents[x])
+        {
+            parents[x] = Find(parents, parents[x]);
+        }
+        return parents[x];
+    }
+
+    int getAns(vector<vector<int>> &mp) {
+        // Write your code here.
+        if(mp.empty() || mp[0].empty()) return 0;
+        int m = mp.size(), n = mp[0].size();
+        vector<int> parents(m+n, 0);
+        for(int i=0; i<parents.size(); ++i)
+            parents[i] = i;
+        int res = 0;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(mp[i][j] == 1)
+                {
+                    int pi = Find(parents, i);
+                    int pj = Find(parents, j+m);
+                    if(pi != pj) parents[pj] = pi;
+                    res++;
+                }
+            }
+        }
+        unordered_set<int> roots;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(mp[i][j] == 1)
+                {
+                    roots.insert(Find(parents, i));
+                }
+            }
+        }
+        return res-roots.size();
+    }
+
+
 };
 #endif // UNIONFIND_H
