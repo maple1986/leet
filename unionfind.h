@@ -153,6 +153,8 @@ class UnionFindSln
         vector<int> j = uf.findRedundantDirectedConnection(edges);
         vector<int> row = {0, 2, 1, 3};
         i = uf.minSwapsCouples(row);
+        vector<Point> op = {{1,1},{0,1},{3,3},{3,4}};
+        uf.numIslands2(4, 5, op);
     }
 
     int numIslands(vector<vector<char>> &grid)
@@ -390,6 +392,52 @@ class UnionFindSln
             }
         }
         return res-roots.size();
+    }
+
+    struct Point {
+        int x;
+        int y;
+        Point() : x(0), y(0) {}
+        Point(int a, int b) : x(a), y(b) {}
+    };
+
+    vector<int> numIslands2(int n, int m, vector<Point> &operators) {
+        // write your code here
+        //int m = r, n = c;
+        int k = operators.size();
+        if(m == 0 || n == 0) return vector<int>(k, 0);
+        vector<vector<int>> grid(n, vector<int>(m, 0));
+        UnionFind2 uf(n*m);
+        int cnt = 0;
+        vector<int> res;
+        for(int i=0; i<operators.size(); ++i)
+        {
+            int x = operators[i].x;
+            int y = operators[i].y;
+            grid[x][y] = 1;
+            cnt++;
+            unordered_set<int> seen;
+            for(int j=0; j<4; ++j)
+            {
+                int tx = x + dx[i];
+                int ty = y + dy[i];
+                if(tx < 0 || tx >= n || ty<0 || ty >=m || grid[tx][ty] != 1) continue;
+                //seen.insert(uf.Find(tx*m+ty));
+                int pa = uf.Find(x*m+y);
+                int pb = uf.Find(tx*m+ty);
+                if(pa != pb)
+                {
+                    uf.Union(pa, pb);
+                    cnt--;
+                }
+
+            }
+            //for(int label: seen)
+            //    uf.Union(label, x*m+y);
+            //cnt -= seen.size();
+            res.push_back(cnt);
+        }
+        return res;
     }
 
 

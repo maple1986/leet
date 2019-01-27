@@ -583,7 +583,85 @@ public:
         return;
     }
 
+    int maxVacationDays2(vector<vector<int>> &flights, vector<vector<int>> &days) {
+        // Write your code here
+        N_ = flights.size();
+        K_ = days[0].size();
+
+        for(int i=0; i<N_; ++i)
+        {
+            _flights[i].emplace_back(i);
+            for(int j=0; j<N_; ++j)
+            {
+                if(flights[i][j] == 1)
+                {
+                    _flights[i].emplace_back(j);
+                }
+            }
+        }
+        memo_ = vector<vector<int>>(N_, vector<int>(K_, -1));
+        int res = 0;
+        //int cur = 0;
+        //dfs(0, 0, days, cur, res);
+        //for(int dst : _flights[0])
+        //{
+        res = maxVacationDaysHelper(0, 0, days);
+        return res;
+        //}
+        //return res;
+    }
+
+    int maxVacationDaysHelper(int start, int week, vector<vector<int>>& days)
+    {
+        if(week == K_)
+        {
+            return 0;
+        }
+        if(memo_[start][week] >= 0) return memo_[start][week];
+        int maxD = 0;
+        for(int dst : _flights[start])
+        {
+            maxD = max(maxD, maxVacationDaysHelper(dst, week+1, days)+days[dst][week]);
+        }
+        memo_[start][week] = maxD;
+        Utils::printVV(memo_);
+        return maxD;
+    }
+
+    int maxVacationDays3(vector<vector<int>> &flights, vector<vector<int>> &days) {
+        // Write your code here
+        int N = flights.size();
+        int K = days[0].size();
+        vector<vector<int>> dp(N, vector<int>(K, -1));
+        for(int i=0; i<N; ++i)
+            dp[i][K-1] = days[i][K-1];
+        Utils::printVV(dp);
+        for(int j=K-2; j>=0; --j)
+            for(int i=0; i<N; ++i){
+                for(int f=0; f<N; ++f)
+                {
+                    if(flights[i][f] || f == i)
+                    {
+                        dp[i][j] = max(dp[i][j], dp[f][j+1]+days[i][j]);
+                        Utils::printVV(dp);
+                    }
+                }
+            }
+        Utils::printVV(dp);
+        int res = 0;
+        for(int i=0; i<N; ++i)
+        {
+            if(i == 0 || flights[0][i])
+                res = max(res, dp[0][i]);
+        }
+        return res;
+    }
+
     unordered_map<int, vector<int>> _flights;
+    vector<vector<int>> memo_;
+    int N_;
+    int K_;
+
     vector<vector<int>> _mem;
 
     int longestIncreasingPath(vector<vector<int>>& matrix) {

@@ -22,6 +22,9 @@ void DFS::test()
         printf("%s\n", it->c_str());
         ++it;
     }
+    vector<vector<int>> flt = {{0,1,1},{1,0,1},{1,1,0}};
+    vector<vector<int>> day = {{1,3,1},{6,0,3},{3,3,3}};
+    int j = dfs.maxVacationDays3(flt, day);
 
     vector<vector<char>> image = {{'0','0','1','0'},{'0','1','1','0'},{'0','1','0','0'}};
     dfs.minArea(image, 0, 2);

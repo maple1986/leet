@@ -42,7 +42,7 @@ int main()
     //NumofOnes::test();
     //SortAlg::test();
     //BitsRel::test();
-    StringRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
@@ -57,7 +57,7 @@ int main()
     //NSum::test();
     //backtrack::test();
     //constructRel::test();
-    //DFS::test();
+    DFS::test();
     //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();
