@@ -5,6 +5,7 @@
 #include <set>
 #include <unordered_set>
 #include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 class UnionFind
@@ -83,6 +84,59 @@ class UnionFind2
   private:
     vector<int> parents;
     vector<int> ranks;
+};
+
+class UnionFind3
+{
+  public:
+    UnionFind3(int n)
+    {
+        parents = vector<int>(n, 0);
+        for (int i = 0; i < parents.size(); ++i)
+        {
+            parents[i] = i;
+        }
+        ranks = vector<int>(n, 1);
+    }
+
+    int Find(int x)
+    {
+        if (x != parents[x])
+        {
+            parents[x] = Find(parents[x]);
+        }
+        return parents[x];
+    }
+
+    int Find(const string& str)
+    {
+        if(!dict.count(str))
+            dict[str] = maxId++;
+        int id = dict[str];
+        return Find(id);
+    }
+
+    bool Union(int x, int y)
+    {
+        int px = Find(x);
+        int py = Find(y);
+        if(px == py) return false;
+        parents[py] = px;
+        ranks[px] += ranks[py];    
+        return true;
+    }
+
+    int getrank(int x)
+    {
+        int px = Find(x);
+        return ranks[px];
+    }
+
+  private:
+    vector<int> parents;
+    vector<int> ranks;
+    unordered_map<string, int> dict;
+    int maxId;
 };
 
 class UnionFindDirected
@@ -440,6 +494,55 @@ class UnionFindSln
         return res;
     }
 
+    bool isSentenceSimilarity(vector<string> &words1, vector<string> &words2, vector<vector<string>> &pairs) {
+        if(words1.size() != words2.size()) return false;
+        if(words1.empty()) return true;
+        int n = words1.size();
+        unordered_map<string, set<int>> ids;
+        int id = 0;
+        for(auto& p: pairs)
+        {
+            ids[p[0]].insert(id);
+            ids[p[1]].insert(id);
+            id++;
+        }
+        for(int i=0; i<words1.size(); ++i)
+        {
+            if(words1[i] == words2[i]) continue;
+            if(!ids.count(words1[i]) || !ids.count(words2[i]))
+                return false;
+            vector<int> c;
+            set_intersection(ids[words1[i]].begin(), ids[words1[i]].end(), ids[words2[i]].begin(), ids[words1[i]].end(), back_inserter(c));
+            if(c.empty())
+                return false;
+        }
+        return true;
+    }
 
+    bool areSentencesSimilarTwo(vector<string>& words1, vector<string>& words2, vector<pair<string, string>> pairs) {
+        if(words1.size() != words2.size()) return false;
+        if(words1.empty()) return true;
+        int n = words1.size();
+        int id = 0;
+        UnionFind3 uf(pairs.size()*2+1);
+        //int id = 0;
+        for(auto& p: pairs)
+        {
+            int p0 = uf.Find(p.first);
+            int p1 = uf.Find(p.second);
+            uf.Union(p0, p1);
+        }
+
+        for(int i=0; i<n; ++i)
+        {
+            string& l = words1[i];
+            string& r = words2[i];
+            if(l == r) continue;
+            if(uf.Find(l) != uf.Find(r))
+                return false;
+        }
+
+        return true;
+    }
 };
 #endif // UNIONFIND_H

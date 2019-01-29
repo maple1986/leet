@@ -9,8 +9,12 @@ void StringRel::test()
     string S = "heeellooo";
     vector<string> words = {"hello", "hi", "helo"};
     int i = str.expressiveWords(S, words);
-    i = str.Sunday("substringsearching", "search");
-    i = str.KMP("cdeabab", "abab");
+    //i = str.Sunday("substringsearching", "search");
+    //i = str.KMP("cdeabab", "abab");
+    S = "3[a]2[bc]";
+    string res1 = str.decodeString(S);
+    S = "Mg(OH)2";
+    res1 = str.countOfAtoms2(S);
     /*
     string s1 = "abc";//"abababababababa";
     string word = "cde";//"cvb";

@@ -8,6 +8,9 @@
         "xstring": "cpp",
         "xtree": "cpp",
         "unordered_map": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "set": "cpp",
+        "map": "cpp",
+        "string": "cpp"
     }
 }

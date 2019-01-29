@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     constructrel.cpp \
     unionfind.cpp \
     utils.cpp \
-    stackheapqueue.cpp
+    stackheapqueue.cpp \
+    minmax.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -73,4 +74,5 @@ HEADERS += \
     constructrel.h \
     unionfind.h \
     utils.h \
-    stackheapqueue.h
+    stackheapqueue.h \
+    minmax.h

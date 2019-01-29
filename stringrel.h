@@ -1321,6 +1321,166 @@ public:
         }
         return "no";
     }
+
+    string decodeString(string s) {
+        if(s.empty()) return s;
+        int i = 0;
+        return decode(s, i);
+    }
+
+    string decode(string& str, int& i)
+    {
+        string res;
+        int cnt = 0;
+        while(i < str.length())
+        {
+            char c = str[i];
+            if(isdigit(c))
+            {
+                cnt = cnt*10 + c - '0';
+                i++;
+            }
+            else if(c == '[')
+            {
+                i++;
+                string t = decode(str, i);
+                while(cnt--) res += t;
+                cnt = 0;
+            }
+            else if(c == ']')
+            {
+                i++;
+                return res;
+            }
+            else
+            {
+                res += c;
+                i++;
+            }
+        }
+        return res;
+    }
+
+    int scoreofParentheses(string s)
+    {
+        return getScore(s, 0, s.length()-1);
+    }
+
+    int getScore(string& str, int s, int e)
+    {
+        //if(s >= e) return 1;
+        //if(s+1 == e) return 1;
+        int balance = 0, score = 0, begin = s;
+        for(int i=s; i<=e; ++i)
+        {
+            char c = str[i];
+            if(c == '(')
+            {
+                balance++;
+            }
+            else if( c == ')')
+            {
+                balance--;
+            }
+            if(balance == 0)
+            {
+                if(begin+1 == i) score += 1;
+                else
+                    score += 2*getScore(str, begin+1, i-1);
+                begin = i+1;
+            }
+        }
+        return score;
+    }
+
+    string countOfAtoms2(string formula) {
+        if(formula.empty()) return formula;
+        map<string, int> dict;
+        int i = 0;
+        dict = countOfAtomsHelp(formula, i);
+        string res;
+        for(auto v : dict)
+        {
+            res += v.first;
+            if(v.second > 1)
+                res += to_string(v.second);
+        }
+        return res;
+    }
+
+    map<string, int> countOfAtomsHelp(string& formula, int& i)
+    {
+        map<string, int> dict;
+        while(i < formula.length())
+        {
+            char c = formula[i];
+            if(c == '(')
+            {
+                map<string, int> tmp = countOfAtomsHelp(formula, ++i);
+                int cnt = getCount1(formula, i);
+                for(auto& kv: tmp)
+                {
+                    dict[kv.first] += cnt * kv.second;
+                }
+            }
+            else if(c ==')')
+            {
+                i++;
+                return dict;
+            }
+            else
+            {
+                string name = getName1(formula, i);
+                int count = getCount1(formula, i);
+                dict[name] += count;
+            }
+        }
+        return dict;
+    }
+
+    int getCount1(string& formula, int& i)
+    {
+        if(!isdigit(formula[i]))
+            return 1;
+        string cnt;
+        while(isdigit(formula[i]))
+            cnt += formula[i++];
+        return stoi(cnt);
+    }
+    string getName1(string& formula, int& i)
+    {
+        string name;
+        if(isupper(formula[i]))
+        {
+            name += formula[i++];
+            while(islower(formula[i]))
+            {
+                name += formula[i++];
+            }
+        }
+        return name;
+    }
+    //"abbbabbbcabbbabbbc"
+    string encode(string &s) {
+        // write your code here
+    }
+    
+    int calculate(string s) {
+        int i = 0;
+        return calcHelper(s, 0);
+    }
+
+    int calcHelper(string&s, int& i)
+    {
+        int res = 0;
+        while(i<s.length())
+        {
+            while(isspace(s[i])) i++;
+            char c = s[i];
+            if(isdigit(c))
+                res
+        }
+    }
 };
 
 #endif // STRINGREL_H
