@@ -1467,19 +1467,48 @@ public:
     
     int calculate(string s) {
         int i = 0;
-        return calcHelper(s, 0);
+        return calcHelper(s, i);
     }
 
     int calcHelper(string&s, int& i)
     {
         int res = 0;
+        int op = 1;
         while(i<s.length())
         {
-            while(isspace(s[i])) i++;
+            while(isspace(s[i]) && i<s.length()) i++;
             char c = s[i];
-            if(isdigit(c))
-                res
+            if(c == '(')
+            {
+                res += op*calcHelper(s, ++i);
+            }
+            else if( c == ')')
+            {
+                ++i;
+                return res;
+            }
+            else if( c== '+')
+            {
+                ++i;
+                op = 1;
+            }
+            else if (c == '-')
+            {
+                ++i;
+                op = -1;
+            }
+            else
+            {
+                int tmp = 0;
+                while(isdigit(s[i]))
+                {
+                    tmp = tmp*10 + s[i] - '0';
+                    i++;
+                }
+                res += op * tmp;
+            }
         }
+        return res;
     }
 };
 
