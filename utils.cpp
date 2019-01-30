@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "stdio.h"
 
+
 void Utils::printV(vector<int> &v)
 {
     for(int i : v)
@@ -21,7 +22,6 @@ void Utils::printVV(vector<vector<int> > &vv)
 
 void Utils::printVC(vector<char>& v)
 {
-
 }
 
 void Utils::printVVC(vector<vector<char>>& v)

@@ -1774,6 +1774,32 @@ public:
         */
         return 0;
     }
+
+    int getMoneyAmount(int n) {
+        if(n < 2) return 0;
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        for(int i=1; i<n; ++i)
+        {
+            dp[i][i+1] = i;
+        }
+        for(int len=3; len<=n; ++len)
+        {
+            for(int i=1; i<n; ++i)
+            {
+                int j = i+len-1;
+                if(j > n) continue;
+                int Min = INT_MAX;
+                for(int k=i+1; k<j; ++k)
+                {
+                    int localMax = k + max(dp[i][k-1], dp[k+1][j]);
+                    Min = min(Min, localMax);
+                }
+                dp[i][j] = Min;
+                Utils::printVV(dp);
+            }
+        }
+        return dp[1][n];
+    }
 };
 
 
