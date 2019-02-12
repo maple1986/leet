@@ -306,6 +306,22 @@ public:
         }
         return res;
     }
+
+    void wiggleSort2(vector<int> &nums) {
+        // write your code here
+        if(nums.empty()) return;
+        sort(nums.begin(), nums.end());
+        vector<int> res;
+        int i = 0, j = (nums.size()+1)/2, k = j;
+        while(j<nums.size())
+        {
+            res.push_back(nums[i++]);
+            res.push_back(nums[j++]);
+        }
+        if(i < k) res.push_back(nums[i++]);
+        nums.swap(res);
+        return;
+    }
 };
 
 #endif // ARRAY1_H

@@ -413,6 +413,41 @@ public:
 
     vector<string> wordsAbbreviation(vector<string> &dict) {
         // write your code here
+        return {};
+    }
+    int kthLargestElement(int n, vector<int> &nums) {
+        // write your code here
+        //sort(nums.rbegin(), nums.rend());
+        int res = 0;
+        return qSort(0, nums, 0, nums.size()-1, res);
+        //return res;
+    }
+
+    int qSort(int n, vector<int> &nums, int s, int e, int& res)
+    {
+        if(s >= e)
+            return s;
+        int p = nums[s];
+        int i = s, j = e, pos = s;
+        while(i < j)
+        {
+            while(i<j && nums[j] >= p) j--;
+            if(i<j)
+            {
+                nums[i] = nums[j];
+            }
+            while(i<j && nums[i] <= p) i++;
+            if(i<j)
+            {
+                nums[j] = nums[i];
+            }
+        }
+        nums[i] = p;
+        if(i == n) return i;
+        else if(i > n)
+            return qSort(n, nums, s, i-1, res);
+        else
+            return qSort(n, nums, i+1, e, res);
     }
 };
 

@@ -413,6 +413,43 @@ public:
         }
     }
 
+    vector<vector<int>> threeSum3(vector<int> &numbers) {
+        // write your code here
+        int n = numbers.size();
+        if(n < 3) return {};
+        vector<vector<int>> res;
+        sort(numbers.begin(), numbers.end());
+        if(numbers[0] > 0) return {};
+        if(numbers.back()<0) return {};
+        unordered_map<int, int> counter;
+        for(int i: numbers) counter[i]++;
+        for(int i=0; i<numbers.size(); ++i)
+        {
+            counter[numbers[i]]--;
+            if(i>0 && numbers[i] == numbers[i-1]) continue;
+            int a = numbers[i];
+            for(auto& kv: counter)
+            {
+                if(kv.second == 0) continue;
+                int b = kv.first;
+                int c = -a-b;
+                if(c < b) continue;
+                else if(c == b)
+                {
+                    if(counter[b] >=2)
+                        res.push_back({a, b, c});
+                }
+                else
+                {
+                    if(counter.count(c))
+                        res.push_back({a, b, c});
+                }
+            }
+        }
+        return res;
+    }
+
+
     vector<vector<int>> fourSum(vector<int>& nums, int target)
     {
         vector<vector<int>> quadruplets;

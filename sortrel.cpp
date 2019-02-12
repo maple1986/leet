@@ -15,6 +15,8 @@ void sortrel::test()
     v.push_back(it2);
     v.push_back(it3);
     sortrel sortl;
+    vector<int> nums = {9,3,2,4,8,10,9,12};
+    sortl.kthLargestElement(0, nums);
     sortl.merge(v);
     vector<int> v1 = {282475249,622650073,984943658,144108930,470211272,101027544,457850878,458777923};
     vector<int> v2 = {823564440,115438165,784484492,74243042,114807987,137522503,441282327,16531729,823378840,143542612};
