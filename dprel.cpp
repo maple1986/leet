@@ -34,7 +34,11 @@ void DPRel::test()
 
     int i = dprel.minimumDeleteSum_dp("delete", "leet");
     i = dprel.minDistance("eat", "sea");
-
+    vector<vector<int>> stations = {{15,457},{156,194},{160,156},{230,314},{390,159},{621,20},{642,123},{679,301}};
+    i = dprel.minRefuelStops(1000, 83, stations);
+    vector<int> pack = {3,4,8,5};
+    i = dprel.backPack(10, pack);
+    i = dprel.backPack1(10, pack);
     vector<int> nums5 = {1,2,3,2,1};
     vector<int> nums6 = {3,2,1,4,7};
     i = dprel.findLength(nums5, nums6);

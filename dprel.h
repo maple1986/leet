@@ -1800,6 +1800,116 @@ public:
         }
         return dp[1][n];
     }
+
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+        if(startFuel >= target) return 0;
+        int n = stations.size();
+        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
+        for(int i=0; i<n; ++i)
+        {
+            dp[i][0] = startFuel;
+            //dp[0][i] = startFuel;
+        }
+/*
+        for(int j=1; j<=n; ++j)
+        {
+            for(int i=1; i<=n; ++i)
+            {
+                //dp[i] = max(dp[i], dp[i-1]+stations[j][1]);
+                if(dp[i-1][j-1] >= stations[i-1][0])
+                {
+                    dp[i][j] = dp[i-1][j-1] + stations[i-1][1];
+                    Utils::printVV(dp);
+                }
+                else dp[i][j] = dp[i-1][j];
+                if(dp[i][j] >= target) return j;
+            }
+        }
+*/
+        //{{15,457},{156,194},{160,156},{230,314},{390,159},{621,20},{642,123},{679,301}};
+        for(int i=1; i<=n; ++i)
+        {
+            for(int j=1; j<=i; ++j)
+            {
+                if(dp[i-1][j-1] >= stations[i-1][0])
+                {
+                    dp[i][j] = dp[i-1][j-1] + stations[i-1][1];
+                }
+                if( j<=i-1)
+                    dp[i][j] = max(dp[i][j], dp[i-1][j]);
+                //dp[i][j] = max(dp[i-1][j-1], 0);
+                Utils::printVV(dp);
+            }
+        }
+        return -1;
+    }
+    int minRefuelStops1(int target, int startFuel, vector<vector<int>>& stations) {
+        if(startFuel >= target) return 0;
+        int n = stations.size();
+        vector<int> dp(n+1, 0);
+        dp[0] = startFuel;
+        for(int i=1; i<=n; ++i)
+        {
+            for(int j=i; j>=1; --j)
+            {
+                if(dp[j-1] >= stations[i-1][0])
+                {
+                    dp[j] = max(dp[j], dp[j-1] + stations[i-1][1]);
+                }
+            }
+            Utils::printV(dp);
+        }
+
+        for(int j=1; j<=n; ++j)
+        {
+            if(dp[j] >= target) return j;
+        }
+
+        return -1;
+    }
+
+    int backPack(int m, vector<int> &A) {
+        // write your code here
+        int n = A.size();
+        if(n == 0 || m == 0) return 0;
+        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+        for(int i=1; i<=n; ++i)
+        {
+            for(int j=1; j<=m; ++j)
+            {
+                if(j < A[i-1])
+                {
+                    dp[i][j] = dp[i-1][j];
+                    continue;
+                }
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-A[i-1]]+A[i-1]);
+
+            }
+        }
+        Utils::printVV(dp);
+        return dp[n][m];
+    }
+
+    int backPack1(int m, vector<int> &A) {
+        int n = A.size();
+        if(n == 0 || m == 0) return 0;
+        vector<int> dp(m+1, 0);
+        for(int i=1; i<=n; ++i)
+        {
+            //for(int j=1; j<=m; ++j)
+            //{
+            for(int j=m; j>=1; --j)
+            {
+                if(j < A[i-1])
+                {
+                    continue;
+                }
+                dp[j] = max(dp[j], dp[j-A[i-1]]+A[i-1]);
+            }
+            Utils::printV(dp);
+        }
+        return dp[m];
+    }
 };
 
 
