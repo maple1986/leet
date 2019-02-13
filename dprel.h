@@ -1910,6 +1910,64 @@ public:
         }
         return dp[m];
     }
+
+    vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
+        int m = nums1.size(), n = nums2.size();
+        if(k == 0) return {};
+        string ans;
+        for(int k1=0; k1<min(m, k); ++k1)
+        {
+            string res;
+            int k2 = k-k1;
+            string s1 = KLarge(nums1, k1);
+            string s2 = KLarge(nums2, k2);
+            int i1=0, i2=0;
+            while(i1<k1 && i2<k2)
+            {
+                if(s1[i1] <= s2[i2])
+                {
+                    res += s2[i2];
+                    i2++;
+                }
+                else
+                {
+                    res += s1[i1];
+                    i1++;
+                }
+            }
+            if(i1<k1) res += s1.substr(i1);
+            else if(i2<k2) res += s2.substr(i2);
+            if(res > ans) ans.swap(res);
+        }
+        vector<int> v;
+        for(char c: ans)
+        {
+            if(v.empty() && c == '0') continue;
+            v.push_back(c-'0');
+        }
+        return v;
+    }
+
+    string Klarge(vector<int>& nums, int k)
+    {
+        string res;
+        int abandon = nums.size()-k;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            while(!res.empty() && res.back()-'0'<nums[i] && abandon>0)
+            {
+                res.pop_back();
+                abandon--;
+            }
+            res.push_back(nums[i]-'0');
+        }
+        while(abandon>0)
+        {
+            res.pop_back();
+            abandon--;
+        }
+        return res;
+    }
 };
 
 
