@@ -1973,7 +1973,6 @@ public:
         if(n == 1) return 0;
         mem_ = vector<int>(n+1, -1);
         int step = 0;
-        n_ = n;
         for(int i=1; i<=n; i*=2)
         {
             mem_[i] = step;

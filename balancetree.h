@@ -1620,6 +1620,29 @@ private:
         dfs(root->right, root->val, cur, res);
     }
 
+    int longestConsecutive1(TreeNode * root) {
+        // write your code here
+        if(!root) return 0;
+        int res = 0;
+        longestConsecutiveRec(root, res);
+        return res;
+    }
+
+    int longestConsecutiveRec(TreeNode *root, int & res)
+    {
+        if(!root) return 0;
+        int ans = 1;
+        int left = longestConsecutiveRec(root->left, res);
+        int right = longestConsecutiveRec(root->right, res);
+        if(root->left && root->left->val == root->val+1)
+            ans = max(ans, left+1);
+        if(root->right && root->right->val == root->val+1)
+            ans = max(ans, right+1);
+        res = max(res, ans);
+        printf("root[%d], len[%d], res[%d]\n", root->val, ans, res);
+        return ans;
+    }
+
     int longestUnivaluePath(TreeNode* root)
     {
         if(!root) return 0;

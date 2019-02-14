@@ -69,6 +69,8 @@ void BalanceTree::test()
     vector<vector<int>> relation1 = {{0,0,0},{0,1,0},{1,1,1}};
     relation1 = bt.updateMatrix(relation1);
     */
+    tree = bt.generateTree("[1,null,2,null,4,null,5,null,6]");
+    bt.longestConsecutive1(tree);
     char* str7 = "[1,2,3,4,5]";
     TreeNode* tree7 = bt.generateTree(str7);
     int j = bt.diameterOfBinaryTree(tree7);
@@ -82,6 +84,8 @@ void BalanceTree::test()
     vector<int> flowers ={3,9,2,8,1,6,10,5,4,7};
     j = bt.kEmptySlots(flowers, 1);
     j = 0;
+    tree8 = bt.generateTree("1,null,2,null,4,null,5,null,6");
+    bt.longestConsecutive1(tree8);
 }
 
 static int isdigit(const char c)
