@@ -28,6 +28,7 @@
 #include "graph1.h"
 #include "bitsrel.h"
 #include "unionfind.h"
+#include "bfs.h"
 using namespace std;
 
 int main()
@@ -35,7 +36,7 @@ int main()
     //UnionFindSln::test();
     //Graph1::test();
     //TrieQuestion::test();
-    array1::test();
+    //array1::test();
     //TwoPointer::test();
     //binarySearchRel::test();
     //sortrel::test();
@@ -53,11 +54,12 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
+    DPRel::test();
     //NSum::test();
     //backtrack::test();
     //constructRel::test();
     //DFS::test();
+    //BFS::test();
     //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();

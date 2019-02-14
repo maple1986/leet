@@ -5,6 +5,13 @@ BFS::BFS()
 
 }
 
+void BFS::test()
+{
+    vector<vector<int>> graph = {{1,2,3},{0},{0},{0}};
+    BFS bfs;
+    int i = bfs.shortestPathLength(graph);
+}
+
 vector<vector<string>> BFS::findLadders(string beginWord, string endWord, vector<string>& wordList) {
     vector<string> result;
     vector<vector<string> > results;

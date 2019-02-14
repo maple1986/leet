@@ -1919,8 +1919,8 @@ public:
         {
             string res;
             int k2 = k-k1;
-            string s1 = KLarge(nums1, k1);
-            string s2 = KLarge(nums2, k2);
+            string s1 = Klarge(nums1, k1);
+            string s2 = Klarge(nums2, k2);
             int i1=0, i2=0;
             while(i1<k1 && i2<k2)
             {
@@ -1968,7 +1968,36 @@ public:
         }
         return res;
     }
+
+    int integerReplacement(int n) {
+        if(n == 1) return 0;
+        mem_ = vector<int>(n+1, -1);
+        int step = 0;
+        n_ = n;
+        for(int i=1; i<=n; i*=2)
+        {
+            mem_[i] = step;
+            step++;
+        }
+        return helper(n);
+    }
+    int helper(int n)
+    {
+        if(mem_[n] != -1) return mem_[n];
+        int step = 0;
+        if(n&1 == 0)
+            step = helper(n/2);
+        else
+            step = 2+min(helper((n-1)/2), helper((n+1)/2));
+        return mem_[n] = step;
+    }
+    vector<int> mem_;
+
+    int integerReplacement1(int n) {
+
+    }
 };
+
 
 
 #endif // DPREL_H

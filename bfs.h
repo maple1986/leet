@@ -10,6 +10,7 @@ class BFS
 {
   public:
     BFS();
+    static void test();
     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string> &wordList);
     int WordGap(string &left, string &right);
     vector<vector<int>> updateMatrix(vector<vector<int>> &matrix)
@@ -147,13 +148,6 @@ class BFS
             }
         }
         return res;
-    }
-
-    int shortestPathLength(vector<vector<int>> &graph)
-    {
-
-        //queue<int> q;
-        //q.push();
     }
 
     int findCheapestPrice(int n, vector<vector<int>> &flights, int src, int dst, int K)
@@ -615,6 +609,43 @@ Expected
     {
         return abs(dy - sy) + abs(dx - sx);
     }
+
+    int shortestPathLength(vector<vector<int>>& graph) {
+        if(graph.size() <= 1) return 0;
+        queue<pair<int, int>> vertex;
+
+        for(int i=0; i<graph.size(); ++i)
+        {
+            int state = 1<<i;
+            vertex.push({i, state});
+        }
+        printf("q size[%d]\n", vertex.size());
+        unordered_set<int> visited;
+        int step = 0;
+        int finished = (1<<graph.size())-1;
+        while(!vertex.empty())
+        {
+            int size = vertex.size();
+            while(size--)
+            {
+                auto cur = vertex.front();
+                vertex.pop();
+                int v = cur.first;
+                int state = cur.second;
+                visited.insert(v<<16|state);
+                if(state == finished) return step;
+                for(int i=0; i<graph[v].size(); ++i)
+                {
+                    if(visited.count(graph[v][i]<<16|(state|1<<graph[v][i]))) continue;
+                    vertex.push({graph[v][i], state|(1<<graph[v][i])});
+                    printf("q size[%d]\n", vertex.size());
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+
 };
 
 #endif // BFS_H

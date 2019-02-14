@@ -8,7 +8,9 @@ DPRel::DPRel()
 void DPRel::test()
 {
     DPRel dprel;
+    int i;
     //int j = dprel.uniquePath(4, 5);
+    i  = dprel.integerReplacement(7);
     vector<int> cost = {1,1,2,2}, damage = {1,2,4,5};
     int totalMoney = 4, totalDamage = 10;
     dprel.cardGame2(cost, damage, totalMoney, totalDamage);
@@ -32,7 +34,7 @@ void DPRel::test()
 
     dprel.countSubstrings1("aaa");
 
-    int i = dprel.minimumDeleteSum_dp("delete", "leet");
+    i = dprel.minimumDeleteSum_dp("delete", "leet");
     i = dprel.minDistance("eat", "sea");
     vector<vector<int>> stations = {{15,457},{156,194},{160,156},{230,314},{390,159},{621,20},{642,123},{679,301}};
     i = dprel.minRefuelStops(1000, 83, stations);
