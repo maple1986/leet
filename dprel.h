@@ -1973,7 +1973,7 @@ public:
         if(n == 1) return 0;
         mem_ = vector<int>(n+1, -1);
         int step = 0;
-        n_ = n;
+        //n_ = n;
         for(int i=1; i<=n; i*=2)
         {
             mem_[i] = step;
@@ -1995,6 +1995,26 @@ public:
 
     int integerReplacement1(int n) {
 
+    }
+
+    bool canPartition(vector<int>& nums) {
+        if(nums.size()<=1) return false;
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        int n = nums.size();
+        if(sum%2) return false;
+        int target = sum/2;
+        vector<vector<int>> dp(n, vector<int>(sum+1, 0));
+        sort(nums.begin(), nums.end());
+        dp[0][0] = 1;
+        for(int i=1; i<=n; ++i)
+        {
+            for(int j=nums[i-1]; j<=target; ++j)
+            {
+                if(dp[i-1][j-nums[i-1]])
+                    dp[i-1][j] = 1;
+            }
+        }
+        return dp[n][target];
     }
 };
 

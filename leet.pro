@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     unionfind.cpp \
     utils.cpp \
     stackheapqueue.cpp \
-    minmax.cpp
+    minmax.cpp \
+    segmenttree.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -75,4 +76,5 @@ HEADERS += \
     unionfind.h \
     utils.h \
     stackheapqueue.h \
-    minmax.h
+    minmax.h \
+    segmenttree.h

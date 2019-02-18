@@ -322,6 +322,27 @@ public:
         nums.swap(res);
         return;
     }
+
+    vector<int> dailyTemperatures(vector<int>& T) {
+        if(T.size()<1) return {0};
+        int n = T.size();
+        vector<int> res(n, 0);
+        stack<int> MonoDecrease;
+        MonoDecrease.push(n-1);
+        for(int i=T.size()-2; i>=0; --i)
+        {
+            while(!MonoDecrease.empty() && T[i] > T[MonoDecrease.top()])
+            {
+                MonoDecrease.pop();
+            }
+            if(MonoDecrease.empty())
+                res[i] = 0;
+            else
+                res[i] = MonoDecrease.top()-i;
+            MonoDecrease.push(i);
+        }
+        return res;
+    }
 };
 
 #endif // ARRAY1_H
