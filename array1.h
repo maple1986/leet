@@ -380,7 +380,7 @@ public:
         return res;
     }
 
-    vector<string> summaryRanges(vector<int>& nums)
+    vector<string> summaryRanges1(vector<int>& nums)
     {
         if(nums.empty()) return {};
         int i = 0, n = nums.size();
@@ -408,8 +408,8 @@ public:
             return to_string(lower)+"->"+to_string(upper);
     }
     //[0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
-    vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
-        vector<int> res;
+    vector<string> findMissingRanges2(vector<int>& nums, int lower, int upper) {
+        vector<string> res;
         if(nums.empty())
         {
             res.push_back(constructRanges(lower, upper));
