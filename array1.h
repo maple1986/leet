@@ -397,34 +397,38 @@ public:
         }
         return res;
     }
+
+    string constructRanges(int lower, int upper)
+    {
+        if(lower>upper)
+            return "";
+        else if(lower==upper)
+            return to_string(lower);
+        else
+            return to_string(lower)+"->"+to_string(upper);
+    }
     //[0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
     vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
         vector<int> res;
         if(nums.empty())
         {
-            if(lower==upper)
-                res.push_back(to_string(lower));
-            else
-                res.push_back(to_string(lower)+"->"+to_string(upper));
+            res.push_back(constructRanges(lower, upper));
+            return res;
         }
-        int l = lower, n = nums.size();
-
-
-        for(int i=0; i<n; ++i)
+        if(lower < nums[0])
+            res.push_back(constructRanges(lower, nums[0]-1));
+        for(int i=0; i<nums.size()-1; ++i)
         {
-            if(nums[i] != l+1)
+            if(nums[i+1] != nums[i]+1)
             {
-                if(l+2 == nums[i])
-                    res.push_back(to_string(l));
-                else
-                    res.push_back(to_string(nums[i])+"->"+to_string(nums[i+j]));
+                res.push_back(constructRanges(nums[i]+1, nums[i+1]-1));
             }
             else
             {
-                start = nums[i];
+
             }
-            i++;
         }
+        return ;
     }
 };
 
