@@ -179,6 +179,51 @@ public:
         }
         return pre1.substr(0, index);
     }
+    //Input: [5,2,6,1]
+    //Output: [2,1,1,0]
+    vector<int> countSmaller(vector<int>& nums) {
+        if(nums.empty()) return {};
+        vector<int> res(nums.size());
+        vector<int> indices(nums.size());
+        split(nums, 0, nums.size()-1, res);
+    }
+
+    void split(vector<int>& nums, int start, int end, vector<int>& res)
+    {
+        if(start >= end)
+        {
+            return;
+        }
+        int mid = start+(end-start)/2;
+        split(nums, start, mid, res);
+        split(nums, mid+1, end, res);
+        merge(nums, start, mid, end, res);
+        return;
+    }
+
+    void merge(vector<int>& nums, int left, int mid, int right, vector<int>& res)
+    {
+        vector<int> merged(right-left+1);
+        int i = left, j =mid+1, k = 0;
+
+        while (i <= mid && j <= right)
+        {
+            if(nums[i] < nums[j])
+            {
+                merged[k++] = nums[i++];
+            }
+            else
+            {
+                merged[k++] = nums[j++];
+            }
+        }
+        while(i<=mid)
+            merged[k++] = nums[i++];
+        while(j<=right)
+            merged[k++] = nums[j++];
+        move(merged.begin(), merged.end(), nums.begin()+left);
+        return;
+    }
 };
 
 #endif // DIVIDEANDCONQUER_H

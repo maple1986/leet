@@ -69,6 +69,10 @@ class BFS
                     //matrix[i][j] = -1;
                     q.push({i, j});
                 }
+                if(matrix[i][j] == 1)
+                {
+                    matrix[i][j] = INT_MAX;
+                }
             }
         }
         int step = 1;
@@ -86,11 +90,10 @@ class BFS
                 {
                     int nx = x + dx[i];
                     int ny = y + dy[i];
-                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && matrix[nx][ny] == 1)
+                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && matrix[nx][ny] == INT_MAX)
                     {
-                        //res[nx][ny] = step;
                         matrix[nx][ny] = step;
-                        //q.push({nx, ny});
+                        q.push({nx, ny});
                     }
                 }
             }

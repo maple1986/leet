@@ -18,4 +18,6 @@ void array1::test()
     arr.nextPermutation1(nums1);
     vector<int> nums2= {1,5,1,1,6,4};
     arr.wiggleSort2(nums2);
+    vector<int> v = {0,1,2,4,5,7};
+    arr.summaryRanges(v);
 }

@@ -919,7 +919,7 @@ public:
         return mem[amount][start];
     }
 
-    int numberOfPatterns(int m, int n) {
+    int numberOfPatterns1(int m, int n) {
         vector<vector<int>> dp(10, vector<int>(10, 0));
         int sum = 0;
         for(int i=1; i<=9; ++i)
@@ -1196,6 +1196,78 @@ public:
     bool compute24(vector<double> &nums) {
         // write your code here
     }
+
+    int numberOfPatterns(int m, int n) {
+        vector<bool> visited(10, false);
+        vector<vector<int>> jumps(10, vector<int>(10, 0));
+        jumps[1][3] = jumps[3][1] = 2;
+        jumps[4][6] = jumps[6][4] = 5;
+        jumps[7][9] = jumps[9][7] = 8;
+        jumps[1][7] = jumps[7][1] = 4;
+        jumps[2][8] = jumps[8][2] = 5;
+        jumps[3][9] = jumps[9][3] = 6;
+        jumps[1][9] = jumps[9][1] = jumps[3][7] = jumps[7][3] = 5;
+        int res = 0, cnt = 0;
+        dfs(1, 1, m, n, visited, jumps, cnt);
+        res = 4*cnt;
+        cnt = 0;
+        dfs(2, 1, m, n, visited, jumps, cnt);
+        res += 4*cnt;
+        cnt = 0;
+        dfs(5, 1, m, n, visited, jumps, cnt);
+        res += cnt;
+        return res;
+    }
+
+    void dfs(int start, int step, int m, int n, vector<bool>& visited, vector<vector<int>>& jumps, int& res)
+    {
+        if(step >= m && step <= n)
+        {
+            res++;
+        }
+        if(step > n)
+            return;
+        visited[start] = true;
+        for(int i=1; i<=9; ++i)
+        {
+            if(visited[i]) continue;
+            if(jumps[start][i] != 0 && !visited[jumps[start][i]]) continue;
+            dfs(i, step+1, m, n, visited, jumps, res);
+        }
+        visited[start] = false;
+        return;
+    }
+
+
+         int dfs(vector<vector<int>>& skip, int visited, int cur, int m, int n) {
+            if (n == 0) return 1;
+            int res = (m <= 0);
+
+            visited |= (1 << cur);
+
+            for (int i = 1; i <= 9; ++i) {
+                // If visited[i] is not visited and (two numbers are adjacent or skip number is already visited)
+                if (!(visited & (1 << i)) && (skip[cur][i] == 0 || (visited & (1 << skip[cur][i])))) {
+                    res += dfs(skip, visited, i, m-1, n-1);
+                }
+            }
+            return res;
+        }
+        int numberOfPatterns(int m, int n) {
+            vector<vector<int>> skip(10,vector<int>(10,0));
+            skip[1][3] = skip[3][1] = 2;
+            skip[1][7] = skip[7][1] = 4;
+            skip[3][9] = skip[9][3] = 6;
+            skip[7][9] = skip[9][7] = 8;
+            skip[1][9] = skip[9][1] = skip[2][8] = skip[8][2] = skip[3][7] = skip[7][3] = skip[4][6] = skip[6][4] = 5;
+
+            int res = 0;
+            res += dfs(skip, 0, 1, m-1, n-1)*4; // 1, 3, 7, 9 are symmetric
+            res += dfs(skip, 0, 2, m-1, n-1)*4; // 2, 4, 6, 8 are symmetric
+            res += dfs(skip, 0, 5, m-1, n-1); // 5
+
+            return res;
+        }
 };
 
 #endif // DFS_H

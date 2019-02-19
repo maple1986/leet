@@ -38,7 +38,7 @@ int main()
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    //binarySearchRel::test();
+    binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();

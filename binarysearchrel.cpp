@@ -8,6 +8,8 @@ binarySearchRel::binarySearchRel()
 void binarySearchRel::test()
 {
     binarySearchRel bs;
+    vector<int> v9={3,2,1,0};
+    bs.countSmaller(v9);
     vector<vector<int>> matrix;
     vector<int> line1 = {0, 1, 2, 3, 4, 5};
     vector<int> line2 = {10, 11, 12, 13, 14, 15};

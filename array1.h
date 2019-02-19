@@ -14,6 +14,20 @@ class array1
 public:
     array1();
     static void test();
+    /*
+     * nums = [0, 1, 3, 50, 75], lower = 0 and upper = 99
+    Output:
+    ["2", "4->49", "51->74", "76->99"]
+    */
+    vector<string> findMissingRanges1(vector<int> &nums, int lower, int upper)
+    {
+        if(nums.size() == static_cast<long>(upper)-lower+1)
+        {
+            return {};
+        }
+
+    }
+
     vector<string> findMissingRanges(vector<int> &nums, int lower, int upper)
     {
         vector<string> res;
@@ -342,6 +356,75 @@ public:
             MonoDecrease.push(i);
         }
         return res;
+    }
+
+    //{0,1,2,4,5,7}
+    vector<string> summaryRanges(vector<int>& nums)
+    {
+        if(nums.empty()) return {};
+        vector<string> res;
+        for(int i=0; i<nums.size();)
+        {
+            int start = i, end = i;
+            while(end<nums.size()-1&&nums[end+1] == nums[end]+1)
+            {
+                end++;
+            }
+
+            if(start == end)
+                res.push_back(to_string(nums[start]));
+            else
+                res.push_back(to_string(nums[start])+"->"+to_string(nums[end]));
+            i = end+1;
+        }
+        return res;
+    }
+
+    vector<string> summaryRanges(vector<int>& nums)
+    {
+        if(nums.empty()) return {};
+        int i = 0, n = nums.size();
+        vector<string> res;
+        while(i<n)
+        {
+            int j = 1;
+            while(i+j<n&&nums[i+j]==nums[i+j-1]+1) j++;
+            if(j==1)
+                res.push_back(to_string(nums[i]));
+            else
+                res.push_back(to_string(nums[i])+"->"+to_string(nums[i+j]));
+            i+=j;
+        }
+        return res;
+    }
+    //[0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
+    vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
+        vector<int> res;
+        if(nums.empty())
+        {
+            if(lower==upper)
+                res.push_back(to_string(lower));
+            else
+                res.push_back(to_string(lower)+"->"+to_string(upper));
+        }
+        int l = lower, n = nums.size();
+
+
+        for(int i=0; i<n; ++i)
+        {
+            if(nums[i] != l+1)
+            {
+                if(l+2 == nums[i])
+                    res.push_back(to_string(l));
+                else
+                    res.push_back(to_string(nums[i])+"->"+to_string(nums[i+j]));
+            }
+            else
+            {
+                start = nums[i];
+            }
+            i++;
+        }
     }
 };
 

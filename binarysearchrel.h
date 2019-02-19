@@ -499,7 +499,7 @@ public:
 
     //Given nums = [5, 2, 6, 1]
     //Return the array [2, 1, 1, 0].
-    vector<int> countSmaller(vector<int>& nums)
+    vector<int> countSmaller1(vector<int>& nums)
     {
         vector<int> sortedNums;
         vector<int> res;
@@ -719,6 +719,53 @@ public:
         }
         */
         return true;
+    }
+
+    struct Node {
+        int val, cnt, smaller;
+        Node *left, *right;
+        ~Node(){delete left; delete right;}
+        Node(int v) : val(v), cnt(1), smaller(0), left(NULL), right(NULL) {}
+    };
+
+    int insert(Node *root, int v) {
+        if(root->val == v)
+        {
+            root->cnt++;
+            return root->smaller;
+        }
+        else if(root->val > v)
+        {
+            root->smaller++;
+            if(!root->left)
+            {
+                //root->smaller++;
+                root->left = new Node(v);
+                return 0;
+            }
+
+            return insert(root->left, v);
+        }
+        else
+        {
+            if(!root->right)
+            {
+                root->right = new Node(v);
+                //root->right->smaller = root->smaller + root->cnt;
+                return root->smaller + root->cnt;
+            }
+            return insert(root->right, v) + root->smaller + root->cnt;
+        }
+    }
+
+    vector<int> countSmaller(vector<int>& nums) {
+        if(nums.empty()) return {};
+        vector<int> res(nums.size(), 0);
+        Node *root = new Node(nums.back());
+        for (int i = nums.size() - 2; i >= 0; --i) {
+            res[i] = insert(root, nums[i]);
+        }
+        return res;
     }
 };
 

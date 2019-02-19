@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     utils.cpp \
     stackheapqueue.cpp \
     minmax.cpp \
-    segmenttree.cpp
+    segmenttree.cpp \
+    bitree.cpp
 
 HEADERS += \
     NumofOnes.h \
@@ -77,4 +78,5 @@ HEADERS += \
     utils.h \
     stackheapqueue.h \
     minmax.h \
-    segmenttree.h
+    segmenttree.h \
+    bitree.h

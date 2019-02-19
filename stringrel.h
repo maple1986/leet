@@ -585,6 +585,7 @@ public:
     char _m2;
     string _sorted;
 
+
     vector<string> summaryRanges(vector<int>& nums)
     {
         vector<string> res;
