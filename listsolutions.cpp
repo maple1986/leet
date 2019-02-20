@@ -8,6 +8,7 @@ ListSolutions::ListSolutions()
 void ListSolutions::test()
 {
     ListSolutions lists;
+    lists.stlListAPI();
     ListNode* head = new ListNode(1);
     //ListNode* p1 = new ListNode(2);
     //head->next = p1;

@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
+#include <list>
+#include <iostream>
 using namespace std;
 //Definition for singly-linked list.
 struct ListNode {
@@ -629,6 +631,21 @@ public:
     //Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
     void reorderList(ListNode* head) {
         
+    }
+
+    void stlListAPI()
+    {
+        vector<int> v1 = {1, 2, 3, 4, 5};
+        list<int> mylist(v1.begin(), v1.end());
+        list<int> mylist2;
+        mylist2.insert(mylist2.end(), mylist.begin(), mylist.end());
+        auto it = mylist2.begin();
+        while(it != mylist2.end())
+        {
+            cout<<*it<<" ";
+            ++it;
+        }
+        return;
     }
 };
 

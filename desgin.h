@@ -222,4 +222,70 @@ private:
     vector<vector<int>> _vecs;
 };
 
+class LFUCache {
+public:
+    
+    LFUCache(int capacity):cap_(capacity), minFreq_(0) {
+        
+    }
+    
+    int get(int key) {
+        if(!mptable_.count(key)) return -1;
+        touch(key);
+        return mptable_[key]->value;
+    }
+    
+    void put(int key, int value) {
+        if(mptable_.count(key))
+        {
+            touch(key);
+            mptable_[key]->value = value;
+        }
+        else
+        {
+            if(mptable_.size() >= cap_)
+            {
+                auto it = freq_[minFreq_].begin();
+                freq_[minFreq_].erase(it);
+            }
+
+            //ListNode node(key, value, 1);
+            freq_[1].emplace_back(key, value, 1);
+            mptable_[key] = --freq_[1].end();
+            minFreq_ = 1;
+        }
+        return;
+    }
+private:
+struct ListNode
+    {
+        ListNode(int k, int v, int f):key(k), value(v), freq(f)
+        {}
+        int key;
+        int value;
+        int freq;
+    };
+
+    void touch(int key)
+    {
+        /*
+        if(!mptable_.count(key)) return;
+        auto it = mptable_[key];
+        if(freq_.count(mptable_[key]))
+        {
+            freq_[it->freq].erase(it);
+            if(freq_[it->freq].empty())
+                minFreq_++;
+        }
+        int newFreq = it->freq+1;
+        freq_[newFreq].splice(freq_[newFreq].end(), freq_[newFreq], it);
+        return;
+        */
+    }
+
+    unordered_map<int, list<ListNode>::iterator> mptable_;
+    unordered_map<int, list<ListNode>> freq_;
+    int cap_;
+    int minFreq_;
+};
 #endif // DESGIN_H

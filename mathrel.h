@@ -224,6 +224,69 @@ public:
         return true;
     }
 
+    int countNumbersWithUniqueDigits(int n)
+    {
+        if(n==0) return 1;
+        if(n==1) return 10;
+        if(n>10) n = 10;
+        //int res = 10;
+        vector<int> dp(n+1, 0);
+        dp[1] = 10, dp[2] = 81;
+        for(int i=3; i<=n; ++i)
+        {
+            dp[i] = dp[i-1]*(10-i+1);
+        }
+        return accumulate(dp.begin(), dp.end(), 0);
+    }
+
+    int countNumbersWithUniqueDigits2(int n) {
+        if(n == 0) return 1;
+        //if(n == 1) return 10;
+        int used = 0;
+        int res = 0;
+        doCountNumbers(1, n, used, res);
+        return res+1;
+    }
+
+    void doCountNumbers(int cur, int n, int used, int& res)
+    {
+        if(cur == n+1)
+        {
+            return;
+        }
+        for(int i=0; i<=9; ++i)
+        {
+            if(used&1<<i) continue;
+            if(cur==1 && i==0) continue;
+            used |= 1<<i;
+            res++;
+            doCountNumbers(cur+1, n, used, res);
+            used &= ~(1<<i);
+        }
+        return;
+    }
+
+    long long countNumbers(long long n) 
+    {
+        if(n <= 10) return 0;
+        if(n <= 99) return 9;
+        string s = to_string(n);
+        int len = s.length();
+        if(len>10) len=10;
+        vector<int> dp(len+1, 0);
+        dp[1] = 10, dp[2] = 81;
+        for(int i=3; i<=n; ++i)
+        {
+            dp[i] = dp[i-1]*(10-i+1);
+        }
+        int unique = accumulate(dp.begin(), dp.end(), 0);
+        if(len>10) return 1e10-unique;
+        else
+        {
+            int all = pow(10, len-1);
+        }
+        return 0;
+    }
 };
 
 #endif // MATHREL_H

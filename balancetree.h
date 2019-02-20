@@ -89,6 +89,7 @@ public:
 #include <stack>
 #include <algorithm>
 #include <map>
+#include <set>
 #include <unordered_set>
 #include <unordered_map>
 #include <sstream>
@@ -2156,6 +2157,37 @@ private:
             counts[id]++;
             return id;
         }
+    }
+
+    int kEmptySlots3(vector<int> &flowers, int k) 
+    {
+        int n = flowers.size();
+        if(n < k+2) return -1;
+        int buckets = ceil(n/(k+1));
+        vector<int> bucketsMin(buckets, INT_MAX);
+        vector<int> bucketsMax(buckets, INT_MIN);
+        for(int i=0; i<flowers.size(); ++i)
+        {
+            int x = flowers[i]/(k+1);
+            
+        }
+    }
+
+    int kEmptySlots2(vector<int> &flowers, int k) {
+        int n = flowers.size();
+        if(n <= k+2) return -1;
+        set<int> bloomed;
+        for(int i=0; i<flowers.size(); ++i)
+        {
+            auto it = bloomed.insert(flowers[i]);
+            auto left = it.first;
+            auto right = left;
+            if(left != bloomed.begin() && *(--left) == flowers[i]-k-1)
+                return i+1;
+            if(++right != bloomed.end() && *(right) == flowers[i]+k+1)
+                return i+1;
+        }
+        return -1;
     }
 
     int kEmptySlots(vector<int> &flowers, int k) {

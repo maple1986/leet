@@ -11,6 +11,7 @@
         "utility": "cpp",
         "set": "cpp",
         "map": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "list": "cpp"
     }
 }

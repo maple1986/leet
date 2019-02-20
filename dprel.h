@@ -2016,6 +2016,29 @@ public:
         }
         return dp[n][target];
     }
+
+    int minCut(string s) {
+        int n = s.size();
+        if(n<=1) return 0;
+        vector<vector<int>> isParlin(n, vector<int>(n, 0));
+        vector<int> minCuts(n, 0);
+        iota(minCuts.begin(), minCuts.end(), 0);
+        for(int i=0; i<n; ++i) isParlin[i][i] = 1;
+        for(int len=2; len<=n; ++len)
+        {
+            for(int i=0; i<n; ++i)
+            {
+                int j = i+len-1;
+                if(j>=n) continue;
+                if(s[i]==s[j]&&((j-i<2)||isParlin[i+1][j-1]))
+                {
+                    isParlin[i][j] = 1;
+                    minCuts[j+1] = min(minCuts[j+1], 1 + minCuts[i]);
+                }   
+            }
+        }
+        return minCuts[n-1];
+    }
 };
 
 

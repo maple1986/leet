@@ -38,7 +38,7 @@ int main()
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    binarySearchRel::test();
+    //binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
@@ -50,7 +50,7 @@ int main()
     MyAtoi::test();
     */
     //IntervalRel::test();
-    //ListSolutions::test();
+    ListSolutions::test();
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
@@ -60,7 +60,7 @@ int main()
     //constructRel::test();
     //DFS::test();
     //BFS::test();
-    BalanceTree::test();
+    //BalanceTree::test();
     //hashRel::test();
     //ZigzagIterator2::test();
     return 0;

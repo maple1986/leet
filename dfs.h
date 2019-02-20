@@ -1253,7 +1253,7 @@ public:
             }
             return res;
         }
-        int numberOfPatterns(int m, int n) {
+        int numberOfPatterns2(int m, int n) {
             vector<vector<int>> skip(10,vector<int>(10,0));
             skip[1][3] = skip[3][1] = 2;
             skip[1][7] = skip[7][1] = 4;
