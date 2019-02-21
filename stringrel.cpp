@@ -5,7 +5,10 @@ void StringRel::test()
     string num1("99");
     string num2("9");
     StringRel str;
-
+    string p = "ABABABA";
+    string p2 ="ABCDABD";
+    vector<int> next(p2.size(), 0);
+    str.calcNext(p2, next);
     string S = "heeellooo";
     vector<string> words = {"hello", "hi", "helo"};
     int i = str.expressiveWords(S, words);

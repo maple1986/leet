@@ -43,14 +43,14 @@ int main()
     //NumofOnes::test();
     //SortAlg::test();
     //BitsRel::test();
-    //StringRel::test();
+    StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
     MyAtoi::test();
     */
     //IntervalRel::test();
-    ListSolutions::test();
+    //ListSolutions::test();
     //MathRel::test();
     //sortrel::test();
     //greedy::test();

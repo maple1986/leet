@@ -1016,7 +1016,6 @@ public:
             }
             next[i] = match;
         }
-
     }
 
     int KMP(const string& T, const string& P)
@@ -1041,6 +1040,44 @@ public:
         }
         return -1;
     }
+
+    void calcNext(const string& p, vector<int>& next)
+    {
+        next[0] = 0;
+        for(int i=1, k=0; i<p.size(); ++i)
+        {
+            while(k>0 && p[k] != p[i]){
+                k = next[k-1];
+            }
+            if(p[k] == p[i])
+                k++;
+            next[i] = k;
+        }
+    }
+
+    int KMP2(const string& T, const string& P)
+    {
+        int m = T.size(), n = P.size();
+        if(n == 0) return 0;
+        if(m < n) return -1;
+        vector<int> next(n, 0);
+        calcNext(P, next);
+        int i = 0;
+        int j = 0;
+        while(i < m)
+        {
+            if (j == -1 || p[i] == p[j])
+            {
+                ++i;
+                ++j;
+                next[i] = j;
+            }
+            else
+                j = next[j];
+        }
+        return -1;
+    }
+
     //const int maxNum = 1005;
     //int shift[maxNum];
     int Sunday(const string& T, const string& P) {
