@@ -16,6 +16,12 @@ struct UndirectedGraphNode {
     UndirectedGraphNode(int x) : label(x) {}
 };
 
+struct DirectedGraphNode {
+    int label;
+    vector<DirectedGraphNode *> neighbors;
+    DirectedGraphNode(int x) : label(x) {}
+};
+
 class Graph1
 {
 public:
@@ -271,6 +277,114 @@ public:
         {
             if(dfs(i, visited, graph))
                 return true;
+        }
+        return false;
+    }
+
+    int sixDegrees(vector<UndirectedGraphNode*> graph, UndirectedGraphNode* s, UndirectedGraphNode* t) {
+        if(s == t) return 0;
+
+        unordered_set<UndirectedGraphNode*> visited;
+        queue<UndirectedGraphNode*> todo;
+        todo.push(s);
+        visited.insert(s);
+        int step = 0;
+        while(!todo.empty())
+        {
+            int size = todo.size();
+            while(size--)
+            {
+                UndirectedGraphNode* top = todo.front();
+                todo.pop();
+                if(top == t) return step;
+                for(UndirectedGraphNode* next: graph[top->label-1]->neighbors)
+                {
+                    if(visited.count(next)) continue;
+                    todo.push(next);
+                    visited.insert(next);    
+                }
+                step++;
+            }
+        }
+        return -1;
+    }
+
+    int sixDegrees2(vector<UndirectedGraphNode*> graph, UndirectedGraphNode* s, UndirectedGraphNode* t) {
+        if(s == t) return 0;
+
+        unordered_set<UndirectedGraphNode*> visited;
+        queue<pair<UndirectedGraphNode*,int>> todo;
+        todo.push({s, 0});
+        visited.insert(s);
+        //int step = 0;
+        while(!todo.empty())
+        {
+            int size = todo.size();
+            while(size--)
+            {
+                auto top = todo.front();
+                todo.pop();
+                if(top.first == t) return top.second;
+                for(UndirectedGraphNode* next: top.first->neighbors)
+                {
+                    if(visited.count(next)) continue;
+                    todo.push({next, top.second+1});
+                    visited.insert(next);    
+                }
+                //step++;
+            }
+        }
+        return -1;
+    }
+
+    vector<vector<int>> connectedSet(vector<UndirectedGraphNode*> nodes) {
+        // write your code here
+        unordered_set<UndirectedGraphNode*> visited;
+        vector<vector<int>> res;
+        for(auto node: nodes)
+        {
+            
+            if(visited.count(node)) continue;
+            visited.insert(node);
+            vector<int> cur;
+            cur.push_back(node->label);
+            queue<UndirectedGraphNode*> todo;
+            todo.push(node);
+            while(!todo.empty())
+            {
+                auto top = todo.front();
+                todo.pop();
+                for(UndirectedGraphNode* next: top->neighbors)
+                {
+                    if(visited.count(next)) continue;
+                    cur.push_back(next->label);
+                    todo.push(next);
+                    visited.insert(next);    
+                }
+            }
+            res.push_back(cur);
+        }
+        return res;
+    }
+
+    bool hasRoute(vector<DirectedGraphNode*> graph, DirectedGraphNode* s, DirectedGraphNode* t) {
+        if(s == t) return 0;
+
+        unordered_set<DirectedGraphNode*> visited;
+        visited.insert(s);
+        queue<DirectedGraphNode*> todo;
+        todo.push(s);
+        while(!todo.empty())
+        {
+            auto top = todo.front();
+            todo.pop();
+            if(top == t) return true;
+            for(DirectedGraphNode* next: top->neighbors)
+            {
+                if(visited.count(next)) continue;
+                todo.push(next);
+                visited.insert(next);    
+            }
         }
         return false;
     }

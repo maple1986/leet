@@ -667,8 +667,9 @@ public:
         while(l<r)
         {
             int mid = l+(r-l)/2;
-
+            int cnt =
         }
+        return l;
     }
 
     bool isPossible(vector<int>& nums) {

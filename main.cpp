@@ -45,7 +45,7 @@ int main()
     //NumofOnes::test();
     //SortAlg::test();
     //BitsRel::test();
-    //StringRel::test();
+    StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
