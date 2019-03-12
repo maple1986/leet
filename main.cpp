@@ -29,10 +29,12 @@
 #include "bitsrel.h"
 #include "unionfind.h"
 #include "bfs.h"
+#include "bitree.h"
 using namespace std;
 
 int main()
 {
+    //BITree::test();
     //UnionFindSln::test();
     //Graph1::test();
     //TrieQuestion::test();
@@ -50,13 +52,13 @@ int main()
     MyAtoi::test();
     */
     //IntervalRel::test();
-    ListSolutions::test();
+    //ListSolutions::test();
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    //backtrack::test();
+    backtrack::test();
     //constructRel::test();
     //DFS::test();
     //BFS::test();

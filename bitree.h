@@ -9,7 +9,7 @@ using namespace std;
 class BITree
 {
 public:
-    BITree();
+    static void test();
 };
 
 class BITreeSolution
@@ -50,6 +50,64 @@ private:
         }
         return ret;
     }
+};
+
+class FenwickTree
+{
+public:
+    FenwickTree(int n):sums_(n+1, 0)
+    {
+    }
+
+    void update(int x, int delta)
+    {
+        int n = sums_.size();
+        while(x<n)
+        {
+            sums_[x] += delta;
+            x += lowbit(x);
+        }
+        return;
+    }
+
+    int query(int x)
+    {
+        int sum = 0;
+        while(x>0)
+        {
+            sum += sums_[x];
+            x -= lowbit(x);
+        }
+        return sum;
+    }
+
+private:
+    static inline int lowbit(int x) {return x&(-x);}
+    vector<int> sums_;
+
+};
+
+class NumArray {
+public:
+    NumArray(vector<int> nums):nums_(std::move(nums)), tree_(nums.size()) {
+        nums_ = nums;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            tree_.update(i+1, nums_[i]);
+        }
+    }
+
+    void update(int i, int val) {
+        tree_.update(i+1, val-nums_[i]);
+        nums_[i] = val;
+    }
+
+    int sumRange(int i, int j) {
+        return tree_.query(j+1)-tree_.query(i);
+    }
+
+    FenwickTree tree_;
+    vector<int> nums_;
 };
 
 #endif // BITREE_H
