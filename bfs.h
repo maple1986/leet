@@ -69,7 +69,7 @@ class BFS
                     //matrix[i][j] = -1;
                     q.push({i, j});
                 }
-                if(matrix[i][j] == 1)
+                if (matrix[i][j] == 1)
                 {
                     matrix[i][j] = INT_MAX;
                 }
@@ -613,34 +613,38 @@ Expected
         return abs(dy - sy) + abs(dx - sx);
     }
 
-    int shortestPathLength(vector<vector<int>>& graph) {
-        if(graph.size() <= 1) return 0;
+    int shortestPathLength(vector<vector<int>> &graph)
+    {
+        if (graph.size() <= 1)
+            return 0;
         queue<pair<int, int>> vertex;
 
-        for(int i=0; i<graph.size(); ++i)
+        for (int i = 0; i < graph.size(); ++i)
         {
-            int state = 1<<i;
+            int state = 1 << i;
             vertex.push({i, state});
         }
         printf("q size[%d]\n", vertex.size());
         unordered_set<int> visited;
         int step = 0;
-        int finished = (1<<graph.size())-1;
-        while(!vertex.empty())
+        int finished = (1 << graph.size()) - 1;
+        while (!vertex.empty())
         {
             int size = vertex.size();
-            while(size--)
+            while (size--)
             {
                 auto cur = vertex.front();
                 vertex.pop();
                 int v = cur.first;
                 int state = cur.second;
-                visited.insert(v<<16|state);
-                if(state == finished) return step;
-                for(int i=0; i<graph[v].size(); ++i)
+                visited.insert(v << 16 | state);
+                if (state == finished)
+                    return step;
+                for (int i = 0; i < graph[v].size(); ++i)
                 {
-                    if(visited.count(graph[v][i]<<16|(state|1<<graph[v][i]))) continue;
-                    vertex.push({graph[v][i], state|(1<<graph[v][i])});
+                    if (visited.count(graph[v][i] << 16 | (state | 1 << graph[v][i])))
+                        continue;
+                    vertex.push({graph[v][i], state | (1 << graph[v][i])});
                     printf("q size[%d]\n", vertex.size());
                 }
             }
@@ -649,6 +653,90 @@ Expected
         return -1;
     }
 
+    int ladderLength(string beginWord, string endWord, vector<string> &wordList)
+    {
+        unordered_set<string> dict;
+        for (string &s : wordList)
+        {
+            dict.insert(s);
+        }
+        if (!dict.count(endWord))
+            return false;
+
+        queue<string> cur;
+        cur.push(beginWord);
+
+        int step = 0;
+        while (!cur.empty())
+        {
+            int size = cur.size();
+            while (size--)
+            {
+                string str = cur.front();
+                cur.pop();
+                if (str == endWord)
+                    return step;
+                for (int i = 0; i < beginWord.length(); ++i)
+                {
+                    char o = beginWord[i];
+                    for (char c = 'a'; c <= 'z'; ++c)
+                    {
+                        if (c == o)
+                            continue;
+                        beginWord[i] = c;
+                        if (dict.count(beginWord))
+                        {
+                            cur.push(beginWord);
+                            dict.erase(beginWord);
+                        }
+                    }
+                    beginWord[i] = o;
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+
+    vector<DirectedGraphNode *> topSort(vector<DirectedGraphNode *> &graph)
+    {
+        // write your code here
+        if (graph.empty())
+            return {};
+        unordered_map<DirectedGraphNode *, int> inDegree;
+        for (auto v : graph)
+        {
+            for (auto v1 : v->neighbors)
+                inDegree[v1]++;
+        }
+        queue<DirectedGraphNode *> q;
+        vector<DirectedGraphNode *> res;
+        for (auto v : graph)
+        {
+            if (!inDegree.count(v) || inDegree[v] == 0)
+            {
+                q.push(v);
+            }
+        }
+        while (!q.empty())
+        {
+            auto t = q.front();
+            q.pop();
+            res.push_back(t);
+            for (auto nei : t->neighbors)
+            {
+                if (--inDegree[nei] == 0)
+                {
+                    q.push(nei);
+                }
+            }
+        }
+        for(auto & kv: inDegree)
+        {
+            if(kv.second > 0) return {};
+        }
+        return res;
+    }
 };
 
 #endif // BFS_H

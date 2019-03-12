@@ -12,6 +12,7 @@
         "set": "cpp",
         "map": "cpp",
         "string": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "xhash": "cpp"
     }
 }
