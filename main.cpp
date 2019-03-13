@@ -39,7 +39,7 @@ int main()
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    binarySearchRel::test();
+    //binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
@@ -55,7 +55,7 @@ int main()
     //MathRel::test();
     //sortrel::test();
     //greedy::test();
-    //DPRel::test();
+    DPRel::test();
     //NSum::test();
     //backtrack::test();
     //constructRel::test();

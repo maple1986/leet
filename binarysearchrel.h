@@ -778,9 +778,10 @@ public:
 
     int minEatingSpeed(vector<int>& piles, int H) {
         if(H<piles.size()) return -1;
+        if(H == piles.size()) return *max_element(piles.begin(), piles.end());
         sort(piles.begin(), piles.end());
         int n = piles.size();
-        int l = piles[0], r = piles[n-1];
+        int l = 1, r = piles[n-1];
         while(l<r)
         {
             int mid = l+(r-l)/2;
@@ -793,7 +794,8 @@ public:
                     cnt += ceil((double)piles[i]/mid);
                 }       
             }
-            if(cnt >= H) l = mid+1;
+            printf("cnt[%d], piles[%d]\n", cnt, mid);
+            if(cnt > H) l = mid+1;
             else r = mid;
         }
         return l;
