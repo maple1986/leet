@@ -737,6 +737,76 @@ Expected
         }
         return res;
     }
+
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        if (!dict.count(endWord)) return {};
+
+        queue<string> cur;
+        cur.push(beginWord);
+        unordered_map<string, vector<string>> children;
+
+        bool found = false;
+        while (!cur.empty() && !found)
+        {
+            int size = cur.size();
+            while (size--)
+            {
+                unordered_set<string> deleteStep;
+                string str = cur.front();
+                string w   = str;
+                cur.pop();
+                for(int i=0; i<str.length(); ++i)
+                {
+                    char o = str[i];
+                    for(char c='a'; c<='z'; ++c)
+                    {
+                        if(c == o) continue;
+                        str[i] = c;
+                        if(endWord == str)
+                        {
+                            children[w].push_back(str);
+                            found = true;
+                        }
+                        if(dict.count(str))
+                        {
+                            children[w].push_back(str);
+                            cur.push(str);
+                            deleteStep.insert(str);
+                        }
+                    }
+                    str[i] = o;
+                }
+                for(const string& s: deleteStep) dict.erase(s);
+            }
+        }
+        vector<vector<string>> res;
+        if(found)
+        {
+            vector<string> cur;
+            hasPath(beginWord, endWord, children, cur, res);
+        }
+
+        return {};
+    }
+
+void hasPath(string& beginWord, string& endWord, unordered_map<string, vector<string>>& children, vector<string>& cur, vector<vector<string>>& res)
+{
+    if(beginWord == endWord)
+    {
+        cur.push_back(endWord);
+        res.push_back(cur);
+        cur.pop_back();
+        return;
+    }
+    for(string& c: children[beginWord])
+    {
+        cur.push_back(c);
+        hasPath(c, endWord, children, cur, res);
+        cur.pop_back();
+    }
+}
+
 };
 
 #endif // BFS_H
