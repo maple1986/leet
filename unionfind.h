@@ -6,7 +6,8 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <algorithm>
-
+#include <numeric>
+#include "utils.h"
 using namespace std;
 class UnionFind
 {
@@ -20,10 +21,6 @@ class UnionFind
         return;
     }
     pair<int, int> Find(const pair<int, int> &)
-    {
-    }
-
-    vector<vector<string>> accountsMerge(vector<vector<string>> &accounts)
     {
     }
 
@@ -202,6 +199,9 @@ class UnionFindSln
     {
         vector<vector<char>> grid = {{'1'}, {'0'}, {'1'}, {'0'}, {'1'}, {'1'}};
         UnionFindSln uf;
+        //[[1,3],[1,4],[2,3,2,4,1],[],[4,3,2]]
+        vector<vector<int>> rooms = {{1,3},{1,4},{2,3,2,4,1},{},{4,3,2}};
+        //uf.canVisitAllRooms(rooms);
         int i = uf.numIslands(grid);
         vector<vector<int>> edges = {{2,1},{3,1},{4,2},{1,4}};
         vector<int> j = uf.findRedundantDirectedConnection(edges);
@@ -544,5 +544,6 @@ class UnionFindSln
 
         return true;
     }
+
 };
 #endif // UNIONFIND_H

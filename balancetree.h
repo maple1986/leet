@@ -94,6 +94,7 @@ public:
 #include <unordered_map>
 #include <sstream>
 #include <utils.h>
+#include <math.h>
 using namespace std;
 
 struct TreeNode {

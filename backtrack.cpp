@@ -11,6 +11,8 @@ void backtrack::test()
 {
     backtrack bt;
     //cout << bt.addBinary1("11", "1") << endl;
+    vector<vector<int>> matrix({{1,1,1},{0,2,0},{2,0,2}});
+    bt.optimalMatch(matrix);
     bt.permute({1, 2, 3});
     bt.letterCasePermutation2("C");
     bt.subsets3({1, 2, 3});

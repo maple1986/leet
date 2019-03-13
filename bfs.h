@@ -13,6 +13,79 @@ class BFS
     static void test();
     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string> &wordList);
     int WordGap(string &left, string &right);
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        if(!dict.count(endWord)) return 0;
+
+        queue<string> cur;
+        cur.push(beginWord);
+        int step = 0;
+
+        //wordList.push_back(endWord);
+        while (!cur.empty())
+        {
+            int size = cur.size();
+            while(--size)
+            {
+                string str = cur.front();
+                cur.pop();
+                if(str == endWord) return step;
+
+                unordered_set<string> dict2(dict);
+                for(string word: dict2)
+                {
+                    if(1 == WordGap(str, word))
+                    {
+                        cur.push(word);
+                        dict.erase(word);
+                    }
+                }
+            }
+            step++;
+        }
+        return 0;
+    }
+
+    int ladderLength2(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        if(!dict.count(endWord)) return 0;
+
+        unordered_set<string> front;
+        unordered_set<string> back;
+        front.insert(beginWord);
+        back.insert(endWord);
+        int step = 0;
+
+        while (!front.empty() && !back.empty())
+        {
+            if(front.size() > back.size())
+                front.swap(back);
+            unordered_set<string> expand;
+            for(string s: front)
+            {
+                if(back.count(s)) return step+1;
+                addWords(expand, dict, s);
+            }
+            front.swap(expand);
+            step++;
+        }
+        return 0;
+    }
+
+    void addWords(unordered_set<string>& todo, unordered_set<string>& dict, string word) {
+        for (int i = 0; i < word.size(); i++) {
+            char t = word[i];
+            for (int j = 0; j < 26; j++) {
+                word[i] = 'a' + j;
+                if (dict.find(word) != dict.end()) {
+                    todo.insert(word);
+                    dict.erase(word);
+                }
+            }
+            word[i] = t;
+        }
+    }
+
     vector<vector<int>> updateMatrix(vector<vector<int>> &matrix)
     {
         vector<vector<int>> res;
@@ -653,6 +726,96 @@ Expected
         return -1;
     }
 
+    bool isBipartite(vector<vector<int>>& graph) {
+        if(graph.empty()) return true;
+        vector<int> color(graph.size(), 0);
+        queue<int> q;
+        for(int i=0; i<graph.size(); ++i)
+        {
+            if(color[i] != 0) continue;
+            q.push(i);
+            color[i] = 1;
+            while(!q.empty())
+            {
+                int cur = q.front();
+                q.pop();
+                int c = color[cur];
+                for(int j=0; j<graph[cur].size(); ++j)
+                {
+                    int visit = graph[cur][j];
+                    if(color[visit] == c) false;
+                    if(color[visit] == -c) continue;
+                    color[visit] = -c;
+                    q.push(visit);
+                }
+            }
+
+        }
+        return true;
+    }
+
+    bool valid(int nx, int ny, int m, int n, vector<vector<int>>& grid, vector<vector<bool>>& flag) {
+        if(0 <= nx && nx < m && 0 <= ny && ny < n) {
+            if(grid[nx][ny] == 0 && flag[nx][ny] == false) {
+                return  true;
+            }
+        }
+        return false;
+    }
+    int dx[4] = {1,0,-1,0};
+    int dy[4] = {0,1,0,-1};
+    int shortestDistance(vector<vector<int>> &grid) {
+        // write your code here
+        if(grid.empty() || grid[0].empty()) return 0;
+        int m_ = grid.size(), n_ = grid[0].size();
+        int house = 0;
+        vector<vector<int>> dist(m_, vector<int>(n_, 0));
+        vector<vector<int>> canReach(m_, vector<int>(n_, 0));
+        for(int i=0; i<m_; ++i)
+        {
+            for(int j=0; j<n_; ++j)
+            {
+                if(grid[i][j] == 1)
+                {
+                    //bfs
+                    house++;
+                    queue<pair<int, int>> q;
+                    q.push({i, j});
+                    vector<vector<bool>> flag(m_, vector<bool>(n_, false)) ;
+                    int step = 1;
+                    while(!q.empty()) {
+                        int size = q.size();
+                        while(size--)
+                        {
+                            pair<int, int> now = q.front();
+                            q.pop();
+
+                            for(int i = 0; i < 4; i++) {
+                                int nx = now.first + dx[i];
+                                int ny = now.second + dy[i];
+                                if (valid(nx, ny, m_, n_, grid, flag)) {
+                                    dist[nx][ny] += step;
+                                    canReach[nx][ny]++;
+                                    flag[nx][ny] = true;
+                                    q.push({nx, ny});
+                                }
+                            }
+                        }
+                        step++;
+                    }
+                }
+            }
+        }
+        Utils::printVV(dist);
+        Utils::printVV(canReach);
+        int ans = INT_MAX;
+        for (int i = 0; i < grid.size(); i++) {
+            for(int j = 0; j < grid[i].size(); j++)
+                if (grid[i][j] == 0 && canReach[i][j] == house){
+                    ans = min(ans, dist[i][j]);
+                }
+        }
+        return ans;
     int ladderLength(string beginWord, string endWord, vector<string> &wordList)
     {
         unordered_set<string> dict;

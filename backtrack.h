@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
+#include "utils.h"
 
 using namespace std;
 class backtrack
@@ -1246,6 +1247,63 @@ ALGORITHM try(v1,...,vi)  // 这里的V1.....V2携带的参数说明 “可能�
                 }
             }
             return false;
+        }
+    }
+
+    int optimalMatch(vector<vector<int>> &matrix) {
+        // Write your code here
+        if(matrix.empty() || matrix[0].empty())
+            return 0;
+        int m = matrix.size(), n = matrix[0].size();
+        vector<pair<int, int>> persons;
+        vector<pair<int, int>> bikes;
+        for(int i=0; i<m; ++i)
+        {
+            for(int j=0; j<n; ++j)
+            {
+                if(matrix[i][j] == 1)
+                    persons.push_back({i, j});
+                else if(matrix[i][j] == 2)
+                    bikes.push_back({i, j});
+            }
+        }
+        int k = persons.size();
+        vector<vector<int>> dis(k, vector<int>(k, 0));
+        for(int i=0; i<k; ++i)
+        {
+            for(int j=0; j<k; ++j)
+            {
+                dis[i][j] = abs(persons[i].first-bikes[j].first)+abs(persons[i].second-bikes[j].second);
+            }
+        }
+        Utils::printVV(dis);
+        int res = INT_MAX;
+        int cur = 0;
+        vector<int> visitedPerson(k, 0);
+        vector<int> visitedBike(k, 0);
+        backtracking(dis, 0, k, visitedPerson, visitedBike, cur, res);
+        return res;
+    }
+
+    void backtracking(vector<vector<int>>& dis, int d, int k, vector<int>& vP, vector<int>& vB, int cur, int& res)
+    {
+        if(d == k)
+        {
+            res = min(res, cur);
+        }
+        for(int i=0; i<k; ++i)
+        {
+            if(vP[i]) continue;
+            vP[i] = 1;
+            for(int j=0; j<k; ++j)
+            {
+                if(vB[j]) continue;
+                vB[j] = 1;
+                //cur += dis[i][j];
+                backtracking(dis, d+1, k, vP, vB, cur+dis[i][j], res);
+                vB[j] = 0;
+            }
+            vP[i] = 0;
         }
     }
 };
