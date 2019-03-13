@@ -36,8 +36,8 @@ void binarySearchRel::test()
     cap = bs.triangleNumber(v5);
     vector<int> v6 = {1, 2, 3, 4, 5};
     salaries = bs.findClosestElements2(v6, 4, 4);
-    vector<int> v7 = {1,3,1};
-    cap = bs.smallestDistancePair(v7, 1);
+    vector<int> v7 = {1,6,1};
+    cap = bs.smallestDistancePair2(v7, 3);
     vector<int> v8 = {1,2,3,3,4,5};
     bres1 = bs.isPossible(v8);
     int i = 0;

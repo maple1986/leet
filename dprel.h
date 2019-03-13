@@ -2039,6 +2039,17 @@ public:
         }
         return minCuts[n-1];
     }
+
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        if(dungeon.empty() || dungeon[0].empty()) return 1;
+        int m = dungeon.size(), n = dungeon[0].size();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+        for(int i=1; i<=m; ++i)
+        {
+
+        }
+        return dp[0][0];
+    }
 };
 
 

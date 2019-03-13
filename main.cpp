@@ -30,7 +30,6 @@
 #include "unionfind.h"
 #include "bfs.h"
 #include "bitree.h"
-using namespace std;
 
 int main()
 {
@@ -40,12 +39,12 @@ int main()
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    //binarySearchRel::test();
+    binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
     //BitsRel::test();
-    StringRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
@@ -58,7 +57,7 @@ int main()
     //greedy::test();
     //DPRel::test();
     //NSum::test();
-    backtrack::test();
+    //backtrack::test();
     //constructRel::test();
     //DFS::test();
     //BFS::test();

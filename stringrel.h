@@ -1066,7 +1066,7 @@ public:
         int j = 0;
         while(i < m)
         {
-            if (j == -1 || p[i] == p[j])
+            if (j == -1 || P[i] == P[j])
             {
                 ++i;
                 ++j;

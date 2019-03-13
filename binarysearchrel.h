@@ -663,11 +663,18 @@ public:
     {
         sort(nums.begin(), nums.end());
         int n = nums.size();
-        int l = 0, r = nums[n-1]-nums[0]+1;
+        int l = 0, r = nums[n-1]-nums[0];
         while(l<r)
         {
             int mid = l+(r-l)/2;
-            int cnt =
+            int cnt = 0, left = 0;
+            for(int right=0; right<n; ++right)
+            {
+                while(nums[right]-nums[left]>mid) left++;
+                cnt += right-left;
+            }
+            if(cnt >= k) r = mid;
+            else l = mid;
         }
         return l;
     }
@@ -768,6 +775,30 @@ public:
         }
         return res;
     }
+
+    int minEatingSpeed(vector<int>& piles, int H) {
+        if(H<piles.size()) return -1;
+        sort(piles.begin(), piles.end());
+        int n = piles.size();
+        int l = piles[0], r = piles[n-1];
+        while(l<r)
+        {
+            int mid = l+(r-l)/2;
+            int cnt = 0;
+            for(int i=0; i<n; ++i)
+            {
+                if(piles[i]<=mid) cnt+=1;
+                else
+                {
+                    cnt += ceil((double)piles[i]/mid);
+                }       
+            }
+            if(cnt >= H) l = mid+1;
+            else r = mid;
+        }
+        return l;
+    }
+
 };
 
 #endif // BINARYSEARCHREL_H

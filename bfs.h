@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <balancetree.h>
+#include <graph1.h>
 using namespace std;
 
 class BFS
@@ -11,8 +12,7 @@ class BFS
   public:
     BFS();
     static void test();
-    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string> &wordList);
-    int WordGap(string &left, string &right);
+    /*
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
         if(!dict.count(endWord)) return 0;
@@ -45,7 +45,7 @@ class BFS
         }
         return 0;
     }
-
+    */
     int ladderLength2(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
         if(!dict.count(endWord)) return 0;
@@ -816,7 +816,8 @@ Expected
                 }
         }
         return ans;
-    int ladderLength(string beginWord, string endWord, vector<string> &wordList)
+    }
+    int ladderLength3(string beginWord, string endWord, vector<string> &wordList)
     {
         unordered_set<string> dict;
         for (string &s : wordList)
