@@ -28,6 +28,18 @@ public:
 
     }
 
+    /*
+[-2147483648,-2147483648,0,2147483647,2147483647]
+-2147483648
+2147483647
+
+["-2147483647->-1","1->2147483646","-2147483648->2147483646"]
+
+Expected
+
+["-2147483647->-1","1->2147483646"]
+
+    */
     vector<string> findMissingRanges(vector<int> &nums, int lower, int upper)
     {
         vector<string> res;
@@ -37,18 +49,18 @@ public:
             return res;
         }
 
-        if(long(nums.front())-long(lower) > 0)
+        if(nums.front()>lower)
         {
             res.push_back(generateString(lower, nums.front()-1));
         }
         for(int i=1; i<nums.size(); ++i)
         {
-            if(long(nums[i]) - long(nums[i-1]) > 1)
+            if(long(nums[i]-1)>nums[i-1])
             {
                 res.push_back(generateString(nums[i-1]+1, nums[i]-1));
             }
         }
-        if(long(upper) - long(nums.back()) > 0)
+        if(upper>nums.back())
         {
             res.push_back(generateString(nums.back()+1, upper));
         }

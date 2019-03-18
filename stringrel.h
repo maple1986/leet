@@ -931,10 +931,6 @@ public:
         return res;
     }
 
-    vector<int> wordsCompression(vector<string> &s) {
-        // Write your code here
-    }
-
     vector<vector<int>> twitchWords(string &str) {
         int n = str.length();
         if(n < 3) return {};
@@ -1548,6 +1544,75 @@ public:
         }
         return res;
     }
+
+    vector<int> wordsCompression(vector<string> &s) {
+        // Write your code here
+        vector<int> rt;
+        if (s.size() == 0)
+            return rt;
+
+        string cs = "";
+        for (auto w : s)
+        {
+            if (cs.size() == 0)
+            {
+                cs += w;
+                rt.push_back(0);
+                continue;
+            }
+
+            vector<int> prefixArray(w.size(), 0);
+            int i = 0; int j = 1;
+            while (j < w.size())
+            {
+                if (w[i] == w[j])
+                {
+                    prefixArray[j] = i+1;
+                    i++;
+                    j++;
+                }
+                else if (i)
+                    i = prefixArray[i-1];
+                else
+                    j++;
+            }
+
+            int si = 0;
+            int ti = 0;
+            int first_find = -1;
+            while (si < cs.size())
+            {
+                if (cs[si] == w[ti])
+                {
+                    si++;
+                    ti++;
+                }
+                else if(ti)
+                    ti = prefixArray[ti-1];
+                else
+                {
+                    si++;
+                }
+                if (ti == w.size())
+                {
+                    if (first_find == -1)
+                        first_find = si - ti;
+                    /*if (si < cs.size())
+                        ti = prefixArray[ti-1];
+                        */
+                }
+            }
+
+            if (first_find != -1)
+                rt.push_back(first_find);
+            else
+                rt.push_back(cs.size() - ti);
+
+            cs += w.substr(ti);
+        }
+        return rt;
+    }
+
 };
 
 #endif // STRINGREL_H

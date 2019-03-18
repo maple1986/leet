@@ -12,6 +12,7 @@ void DPRel::test()
     //int j = dprel.uniquePath(4, 5);
     vector<vector<int>> dugeon = {{-2,-3,3},{-5,-10,1},{10,30,-5}};
     i  = dprel.calculateMinimumHP(dugeon);
+    dprel.encode("abbbabbbcabbbabbbc");
     /*
     i  = dprel.integerReplacement(7);
     vector<int> cost = {1,1,2,2}, damage = {1,2,4,5};

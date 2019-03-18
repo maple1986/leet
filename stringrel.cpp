@@ -5,12 +5,14 @@ void StringRel::test()
     string num1("99");
     string num2("9");
     StringRel str;
+    vector<string> words = {"aba","ababababca","acb","cb"};
+    str.wordsCompression(words);
     string p = "ABABABA";
     string p2 ="ABCDABD";
     vector<int> next(p2.size(), 0);
     str.calcNext(p2, next);
     string S = "heeellooo";
-    vector<string> words = {"hello", "hi", "helo"};
+    words = {"hello", "hi", "helo"};
     int i = str.expressiveWords(S, words);
     //i = str.Sunday("substringsearching", "search");
     //i = str.KMP("cdeabab", "abab");

@@ -2056,6 +2056,42 @@ public:
         }
         return dp[0][0];
     }
+
+    string encode(const string& s) {
+        int n = s.size();
+        vector<vector<string>> dp(n, vector<string>(n, ""));
+        for (int step = 1; step <= n; ++step) {
+            for (int i = 0; i + step - 1 < n; ++i) {
+                int j = i + step - 1;
+                dp[i][j] = s.substr(i, step);
+                string t = s.substr(i, step), replace = "";
+                auto pos = (t + t).find(t, 1);
+                if (pos < t.size()) {
+                    replace = to_string(t.size() / pos) + "[" + dp[i][i + pos - 1] + "]";
+                    if (replace.size() < dp[i][j].size()) dp[i][j] = replace;
+                    continue;
+                }
+                for (int k = i; k < j; ++k) {
+                    string left = dp[i][k], right = dp[k + 1][j];
+                    if (left.size() + right.size() < dp[i][j].size()) {
+                        dp[i][j] = left + right;
+                    }
+                }
+            }
+            //Utils::printVVS(dp);
+        }
+        return dp[0][n - 1];
+    }
+
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        vector<int> minCost(366, INT_MAX);
+        minCost[0] = 0;
+        for(int i=1; i<366; ++i)
+        {
+
+        }
+    }
+
 };
 
 
