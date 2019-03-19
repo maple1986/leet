@@ -1195,6 +1195,21 @@ public:
 
     bool compute24(vector<double> &nums) {
         // write your code here
+
+    }
+
+    bool dfs(int start, int sum)
+    {
+        if(start == 4)
+        {
+            if(sum == 24) return true;
+            else return false;
+        }
+        for(int i=start; i<4; ++i)
+        {
+            dfs()
+        }
+        return false;
     }
 
     int numberOfPatterns(int m, int n) {

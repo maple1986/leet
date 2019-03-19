@@ -388,6 +388,38 @@ public:
         }
         return false;
     }
+
+    bool sequenceReconstruction(vector<int> &org, vector<vector<int>> &seqs)
+    {
+        unordered_map<int, vector<int>> graph;
+        unordered_map<int, int> indegree;
+        unordered_set<int> vertex;
+        for(auto& seq: seqs)
+        {
+            vertex.insert(seq[0]);
+            for(int i=1; i<seq.size(); ++i)
+            {
+                graph[seq[0]].push_back(seq[i]);
+                indegree[seq[i]]++;
+                vertex.insert(seq[i]);
+            }
+        }
+        if(vertex.size()==1 && indegree.empty()) return true;
+        if(vertex.size() != indegree.size()) return false;
+        for(int num: org)
+        {
+            if(!indegree.count(num)) return false;
+            if(indegree[num]!= 0) return false;
+            int cnt = 0;
+            for(auto& v: graph[num])
+            {
+                if(--indegree[v] == 0)cnt++;
+            }
+            if(cnt>1) return false;
+            graph.erase(num);
+        }
+        return true;
+    }
 };
 
 #endif // GRAPH1_H

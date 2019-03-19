@@ -443,17 +443,15 @@ public:
     int numWays1(int n, int k)
     {
         if (n == 0) return 0;
-        if (n == 1) return k;
-        vector<int> dp(n+1, 0);
-        dp[1] = k;
-        dp[2] = k*k;
-        for (int i = 3; i <= n; ++i)
+        int same = 0, diff = k;
+        for(int i=2; i<=n; ++i)
         {
-            dp[i] = (dp[i-1] + dp[i-2])*(k-1);
+            int t = diff;
+            diff = same*(k-1) + diff*(k-1);
+            same = t;
         }
-        return dp[n];
+        return same + diff;
     }
-
 
     int numWays2(int n, int k) {
         if(n == 0) return 0;
