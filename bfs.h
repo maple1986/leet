@@ -429,11 +429,9 @@ Expected
                 {
                     int nx = cood.first + dx[i];
                     int ny = cood.second + dy[i];
-                    if (rooms[nx][ny] > step)
-                    {
-                        rooms[nx][ny] = step;
-                        q.push({nx, ny});
-                    }
+                    if (nx<0 || nx>=rooms.size() || ny<0 || ny>=rooms[0].size() || rooms[nx][ny] != INT_MAX) continue;
+                    rooms[nx][ny] = step;
+                    q.push({nx, ny});
                 }
             }
             step++;

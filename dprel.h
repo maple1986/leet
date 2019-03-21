@@ -745,21 +745,71 @@ public:
         }
     }
 
-    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs)
-    {
-
-        return 0;
-    }
-
-    int shoppingOffers_rec(vector<int>& price, vector<vector<int>>& special, vector<int>& needs)
-    {
-        vector<int> tmp = needs;
-        for(auto & item: tmp)
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        if(price.empty()) return 0;
+        string str = vector2string(needs);
+        if(mem_.count(str)) return mem_[str];
+        int minPrice = 0;
+        for(int i=0; i<price.size(); ++i)
         {
-            //ifitem
+            minPrice += price[i]*needs[i];
         }
-        return 0;
+        for(int i=0; i<special.size(); ++i)
+        {
+            if(checkValid(special[i], needs))
+            {
+                for(int j=0; j<needs.size(); ++j)
+                {
+                    needs[j] -= special[i][j];
+                }
+            
+                minPrice = min(minPrice, shoppingOffers(price, special, needs)+ special[i].back());
+
+                for(int j=0; j<needs.size(); ++j)
+                {
+                    needs[j] += special[i][j];
+                }
+
+            }
+        }
+        
+        
+        return minPrice;
     }
+
+    bool checkValid(vector<int>& coupon, vector<int>& need)
+    {
+        for(int i=0; i<need.size(); ++i)
+        {
+            if(need[i] < coupon[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    string vector2string(vector<int>& needs)
+    {
+        string res;
+        for(int need: needs)
+            res += to_string(need)+",";
+        if(!res.empty()) res.pop_back();
+        return res;
+    }
+    /*
+    vector<int> string2vector(string& needs)
+    {
+        vector<int> t;
+        istringstream is(needs);
+        string s;
+        while(getline(is, s, ','))
+        {
+            t.push_back(stoi(s));
+        }
+        return t;
+    }
+    */
+    unordered_map<string, int> mem_;
 
     int findLongestChain(vector<vector<int>>& pairs)
     {
