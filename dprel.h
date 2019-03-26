@@ -2016,7 +2016,7 @@ public:
         }
         return res;
     }
-
+    /*
     int integerReplacement(int n) {
         if(n == 1) return 0;
         mem_ = vector<int>(n+1, -1);
@@ -2040,7 +2040,7 @@ public:
         return mem_[n] = step;
     }
     vector<int> mem_;
-
+    */
     int integerReplacement1(int n) {
 
     }

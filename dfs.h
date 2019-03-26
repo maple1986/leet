@@ -1195,20 +1195,60 @@ public:
 
     bool compute24(vector<double> &nums) {
         // write your code here
-
+        if(nums.size() != 4) return false;
+        return dfs(nums);
     }
 
-    bool dfs(int start, int sum)
+    bool dfs(vector<double> &nums)
     {
-        if(start == 4)
+        if(nums.size() == 1)
         {
-            if(sum == 24) return true;
+            if(nums[0]-24.0<1e-6) return true;
             else return false;
         }
-        for(int i=start; i<4; ++i)
+        vector<double> temp(nums);
+        for(int i=0; i<temp.size(); ++i)
         {
-            dfs()
+            temp = nums;
+            int a = nums[i];
+            temp.erase(temp.begin()+i);
+            for(int j=i+1; j<temp.size(); ++j)
+            {
+                int b = nums[j];
+                nums.erase(nums.begin()+j);
+                double sum = nums[i]+nums[j];
+                nums.push_back(sum);
+                if(dfs(nums)) return true;
+                nums.pop_back();
+
+                double diff = nums[i]-nums[j];
+                nums.push_back(diff);
+                if(dfs(nums)) return true;
+                nums.pop_back();
+
+                diff = -diff;
+                nums.push_back(diff);
+                if(dfs(nums)) return true;
+                nums.pop_back();
+
+                if(nums[i] != 0)
+                {
+                    double quot = nums[j]/nums[i];
+                    nums.push_back(quot);
+                    if(dfs(nums)) return true;
+                    nums.pop_back();
+                }
+                
+                if(nums[j] != 0)
+                {
+                    double quot = nums[i]/nums[j];
+                    nums.push_back(quot);
+                    if(dfs(nums)) return true;
+                    nums.pop_back();
+                }
+            }
         }
+        nums.swap(temp);
         return false;
     }
 
