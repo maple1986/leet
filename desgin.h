@@ -288,4 +288,51 @@ struct ListNode
     int cap_;
     int minFreq_;
 };
+
+class LFUCache2 {
+public:
+
+    LFUCache2(int capacity):cap_(capacity), minFreq_(0) {
+
+    }
+
+    int get(int key) {
+
+    }
+
+    void put(int key, int value) {
+    }
+private:
+struct ListNode
+    {
+        ListNode(int k, int v, int f):key(k), value(v), freq(f)
+        {}
+        int key;
+        int value;
+        int freq;
+    };
+
+    void touch(int key)
+    {
+        /*
+        if(!mptable_.count(key)) return;
+        auto it = mptable_[key];
+        if(freq_.count(mptable_[key]))
+        {
+            freq_[it->freq].erase(it);
+            if(freq_[it->freq].empty())
+                minFreq_++;
+        }
+        int newFreq = it->freq+1;
+        freq_[newFreq].splice(freq_[newFreq].end(), freq_[newFreq], it);
+        return;
+        */
+    }
+
+    unordered_map<int, list<ListNode>::iterator> index_;
+    unordered_map<int, list<ListNode>> freq_;
+    int cap_;
+    int minFreq_;
+};
+
 #endif // DESGIN_H

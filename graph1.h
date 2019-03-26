@@ -396,6 +396,7 @@ public:
         unordered_set<int> vertex;
         for(auto& seq: seqs)
         {
+            if(seq.empty()) continue;
             vertex.insert(seq[0]);
             for(int i=1; i<seq.size(); ++i)
             {
@@ -404,7 +405,7 @@ public:
                 vertex.insert(seq[i]);
             }
         }
-        if(vertex.size()==1 && indegree.empty()) return true;
+        //if(vertex.size()<=1 && indegree.empty()) return true;
         if(vertex.size() != indegree.size()) return false;
         for(int num: org)
         {

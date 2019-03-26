@@ -1718,7 +1718,7 @@ class StringRel
         return rt;
     }
 
-    vector<int> wordsCompression(vector<string> &s)
+    vector<int> wordsCompression1(vector<string> &s)
     {
         // Write your code here
         vector<int> rt;
@@ -1752,8 +1752,7 @@ class StringRel
                 }
             }
 
-            int i = 0;
-            int j = 0;
+            i = 0, j = 0;
             int first_find = -1;
             while (i < cs.size())
             {

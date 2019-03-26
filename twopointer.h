@@ -88,6 +88,40 @@ public:
         }
         return j == n;
     }
+/*
+    int maxLength(istringstream& str, int k)
+    {
+        if(k==0 || !str.hasNext()) return 0;
+        vector<list<pair<char, int>>::iterator> index(128, NULL);
+        list<pair<char, int>> lastPostions;
+        int res = 0;
+        int i = -1, j = 0;
+        while(str.hasNext())
+        {
+            char c = str.next();
+            if(index[c] == NULL)
+            {
+                k--;
+                index[c] = lastPostions.push_back({c, j});
+            }
+            else
+            {
+                lastPostions.splice(lastPostions.end(), lastPostions, index[c]);
+            }
+            if(k<0)
+            {
+                char delChar = lastPostions.begin()->first;
+                i = lastPostions.begin()->second;
+                index[delChar] = NULL;
+                lastPostions.erase(lastPostions.begin());
+                k++;
+            }
+            res = max(res, j-i);
+            ++j;
+        }
+        return res;
+    }
+*/
 };
 
 #endif // TWOPOINTER_H
