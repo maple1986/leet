@@ -19,14 +19,6 @@ public:
     Output:
     ["2", "4->49", "51->74", "76->99"]
     */
-    vector<string> findMissingRanges1(vector<int> &nums, int lower, int upper)
-    {
-        if(nums.size() == static_cast<long>(upper)-lower+1)
-        {
-            return {};
-        }
-
-    }
 
     /*
 [-2147483648,-2147483648,0,2147483647,2147483647]
@@ -442,6 +434,61 @@ Expected
         }
         return {};
     }
+
+    int maxSubArray(vector<int> &nums) {
+        // write your code here
+        if(nums.empty()) return 0;
+        int res = nums[0];
+        int cur = nums[0];
+        for(int i=1; i<nums.size(); ++i)
+        {
+            cur = max(cur+nums[i], nums[i]);
+            res = max(res, cur);
+        }
+        return res;
+    }
+
+    int maxSubArrayDC(vector<int> &nums) {
+        // write your code here
+        if(nums.empty()) return 0;
+        int res = nums[0];
+        int cur = nums[0];
+        for(int i=1; i<nums.size(); ++i)
+        {
+            cur = max(cur+nums[i], nums[i]);
+            res = max(res, cur);
+        }
+        return res;
+    }
+
+    int maxTwoSubArrays(vector<int> &nums) {
+        // write your code here
+        if(nums.empty()) return 0;
+        vector<int> left(nums.size(),  INT_MIN);
+        vector<int> right(nums.size(), INT_MIN);
+        int cur = 0, res = 0;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            cur = max(cur+nums[i], nums[i]);
+            left[i] = cur;
+        }
+        for(int i=nums.size()-1; i>=0; --i)
+        {
+            cur = max(cur+nums[i], nums[i]);
+            right[i] = cur;
+        }
+        int res = INT_MIN;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            res = max(res, left[i]+right[i]);
+        }
+        return res;
+    }
+
+    int maxSubArray(vector<int> &nums, int k) {
+        // write your code here
+    }
+
 };
 
 #endif // ARRAY1_H

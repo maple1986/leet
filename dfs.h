@@ -1206,49 +1206,30 @@ public:
             if(nums[0]-24.0<1e-6) return true;
             else return false;
         }
-        vector<double> temp(nums);
-        for(int i=0; i<temp.size(); ++i)
+        //vector<double> temp(nums);
+        for(int i=0; i<nums.size(); ++i)
         {
-            temp = nums;
-            int a = nums[i];
-            temp.erase(temp.begin()+i);
-            for(int j=i+1; j<temp.size(); ++j)
+            double a = nums[i];
+            for(int j=0; j<i; ++j)
             {
-                int b = nums[j];
-                nums.erase(nums.begin()+j);
-                double sum = nums[i]+nums[j];
-                nums.push_back(sum);
-                if(dfs(nums)) return true;
-                nums.pop_back();
-
-                double diff = nums[i]-nums[j];
-                nums.push_back(diff);
-                if(dfs(nums)) return true;
-                nums.pop_back();
-
-                diff = -diff;
-                nums.push_back(diff);
-                if(dfs(nums)) return true;
-                nums.pop_back();
-
-                if(nums[i] != 0)
+                double b = nums[j];
+                vector<double> newEle({a+b, a-b, b-a, a*b});
+                vector<double> tmp;
+                for(int k=0; k<nums.size(); ++k)
                 {
-                    double quot = nums[j]/nums[i];
-                    nums.push_back(quot);
-                    if(dfs(nums)) return true;
-                    nums.pop_back();
+                    if(k==i||k==j) continue;
+                    tmp.push_back(k);
                 }
-                
-                if(nums[j] != 0)
+                if(b>1e-6)  newEle.push_back(a/b);
+                if(a>1e-6)  newEle.push_back(b/a);
+                for(double d: newEle)
                 {
-                    double quot = nums[i]/nums[j];
-                    nums.push_back(quot);
-                    if(dfs(nums)) return true;
-                    nums.pop_back();
+                    tmp.push_back(d);
+                    if(dfs(tmp)) return true;
+                    tmp.pop_back();
                 }
             }
         }
-        nums.swap(temp);
         return false;
     }
 
@@ -1322,6 +1303,104 @@ public:
             res += dfs(skip, 0, 5, m-1, n-1); // 5
 
             return res;
+        }
+
+        vector<int> diffWaysToCompute(string input) {
+            if(input.empty()) return {};
+            vector<int> res;
+            bool containsOp=false;
+            for(int i=0; i<input.size(); ++i)
+            {
+                if(input[i]=='+'||input[i]=='-'||input[i]=='*')
+                {
+                    containsOp = true;
+                    char op = input[i];
+                    string frontStr = input.substr(0, i);
+                    string backStr  = input.substr(i+1);
+                    vector<int> ans1 = diffWaysToCompute(frontStr);
+                    vector<int> ans2 = diffWaysToCompute(backStr);
+                    for(int a1: ans1)
+                    {
+                        for(int a2: ans2)
+                        {
+                            switch(op)
+                            {
+                                case '+': res.push_back(a1+a2);break;
+                                case '-': res.push_back(a1-a2);break;
+                                case '*': res.push_back(a1*a2);break;
+                            }
+                        }
+                    }
+                }
+            }
+            if(!containsOp) res.push_back(stoi(input));
+            return res;
+        }
+
+        vector<vector<string>> partition(string s)
+        {
+            vector<vector<string>> res;
+            vector<string> cur;
+            dfs(s, 0, cur, res);
+            return res;
+        }
+
+        void dfs(string& s, int start, vector<string>&cur, vector<vector<string>>& res)
+        {
+            if(start==s.length())
+            {
+                res.push_back(cur);
+                return;
+            }
+            for(int len=1; len<s.length()-start; ++len)
+            {
+                if(!isParadrom(s, start, start+len-1)) continue;
+                cur.push_back(s.substr(start, len));
+                dfs(s, start+len, cur, res);
+                cur.pop_back();
+            }
+            return;
+        }
+
+        bool isParadrom(string& s, int start, int end)
+        {
+            if(start == end) return true;
+            if(start>end) return false;
+            while(start<end)
+            {
+                if(s[start] != s[end]) return false;
+                start++; end--;
+            }
+            return true;
+        }
+
+        vector<string> addOperators(string num, int target) {
+            if(num.empty()) return {};
+            vector<string> res;
+            string cur;
+            dfs(num, 0, target, 0, 0, cur, res);
+            return res;
+        }
+
+        void dfs(string& num, int start, int target, int pre, int sum, string cur, vector<string>& res)
+        {
+            if(start == num.size())
+            {
+                if(sum == target) res.push_back(cur);
+                return;
+            }
+            for(int i=start; i<num.size(); ++i)
+            {
+                string sub = num.substr(start, i-start+1);
+                if(sub.size()>1 && sub[0]=='0') break;
+                long subn  = stol(sub);
+                if(subn>INT_MAX)break;
+                dfs(num, i+1, target, subn, sum+subn, cur.empty()?sub:cur+'+'+sub, res);
+                dfs(num, i+1, target, -subn, sum-subn, cur.empty()?sub:cur+'-'+sub, res);
+                dfs(num, i+1, target, sum*subn, sum-subn+pre*subn, cur.empty()?sub:cur+'*'+sub, res);
+                
+                //dfs(num, i+1, target, subn, sum-pre+pre*, cur+'-'+sub, res);
+            }
         }
 };
 
