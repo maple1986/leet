@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <numeric>
 #include "utils.h"
+#include <math.h>
 using namespace std;
 class UnionFind
 {
@@ -536,13 +537,14 @@ class UnionFindSln
 
     bool areSentencesSimilarTwo(vector<string> &words1, vector<string> &words2, vector<pair<string, string>> pairs)
     {
+        /*
         if (words1.size() != words2.size())
             return false;
         if (words1.empty())
             return true;
         int n = words1.size();
         int id = 0;
-        UnionFind3 uf(pairs.size() * 2 + 1);
+        UnionFind2 uf(pairs.size() * 2 + 1);
         //int id = 0;
         for (auto &p : pairs)
         {
@@ -560,7 +562,7 @@ class UnionFindSln
             if (uf.Find(l) != uf.Find(r))
                 return false;
         }
-
+        */
         return true;
     }
 

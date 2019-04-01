@@ -2,13 +2,14 @@
 #include "stdio.h"
 #include <iostream>
 
+using namespace std;
 void Utils::printV(vector<int> &v)
 {
     for(int i : v)
     {
-        printf("%d ", i);
+        cout << i << " ";
     }
-    printf("\n");
+    cout << endl;
 }
 
 void Utils::printVV(vector<vector<int> > &vv)
@@ -17,7 +18,7 @@ void Utils::printVV(vector<vector<int> > &vv)
     {
         printV(v);
     }
-    printf("\n");
+    cout << endl;
 }
 
 void Utils::printVS(vector<string> &s)
