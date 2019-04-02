@@ -2140,6 +2140,21 @@ public:
         }
     }
 
+    long long houseRobber(vector<int> &A) {
+        // write your code here
+        if(A.empty()) return 0;
+        int n = A.size();
+        if(n==1) return A[0];
+        long long dp1 = A[1], dp2 = A[0], dp=max(dp1, dp2);
+        for(int i=2; i<A.size(); ++i)
+        {
+            dp = max(dp1, dp2+A[i]);
+            dp2 = dp1;
+            dp1 = dp;
+        }
+        return dp1;
+    }
+
 };
 
 

@@ -1600,54 +1600,6 @@ class StringRel
         // write your code here
     }
 
-    int calculate(string s)
-    {
-        int i = 0;
-        return calcHelper(s, i);
-    }
-
-    int calcHelper(string &s, int &i)
-    {
-        int res = 0;
-        int op = 1;
-        while (i < s.length())
-        {
-            while (isspace(s[i]) && i < s.length())
-                i++;
-            char c = s[i];
-            if (c == '(')
-            {
-                res += op * calcHelper(s, ++i);
-            }
-            else if (c == ')')
-            {
-                ++i;
-                return res;
-            }
-            else if (c == '+')
-            {
-                ++i;
-                op = 1;
-            }
-            else if (c == '-')
-            {
-                ++i;
-                op = -1;
-            }
-            else
-            {
-                int tmp = 0;
-                while (isdigit(s[i]))
-                {
-                    tmp = tmp * 10 + s[i] - '0';
-                    i++;
-                }
-                res += op * tmp;
-            }
-        }
-        return res;
-    }
-
     vector<int> wordsCompression(vector<string> &s)
     {
         // Write your code here
@@ -1756,14 +1708,14 @@ class StringRel
             int first_find = -1;
             while (i < cs.size())
             {
-                if (j<0||cs[i] == w[j])
+                if (j < 0 || cs[i] == w[j])
                 {
                     i++;
                     j++;
                 }
-                else 
+                else
                 {
-                    j=next[j];
+                    j = next[j];
                 }
                 if (j == w.size())
                 {
@@ -1775,89 +1727,197 @@ class StringRel
             if (first_find != -1)
                 rt.push_back(first_find);
             else
-                rt.push_back(cs.size()-j-1);
+                rt.push_back(cs.size() - j - 1);
 
-            cs += w.substr(j+1);
-
+            cs += w.substr(j + 1);
         }
         return rt;
     }
-        int minimumCycleSection(vector<int> & array)
+    int minimumCycleSection(vector<int> &array)
+    {
+        // Write your code here
+        int *next = new int[array.size() + 1];
+        int i = 0, j = -1;
+        next[0] = -1;
+        while (i < array.size())
         {
-            // Write your code here
-            int *next = new int[array.size() + 1];
-            int i = 0, j = -1;
-            next[0] = -1;
-            while (i < array.size())
+            if (j == -1 || array[i] == array[j])
             {
-                if (j == -1 || array[i] == array[j])
-                {
-                    i++;
-                    j++;
-                    next[i] = j;
-                }
-                else
-                {
-                    j = next[j];
-                }
+                i++;
+                j++;
+                next[i] = j;
             }
-            return i - next[i];
-        }
-
-        int minimumCycleSection2(vector<int> & array)
-        {
-            // Write your code here
-            int len = array.size();
-            if (len == 0)
-                return 0;
-            vector<int> v(len, 0);
-            int j = 0, ret = 1;
-            for (int i = 1; i < len; i++)
+            else
             {
+                j = next[j];
+            }
+        }
+        return i - next[i];
+    }
+
+    int minimumCycleSection2(vector<int> &array)
+    {
+        // Write your code here
+        int len = array.size();
+        if (len == 0)
+            return 0;
+        vector<int> v(len, 0);
+        int j = 0, ret = 1;
+        for (int i = 1; i < len; i++)
+        {
+            if (array[i] == array[j])
+            {
+                v[i] = ++j;
+            }
+            else
+            {
+                while (j > 0 && array[i] != array[j])
+                    j = v[j - 1];
                 if (array[i] == array[j])
-                {
                     v[i] = ++j;
-                }
                 else
-                {
-                    while (j > 0 && array[i] != array[j])
-                        j = v[j - 1];
-                    if (array[i] == array[j])
-                        v[i] = ++j;
-                    else
-                        v[i] = 0;
-                }
-                if (v[i] == 0)
-                    ret = max(ret, i + 1);
-                else
-                    ret = max(ret, i + 1 - v[i]);
+                    v[i] = 0;
             }
-            return ret;
+            if (v[i] == 0)
+                ret = max(ret, i + 1);
+            else
+                ret = max(ret, i + 1 - v[i]);
         }
+        return ret;
+    }
 
-        int minimumCycleSection3(vector<int> & array)
+    int minimumCycleSection3(vector<int> &array)
+    {
+        int n = array.size();
+        if (n <= 1)
+            return n;
+        vector<int> next(n + 1, 0);
+        next[0] = -1;
+        int i = 0, j = -1;
+        while (i < n)
         {
-            int n = array.size();
-            if (n <= 1)
-                return n;
-            vector<int> next(n + 1, 0);
-            next[0] = -1;
-            int i = 0, j = -1;
-            while (i < n)
+            if (j == -1 || array[i] == array[j])
             {
-                if (j == -1 || array[i] == array[j])
+                i++;
+                j++;
+                next[i] = j;
+            }
+            else
+            {
+                j = next[j];
+            }
+        }
+        return n - next[n];
+    }
+
+    int calculate(string s)
+    {
+        int i = 0;
+        return calcHelper(s, i);
+    }
+
+    int calcHelper(string &s, int &i)
+    {
+        int res = 0;
+        int op = 1;
+        while (i < s.length())
+        {
+            while (isspace(s[i]) && i < s.length())
+                i++;
+            char c = s[i];
+            if (c == '(')
+            {
+                res += op * calcHelper(s, ++i);
+            }
+            else if (c == ')')
+            {
+                ++i;
+                return res;
+            }
+            else if (c == '+')
+            {
+                ++i;
+                op = 1;
+            }
+            else if (c == '-')
+            {
+                ++i;
+                op = -1;
+            }
+            else
+            {
+                int tmp = 0;
+                while (isdigit(s[i]))
                 {
+                    tmp = tmp * 10 + s[i] - '0';
                     i++;
-                    j++;
-                    next[i] = j;
                 }
-                else
+                res += op * tmp;
+            }
+        }
+        return res;
+    }
+
+    int calculate2(string s)
+    {
+        int i = 0;
+        return calcHelper2(s, i);
+    }
+
+    int calcHelper2(string &s, int &i)
+    {
+        if (s.empty())
+            return 0;
+        int pre = 0;
+        int operand = 0;
+        char op = '+';
+        int res = 0;
+        while(i < s.length())
+        {
+            char c = s[i];
+            if (c == '+'||c == '-'||c =='*'||c=='/')
+            {
+                ++i;
+                op = c;
+            }
+            else if(c == '(')
+            {
+                i++;
+                int tmp = calcHelper2(s, i);
+                switch(op)
                 {
-                    j = next[j];
+                    case '+': res = res+tmp; pre = tmp;break;
+                    case '-': res = res-tmp; pre = -tmp;break;
+                    case '*': res = res-pre+pre*tmp; pre=pre*tmp;break;
+                    case '/': res = res-pre+pre/tmp; pre=pre/tmp;break;
                 }
             }
-            return n - next[n];
+            else if(c == ')')
+            {
+                i++;
+                return res;
+            }
+            else if(isdigit(c))
+            {
+                int tmp = 0;
+                while (isdigit(s[i]))
+                {
+                    tmp = tmp * 10 + s[i] - '0';
+                    i++;
+                }
+                switch(op)
+                {
+                    case '+': res = res+tmp; pre = tmp;break;
+                    case '-': res = res-tmp; pre = -tmp;break;
+                    case '*': res = res-pre+pre*tmp; pre=pre*tmp;break;
+                    case '/': res = res-pre+pre/tmp; pre=pre/tmp;break;
+                }
+            }
+
+            else i++;
         }
-    };
+        return res;
+    }
+};
 
 #endif // STRINGREL_H

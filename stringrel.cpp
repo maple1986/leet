@@ -5,6 +5,7 @@ void StringRel::test()
     string num1("99");
     string num2("9");
     StringRel str;
+    str.calculate2(" 3/2 ");
     vector<string> words = {"aba","ababababca","acb","cb"};
     str.wordsCompression(words);
     string p = "ABABABA";

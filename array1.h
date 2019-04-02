@@ -466,7 +466,7 @@ Expected
         if(nums.empty()) return 0;
         vector<int> left(nums.size(),  INT_MIN);
         vector<int> right(nums.size(), INT_MIN);
-        int cur = 0, res = 0;
+        int cur = 0;
         for(int i=0; i<nums.size(); ++i)
         {
             cur = max(cur+nums[i], nums[i]);
