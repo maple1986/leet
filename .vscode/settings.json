@@ -13,6 +13,7 @@
         "map": "cpp",
         "string": "cpp",
         "list": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "algorithm": "cpp"
     }
 }

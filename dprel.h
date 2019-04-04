@@ -2155,6 +2155,28 @@ public:
         return dp1;
     }
 
+    int maxSubarray4(vector<int> &nums, int k) {
+        // write your code here
+        int n = nums.size();
+        if(n<k) return 0;
+        vector<int> sum(n+1, 0);
+        vector<int> minsum(n+1, 0);
+        for(int i=0; i<nums.size(); ++i)
+        {
+            sum[i+1] = sum[i]+nums[i];
+            minsum[i+1] = min(minsum[i], sum[i+1]);
+        }
+        int largest = INT_MIN;
+        for(int i=k; i<=nums.size(); ++i)
+        {
+            largest = max(largest, sum[i]-minsum[i-k]);
+        }
+        return largest;
+    }
+
+    int maxSubarray5(vector<int> &nums, int k1, int k2) {
+        // write your code here
+    }
 };
 
 
