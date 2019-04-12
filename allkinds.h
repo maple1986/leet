@@ -54,3 +54,50 @@ int consecutiveNumbersSum(int N)
     }
     return res;
 }
+
+bool lottery(vector<vector<int>>& lot, vector<int>& lucky)
+{
+	int n = lot.size(), m = lucky.size();
+	if(m<n) return false;
+
+}
+
+API:
+bool hasNext(stream& int_stream);
+pair<int, bool> getNext(stream& int_stream);
+
+vector<int> Sampling(stream& int_stream, int n)
+{
+	vector<int> res(n, 0);
+	int badIndex=-1, goodIndex=n, totalBadCnt=0;
+	while(hasNext(int_stream) && goodIndex>0)
+	{
+		auto nextInt = getNext(int_stream);
+		if(nextInt.second)
+		{
+			goodIndex--；
+			if(goodIndex==badIndex)
+			{
+				int dropIndex = rand()%(badIndex+1);
+				swap(res[badIndex], res[dropIndex]);
+				badIndex--;
+			}
+			res[goodIndex] = nextInt.first;
+		}
+		else
+		{
+			totalBadCnt++;
+			if(badIndex+1==goodIndex)
+			{
+				int dropIndex = rand()%(totalBadCnt);
+				if(dropIndex<=badIndex)
+				{
+					res[dropIndex] = nextInt.first;
+				}
+			}
+			else
+				res[++badIndex] = nextInt.first;
+		}
+	}
+	return res;
+}
