@@ -5,9 +5,15 @@ void StringRel::test()
     string num1("99");
     string num2("9");
     StringRel str;
+
+
     str.calculate2(" 3/2 ");
     vector<string> words = {"aba","ababababca","acb","cb"};
     str.wordsCompression(words);
+
+    words = {"This","is","an","example","of","text","justification."};
+    str.fullJustify(words, 16);
+
     string p = "ABABABA";
     string p2 ="ABCDABD";
     vector<int> next(p2.size(), 0);

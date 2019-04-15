@@ -150,71 +150,68 @@ vector<int> Sampling(stream& int_stream, int n)
     };
 
 
-    class UnionFind
-    {
-    public: 
-        UnionFind()
-        {   
-        }
-        
-        pair<string, double> Find(string& str)
+    class Solution {
+    public:
+        class UnionFind
         {
-            if(parents[x].first != x)
-            {
-                parents[x]=Find(parents[x]);
-                value[x] = value[x]*value[parents[x]];
+        public: 
+            UnionFind()
+            {   
             }
-            return parents[x];
-        }
-
-        double getValue(string& x)
-        {
-            if(!dict.count(x)) return -1.0;
-            return value[dict[x]];
-        }
-        
-        bool Union(string& x, string& y, double v)
-        {
-            if(!dict.count(x))
+            
+            pair<string, double> Find(string& str)
             {
-                cnt++;
-                dict[x] = cnt-1;
+                if(!parents.count(str))
+                {
+                    parents[str] = {str, 1.0};
+                }
+                else if(parents[str].first != str)
+                {
+                    parents[str].first = parents[parents[str].first].first;
+                    parents[str].second *= parents[parents[str].first].second;
+                }
+                return parents[str];
             }
-            if(!dict.count(y))
-            {
-                cnt++;
-                dict[y] = cnt-1;
-            }
-            int parentX=Find(x);
-            int parentY=Find(y);
-            if(parentX != parentY)
-            {
-                parents[parentX] = parentY;
-                value[parentX]*=v;
-            }
-        }
-    private:
-        unordered_map<string, pair<string, double>> parents;
-    };
     
-    vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
-        if(queries.empty()) return {};
-        UnionFind uf(equations.size()*2);
-        for(int i=0; i<equations.size(); ++i)
-        {
-            string a=equations[i].first, b=equations[i].second;
-            uf.uion(a, b, values[i]);
-        }
-        
-        vector<double> res(queries.size(), -1.0);
-        for(int i=0; i<queries.size(); ++i)
-        {
-            auto parentA = uf.find(queries[i].first);
-            auto parentB = uf.find(queries[i].second);
-            if(parentA == parentB && parentA !=-1)
+            bool Union(string& x, string& y, double v)
             {
-                res[i] = getValue(queries[i].first)/getValue(queries[i].second);
+                auto parentX=Find(x);
+                auto parentY=Find(y);
+                if(parentX.first != parentY.first)
+                {
+                    parents[parentX.first].first = parentY.first;
+                    parents[parentX.first].second *= v;
+                }
+                return true;
             }
+            unordered_map<string, pair<string, double>> parents;
+        };
+        
+        vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
+            if(queries.empty()) return {};
+            UnionFind uf;
+            for(int i=0; i<equations.size(); ++i)
+            {
+                string a=equations[i].first, b=equations[i].second;
+                uf.Union(a, b, values[i]);
+            }
+    
+            vector<double> res(queries.size(), -1.0);
+            for(int i=0; i<queries.size(); ++i)
+            {
+                if(!uf.parents.count(queries[i].first) || !uf.parents.count(queries[i].second))
+                    continue;
+                auto parentA = uf.Find(queries[i].first);
+                auto parentB = uf.Find(queries[i].second);
+                if(parentA.first == parentB.first)
+                {
+                    res[i] = parentA.second/parentB.second;
+                }
+            }
+                    for(auto kv: uf.parents)
+            {
+                cout << kv.first.c_str() << " " << kv.second.first.c_str() << " " << kv.second.second << endl;
+            }
+            return res;
         }
-        return res;
-    }
+    };

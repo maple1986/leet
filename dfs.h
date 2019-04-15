@@ -885,11 +885,11 @@ public:
         sort(coins.begin(), coins.end());
         vector<vector<int>> mem(amount+1, vector<int>(coins.size(), -1));
         //mem[0][] = 1;
-        return count(coins, 0, amount, mem);
+        return count1(coins, 0, amount, mem);
         //return res;
     }
 
-    int count(vector<int>& coins, int start, int amount, vector<vector<int>>& mem)
+    int count1(vector<int>& coins, int start, int amount, vector<vector<int>>& mem)
     {
 
         if(amount < 0) return 0;
@@ -910,7 +910,7 @@ public:
 
             while(k)
             {
-                cnt += count(coins, i+1, amount-k*coins[i], mem);
+                cnt += count1(coins, i+1, amount-k*coins[i], mem);
                 k--;
             }
 

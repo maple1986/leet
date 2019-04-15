@@ -6,6 +6,7 @@
 #include <stack>
 #include <unordered_set>
 #include <queue>
+#include <math.h>
 
 using namespace std;
 
@@ -421,6 +422,50 @@ public:
         }
         return true;
     }
+
+    double minRadius(vector<pair<int, int>>& bombs)
+    {
+        if(bombs.empty()) return 0.0;
+        int n = bombs.size();
+        vector<vector<pair<double, int>>> graph(n);
+        for(int i=0; i<bombs.size(); ++i)
+        {
+            for(int j=i+1; j<bombs.size(); ++j)
+            {
+                double dis = sqrt((bombs[i].first-bombs[j].first)*(bombs[i].first-bombs[j].first)+(bombs[i].second-bombs[j].second)*(bombs[i].second-bombs[j].second));
+                graph[i].push_back({dis, j});
+                graph[j].push_back({dis, i});
+            }
+        }
+        vector<int> seen(n, 0);
+        double maxlength = 0;
+        seen[0] = 1;
+        int visitedCnt= 1;
+        priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> pq;
+        //priority_queue<pair<double, int>> pq;
+        for(auto element: graph[0])
+        {
+            pq.push(element);
+        }
+        while(!pq.empty())
+        {
+            auto cur = pq.top(); pq.pop();
+            double dis = cur.first;
+            int v = cur.second;
+            if(seen[v]) continue;
+            maxlength = max(maxlength, dis);
+            seen[v] = 1;
+            visitedCnt++;
+            if(visitedCnt == n) return maxlength;
+            for(auto element: graph[v])
+            {
+                pq.push(element);
+            }
+        }
+
+        return maxlength;
+    }
+
 };
 
 #endif // GRAPH1_H

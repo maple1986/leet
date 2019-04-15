@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <set>
 #include <sstream>
+#include <math.h>
 
 using namespace std;
 
@@ -1915,6 +1916,48 @@ class StringRel
             }
 
             else i++;
+        }
+        return res;
+    }
+
+    vector<string> fullJustify(vector<string> &words, int maxWidth) {
+        // write your code here
+        string s;
+        for(string& w: words) s+=w+" ";
+        int len = s.length();
+        vector<string> res;
+        for(int i=0; i<len;)
+        {
+            int j = min(len, i+maxWidth);
+            if(j==len || s[j] == ' ')
+            {
+                res.push_back(s.substr(i, j-i));
+            }
+            else
+            {
+                int blank = 0;
+                int m=j;
+                while(s[m-1] != ' ') m--;
+                int delta = j-m;
+                for(int k=i; k<m; ++k)
+                {
+                    if(s[k]==' ') blank++;
+                }
+                string tmp;
+                for(int k=i; k<m; ++k)
+                {
+                    if(s[k]==' ')
+                    {
+                        int n = ceil(delta/(double)blank)+1;
+                        delta-=n; blank--;
+                        while(n--) tmp += ' ';
+                    }
+                    else tmp += s[k];
+                }
+                res.push_back(tmp);
+                j=m+1;
+            }
+            i = j;
         }
         return res;
     }
