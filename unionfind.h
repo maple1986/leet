@@ -139,62 +139,6 @@ class UnionFind3
     int maxId;
 };
 
-class UnionFindDirected
-{
-  public:
-    UnionFindDirected(int n)
-    {
-        parents = vector<int>(n, 0);
-        for (int i = 0; i < parents.size(); ++i)
-        {
-            parents[i] = i;
-        }
-        ranks = vector<int>(n, 1);
-    }
-
-    int Find(int x)
-    {
-        if (x != parents[x])
-        {
-            parents[x] = Find(parents[x]);
-        }
-        return parents[x];
-    }
-
-    bool Union(int parent, int child)
-    {
-        int pparent = Find(parent);
-        int pchild = Find(child);
-        if (pparent == pchild)
-            return false;
-        parents[pchild] = pparent;
-        return true;
-        /*
-        int px = Find(x);
-        int py = Find(y);
-        if(px == py) return false;
-        if (px != py)
-        {
-            if (ranks[px] > ranks[py])
-            {
-                parents[py] = px;
-                ranks[px] += ranks[py];
-            }
-            else
-            {
-                parents[px] = py;
-                ranks[py] += ranks[px];
-            }
-        }
-        return true;
-        */
-    }
-
-  private:
-    vector<int> parents;
-    vector<int> ranks;
-};
-
 class UnionFindSln
 {
   public:

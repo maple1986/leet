@@ -101,3 +101,120 @@ vector<int> Sampling(stream& int_stream, int n)
 	}
 	return res;
 }
+
+    class UnionFind
+    {
+    public: 
+        UnionFind()
+        {   
+        }
+        
+        pair<string, double> Find(string& str)
+        {
+            if(parents[x].first != x)
+            {
+                parents[x]=Find(parents[x]);
+                value[x] = value[x]*value[parents[x]];
+            }
+            return parents[x];
+        }
+
+        double getValue(string& x)
+        {
+            if(!dict.count(x)) return -1.0;
+            return value[dict[x]];
+        }
+        
+        bool Union(string& x, string& y, double v)
+        {
+            if(!dict.count(x))
+            {
+                cnt++;
+                dict[x] = cnt-1;
+            }
+            if(!dict.count(y))
+            {
+                cnt++;
+                dict[y] = cnt-1;
+            }
+            int parentX=Find(x);
+            int parentY=Find(y);
+            if(parentX != parentY)
+            {
+                parents[parentX] = parentY;
+                value[parentX]*=v;
+            }
+        }
+    private:
+        unordered_map<string, pair<string, double>> parents;
+    };
+
+
+    class UnionFind
+    {
+    public: 
+        UnionFind()
+        {   
+        }
+        
+        pair<string, double> Find(string& str)
+        {
+            if(parents[x].first != x)
+            {
+                parents[x]=Find(parents[x]);
+                value[x] = value[x]*value[parents[x]];
+            }
+            return parents[x];
+        }
+
+        double getValue(string& x)
+        {
+            if(!dict.count(x)) return -1.0;
+            return value[dict[x]];
+        }
+        
+        bool Union(string& x, string& y, double v)
+        {
+            if(!dict.count(x))
+            {
+                cnt++;
+                dict[x] = cnt-1;
+            }
+            if(!dict.count(y))
+            {
+                cnt++;
+                dict[y] = cnt-1;
+            }
+            int parentX=Find(x);
+            int parentY=Find(y);
+            if(parentX != parentY)
+            {
+                parents[parentX] = parentY;
+                value[parentX]*=v;
+            }
+        }
+    private:
+        unordered_map<string, pair<string, double>> parents;
+    };
+    
+    vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
+        if(queries.empty()) return {};
+        UnionFind uf(equations.size()*2);
+        for(int i=0; i<equations.size(); ++i)
+        {
+            string a=equations[i].first, b=equations[i].second;
+            uf.uion(a, b, values[i]);
+        }
+        
+        vector<double> res(queries.size(), -1.0);
+        for(int i=0; i<queries.size(); ++i)
+        {
+            auto parentA = uf.find(queries[i].first);
+            auto parentB = uf.find(queries[i].second);
+            if(parentA == parentB && parentA !=-1)
+            {
+                res[i] = getValue(queries[i].first)/getValue(queries[i].second);
+            }
+        }
+        return res;
+    }
