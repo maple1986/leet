@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <bitset>
+#include <iostream>
 using namespace std;
 class BitsRel
 {
@@ -98,6 +100,30 @@ public:
             if(primes.count(countOnes)) res++;
         }
         return res;
+    }
+
+    bool canIWin(int maxI, int total) {
+        if(maxI>=total) return true;
+        bitset<32> used;
+        used.reset();
+        return canIWinUtil(total, maxI, used);
+    }
+
+    bool canIWinUtil(int remain, int maxI, bitset<32>& used)
+    {
+        if(remain<=0) return false;
+        for(int i=1; i<=maxI; ++i)
+        {
+            if(used.test(i)) continue;
+
+            used.flip(i);
+            cout << used.to_string().c_str() << endl;
+            if(!canIWinUtil(remain-i, maxI, used)) return true;
+            used.flip(i);
+            //cout << used.to_string().c_str() << endl;
+        }
+        //cout << used.to_string().c_str() << endl;
+        return false;
     }
 };
 

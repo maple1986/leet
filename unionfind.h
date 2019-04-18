@@ -151,7 +151,7 @@ class UnionFindSln
         //uf.canVisitAllRooms(rooms);
         int i = uf.numIslands(grid);
         vector<vector<int>> edges = {{2, 1}, {3, 1}, {4, 2}, {1, 4}};
-        vector<int> j = uf.findRedundantDirectedConnection(edges);
+        //<int> j = uf.findRedundantDirectedConnection(edges);
         vector<int> row = {0, 2, 1, 3};
         i = uf.minSwapsCouples(row);
         vector<Point> op = {{1, 1}, {0, 1}, {3, 3}, {3, 4}};
@@ -217,18 +217,6 @@ class UnionFindSln
         return {};
     }
     //[[2,1],[3,1],[4,2],[1,4]]
-    vector<int> findRedundantDirectedConnection(vector<vector<int>> &edges)
-    {
-        UnionFindDirected uf(edges.size() + 1);
-        for (auto &edge : edges)
-        {
-            //int p0 = uf.Find(edge[0]);
-            //int p1 = uf.Find(edge[1]);
-            if (!uf.Union(edge[0], edge[1]))
-                return edge;
-        }
-        return {};
-    }
 
     int removeStones(vector<vector<int>> &stones)
     {

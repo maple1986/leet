@@ -43,8 +43,8 @@ int main()
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
-    //BitsRel::test();
-    StringRel::test();
+    BitsRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();

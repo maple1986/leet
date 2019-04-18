@@ -399,4 +399,193 @@ private:
     vector<vector<string>> findDuplicate(vector<string>& paths) {
         
     }
+
+    bool PredictTheWinner(vector<int>& nums) {
+        if(nums.size()==0) return false;
+        mem=vector<vector<int>>(n, vector<int>(n, -1));
+        int sum1=play(nums, 0, nums.size()-1);
+        int sum=accumulate(nums.begin(), nums.end(), 0);
+        return 2*sum1>=sum;
+    }
+
+    int play(vector<int>& nums, int start, int end)
+    {
+        if(start>end) return 0;
+        if(start==end) return nums[start];
+        if(mem[start][end]!=-1) return mem[start][end];
+        int a = nums[start]+min(play(nums, start+1, end-1), play(nums, start+2, end));
+        int b = nums[end]+min(play(nums, start+1, end-1), play(nums, start, end-2));
+        return mem[start][end] = max(a, b);
+    }
+
+    private:
+        vector<vector<int>> mem;
+
+    bool canWinNim(int n) {
+        if(n<=3) return true;
+        vector<int> mem=vector<int>((long)n+1, -1);
+        return NimUtil(n, mem);
+    }
+
+    bool NimUtil(int n, vector<int>& mem)
+    {
+        if(n<=3) return true;
+        if(mem[n]!=-1) return !mem[n];
+        for(int i=1; i<=3; ++i)
+        {
+            if(!NimUtil(n-i, mem))
+            {
+                //mem[n-i]=true;
+                return 1;
+            }
+            else 
+                mem[n-i]=0;
+        }
+        return 0;
+    }
+
+    bool canIWin(int maxI, int total) {
+        if(maxI>=total) return true;
+        if(maxI*(maxI+1)<2*total) return false;
+        bitset<32> used;
+        used.reset();
+        return canIWinUtil(total, maxI, used);
+    }
+
+    bool canIWinUtil(int remain, int maxI, bitset<32>& used)
+    {
+        if(remain<=0) return false;
+        unsigned long mask = used.to_ulong();
+        if(mem.count(mask)) return mem[mask];
+        for(int i=1; i<=maxI; ++i)
+        {
+            if(used.test(i)) continue;
+            
+            used.flip(i);
+            if(!canIWinUtil(remain-i, maxI, used))
+            {
+                used.flip(i);
+                return mem[mask]=true;
+            }  
+            used.flip(i);
+        }
+        return mem[mask]=false;
+    }
+    unordered_map<ulong, bool> mem;
 };
+
+int findPoisonedDuration(vector<int>& timeSeries, int duration) {
+    if(timeSeries.empty()||duration==0) return 0;
+    if(duration==1) return timeSeries.size();
+    sort(timeSeries.begin(), timeSeries.end());
+    int res=0;
+    int n=timeSeries.size();
+    for(int i=n-1; i>=0; --i)
+    {
+        /*
+        if(i==n-1) res+=duration;
+        else if(timeSeries[i+1]-timeSeries[i]<duration)
+        {
+            res += timeSeries[i+1]-timeSeries[i];
+        }
+        else res += duration;
+        */
+        if(i!=n-1 && timeSeries[i+1]-timeSeries[i]<duration)
+        {
+            res += timeSeries[i+1]-timeSeries[i];
+        }
+        else res += duration;
+    }
+    return res;
+}
+
+string add(string& num1, string& num2, int sign)
+{
+    if(num1.empty()||nums2.empty()) return "invalid";
+    string res;
+    reverse(nums1.begin(), nums1.end());
+    reverse(nums2.begin(), nums2.end());
+    int len1=nums1.length(), len2=nums2.length();
+    int carry = 0;
+    for(int i=0; i<max(len1, len2); ++i)
+    {
+        int a=0, b=0;
+        if(i<len1) a=nums1[i];
+        if(i<len2) b=nums2[i];
+        int cur = a-'0'+b-'0'+carry;
+        carry=0;
+        if(cur>9) carry=1;
+        res += cur%10+'0';
+    }
+    if(carry) res+='1';
+    if(!sgin) res+='-';
+    return reverse(res.begin(), res.end());
+}
+
+string sub(string& num1, string& num2)
+{
+    if(num1.empty()||nums2.empty()) return "invalid";
+    if(nums1[0]=='-'&&nums2[0]=='-')
+    {
+        nums1.pop_front();
+        nums2.pop_front();
+        return sub(num2, num1);
+    }
+    else if(nums1[0]=='-'&&nums2[0]!='-')
+    {
+        nums1.pop_front();
+        return add(num1, num2, 0);
+    }
+    else if(nums1[0]!='-'&&nums2[0]=='-')
+    {
+        nums2.pop_front();
+        return add(num1, num2, 1);
+    }
+    int len1 = nums1.length(), len2=nums2.length();
+    int sign = 1;
+    if(len1<len2) sign=0;
+    else if(len1==len2)
+    {
+        for(int i=0; i<len1; ++i)
+        {
+            if(nums1[i] != nums2[i])
+            {
+                sign = nums1[i]>nums2[i];
+                break;
+            }
+        }
+    }
+    if(!sign)
+    {
+        swap(nums1, nums2);
+        int tmp=len1;
+        len1=len2;
+        len2=tmp;
+    }    
+    string res;
+    reverse(nums1.begin(), nums1.end());
+    reverse(nums2.begin(), nums2.end());
+    for(int i=0; i<len1; ++i)
+    {
+        if(i<len2)
+        {
+            if(nums1[i]-nums2[i]>=0)
+                res+=(num1[i]-nums2[i])+'0';
+            else
+            {
+                res+=nums1[i]-nums2[i]+10+'0';
+                int j=i+1;
+                while(nums[j]=='0')
+                {
+                    nums[j]='9';
+                    j++;
+                }
+                nums[j]--;
+            }
+        }
+        else res += nums1[i];
+    }
+    while(res.size()>1&&res.back()=='0') res.pop();
+    if(!sign) res += '-';
+    return reverse(res.begin(), res.end());
+}
