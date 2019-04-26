@@ -6,6 +6,7 @@
 #include <queue>
 #include <set>
 #include <unordered_map>
+#include <map>
 #include <math.h>
 
 using namespace std;
@@ -802,6 +803,14 @@ public:
         return l;
     }
 
+
+    bool rainDrop(double location)
+    {
+        drops.lower_bound(location-0.5);
+        drops.upper_bound(location+0.5);
+
+    }
+    map<double, double> drops;
 };
 
 #endif // BINARYSEARCHREL_H

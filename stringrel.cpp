@@ -5,8 +5,9 @@ void StringRel::test()
     string num1("99");
     string num2("9");
     StringRel str;
-
-
+    string Y("abac");
+    string Z("baca");
+    int res3 = str.kSimilarity(Y, Z);
     str.calculate2(" 3/2 ");
     vector<string> words = {"aba","ababababca","acb","cb"};
     str.wordsCompression(words);
