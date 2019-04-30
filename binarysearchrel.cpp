@@ -8,6 +8,8 @@ binarySearchRel::binarySearchRel()
 void binarySearchRel::test()
 {
     binarySearchRel bs;
+    vector<pair<int, int>> v10={{1,2},{3,4},{5,6},{6,5},{7,8}};
+    int iii = bs.maxEnvelopes(v10);
     vector<int> v9={3,2,1,0};
     bs.countSmaller(v9);
     vector<vector<int>> matrix;

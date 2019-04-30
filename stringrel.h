@@ -2032,6 +2032,53 @@ class StringRel
         return mem[A]=res;
     }
     unordered_map<string, int> mem;
+
+    string findLongestWord(string s, vector<string>& d) {
+        if(s.empty()) return "";
+        vector<vector<int>> pos(256);
+        for(int i=0; i<s.length(); ++i) pos[s[i]].push_back(i);
+        string res;
+        vector<int> res2;
+        for(auto& str: d)
+        {
+            int index=-1;
+            bool found=true;
+            for(char c: str)
+            {
+                index = findPos(pos[c], index);
+                if(index==-1)
+                {
+                    found=false;
+                    break;
+                }
+                index++;
+            }
+            if(found)
+            {
+                if(str.length()>res.length()) res=str;
+                else if(str.length()==res.length())
+                {
+                    res=str<res?str:res;
+                }
+            }
+        }
+        return res;
+     }
+
+     int findPos(vector<int>& arr, int start)
+     {
+        if(arr.empty()) return -1;
+        if(start>arr.back()) return -1;
+        int l=0, r= arr.size();
+        while(l<r)
+        {
+            int mid=l+(r-l)/2;
+            if(arr[mid]>=start) r=mid;
+            else l=mid+1;
+        }
+        return arr[l];
+     }
+
 };
 
 #endif // STRINGREL_H

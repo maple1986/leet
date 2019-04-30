@@ -7,6 +7,9 @@ void StringRel::test()
     StringRel str;
     string Y("abac");
     string Z("baca");
+    string pat("wsmzffsupzgauxwokahurhhikapmqitytvcgrfpavbxbmmzdhnrazartkzrnsmoovmiofmilihynvqlmwcihkfskwozyjlnpkgdkayioieztjswgwckmuqnhbvsfoevdynyejihombjppgdgjbqtlauoapqldkuhfbynopisrjsdelsfspzcknfwuwdcgnaxpevwodoegzeisyrlrfqqavfziermslnlclbaejzqglzjzmuprpksjpqgnohjjrpdlofruutojzfmianxsbzfeuabhgeflyhjnyugcnhteicsvjajludwizklkkosrpvhhrgkzctzwcghpxnbsmkxfydkvfevyewqnzniofhsriadsoxjmsswgpiabcbpdjjuffnbvoiwotrbvylmnryckpnyemzkiofwdnpnbhkapsktrkkkakxetvdpfkdlwqhfjyhvlxgywavtmezbgpobhikrnebmevthlzgajyrmnbougmrirsxi");
+    vector<string> vstring = {"jpthiudqzzeugzwwsngebdeai","nbmxgkduynigvzuyblwjepn"};
+    str.findLongestWord(pat, vstring);
     int res3 = str.kSimilarity(Y, Z);
     str.calculate2(" 3/2 ");
     vector<string> words = {"aba","ababababca","acb","cb"};

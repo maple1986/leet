@@ -39,12 +39,12 @@ int main()
     //TrieQuestion::test();
     //array1::test();
     //TwoPointer::test();
-    //binarySearchRel::test();
+    binarySearchRel::test();
     //sortrel::test();
     //NumofOnes::test();
     //SortAlg::test();
     //BitsRel::test();
-    StringRel::test();
+    //StringRel::test();
     /*
     PowerofN::test();
     MSRA::test();
