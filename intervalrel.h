@@ -267,6 +267,42 @@ public:
         //auto it2 = upper_bound(intervals.begin(), intervals.end(), fuc);
     }
 
+
+
+    void addNum(int val) {
+        auto it = intervals.lower_bound(val);
+        if(it == intervals.end())
+        {
+            intervals.insert({val, val});
+            return;
+        }
+        else
+        {
+            if(it->first == val) return;
+            int start=val, end=val;
+            if(it != intervals.begin() && pre(it)->second>=val-1)
+            {
+
+                start = min(start, it->first);
+                end   = max(end, it->second);
+                intervals.erase(it);
+            }
+            intervals[start]=end;
+        }
+
+    }
+
+    vector<vector<int>> getIntervals() {
+        vector<vector<int>> res;
+        for(auto ele: intervals)
+        {
+            res.push_back({ele.first, ele.second});
+        }
+        return res;
+    }
+
+    map<int, int> intervals;
+
     static void test();
 };
 
