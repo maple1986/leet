@@ -6,6 +6,7 @@
 #include <queue>
 #include <set>
 #include <unordered_map>
+#include <map>
 #include <math.h>
 
 using namespace std;
@@ -800,6 +801,54 @@ public:
             else r = mid;
         }
         return l;
+    }
+
+
+    bool rainDrop(double location)
+    {
+        drops.lower_bound(location-0.5);
+        drops.upper_bound(location+0.5);
+
+    }
+    map<double, double> drops;
+
+    static bool cmp(pair<int,int> a,pair<int,int> b){
+        if(a.first == b.first) return a.second > b.second;
+        else return a.first < b.first;
+    }
+
+    int maxEnvelopes(vector<pair<int, int>>& envelopes) {
+        // write your code here
+        int n=envelopes.size();
+        if(n<=1) return n;
+
+        sort(envelopes.begin(), envelopes.end(), [](pair<int, int> l, pair<int, int> r)
+            {
+                if(l.first==r.first) return l.second>r.second;
+                return l.first<r.first;
+            });
+
+        //sort(envelopes.begin(), envelopes.end(), cmp);
+        vector<int> tails(n, 0);
+        int maxLen=1;
+        tails[0]=envelopes[0].second;
+        for(int i=1; i<envelopes.size(); ++i)
+        {
+            if(envelopes[i].second<tails[0]) tails[0]=envelopes[i].second;
+            else if(envelopes[i].second>tails[maxLen-1]) tails[++maxLen]=envelopes[i].second;
+            else
+            {
+                int l=0, r=maxLen;
+                while(l<r)
+                {
+                    int mid=l+(r-l)/2;
+                    if(tails[mid]>=envelopes[i].second) r=mid;
+                    else l=mid+1;
+                }
+                tails[l]=envelopes[i].second;
+            }
+        }
+        return maxLen;
     }
 
 };

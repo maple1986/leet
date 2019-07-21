@@ -10,7 +10,7 @@
 #include <set>
 #include <sstream>
 #include <math.h>
-
+#include <deque>
 using namespace std;
 
 class StringRel
@@ -2034,6 +2034,123 @@ class StringRel
         res.insert(res.end(), cur.begin(), cur.end());
         return res;
     }
+    int kSimilarity2(string A, string B) {
+        int m=A.length(), n=B.length();
+        if(m!=n) return -1;
+        if(A==B) return 0;
+        unordered_map<char, deque<int>> dict1;
+        for(int i=0; i<m; ++i)
+        {
+            if(A[i]!=B[i])
+            {
+                dict1[A[i]].push_back(i);
+            }
+        }
+        int step=0;
+        for(int i=0; i<m; ++i)
+        {
+            if(A[i]!=B[i])
+            {
+                if(dict1.count(B[i]))
+                {
+                    if(!dfs(A, B, i, dict1, step)) return -1;
+                }
+                else return -1;
+            }
+        }
+        return step;
+    }
+
+    bool dfs(string& A, string& B, int start, unordered_map<char, deque<int>>& graph, int& step)
+    {
+        if(A[start]==B[start]) return true;
+        if(!graph.count(B[start])) return false;
+        int next = graph[B[start]].front();
+        graph[B[start]].pop_front();
+        if(graph[B[start]].empty()) graph.erase(B[start]);
+        swap(A[start], A[next]);
+        step++;
+        return dfs(A, B, next, graph, step);
+    }
+
+    int kSimilarity(string A, string B) {
+        if(A.length()!=B.length()) return -1;
+        if(A.empty()) return 0;
+        int res=backtrack(A, B, 0);
+        return res==INT_MAX?-1:res;
+    }
+
+    int backtrack(string& A, string& B, int start)
+    {
+        if(mem.count(A)) return mem[A];
+        if(A==B) return 0;
+        int res=INT_MAX;
+        if(start>=A.length()) return res;
+        while(start<A.length())
+        {
+            if(A[start]!=B[start]) break;
+            start++;
+        }
+        for(int j=start+1; j<A.length(); ++j)
+        {
+            if(A[j]==B[start])
+            {
+                swap(A[start], A[j]);
+                int next=backtrack(A, B, start+1);
+                if(next != INT_MAX) res=min(res, 1+next);
+                swap(A[start], A[j]);
+            }
+        }
+        return mem[A]=res;
+    }
+    unordered_map<string, int> mem;
+
+    string findLongestWord(string s, vector<string>& d) {
+        if(s.empty()) return "";
+        vector<vector<int>> pos(256);
+        for(int i=0; i<s.length(); ++i) pos[s[i]].push_back(i);
+        string res;
+        vector<int> res2;
+        for(auto& str: d)
+        {
+            int index=-1;
+            bool found=true;
+            for(char c: str)
+            {
+                index = findPos(pos[c], index);
+                if(index==-1)
+                {
+                    found=false;
+                    break;
+                }
+                index++;
+            }
+            if(found)
+            {
+                if(str.length()>res.length()) res=str;
+                else if(str.length()==res.length())
+                {
+                    res=str<res?str:res;
+                }
+            }
+        }
+        return res;
+     }
+
+     int findPos(vector<int>& arr, int start)
+     {
+        if(arr.empty()) return -1;
+        if(start>arr.back()) return -1;
+        int l=0, r= arr.size();
+        while(l<r)
+        {
+            int mid=l+(r-l)/2;
+            if(arr[mid]>=start) r=mid;
+            else l=mid+1;
+        }
+        return arr[l];
+     }
+
 };
 
 #endif // STRINGREL_H
