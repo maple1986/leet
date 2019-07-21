@@ -509,11 +509,10 @@ string add(string& num1, string& num2, int sign)
     int carry = 0;
     for(int i=0; i<max(len1, len2); ++i)
     {
-        int a=0, b=0;
-        if(i<len1) a=nums1[i];
-        if(i<len2) b=nums2[i];
-        int cur = a-'0'+b-'0'+carry;
-        carry=0;
+        int cur = carry;
+        carry = 0;
+        if(i<len1) cur+=nums1[i]-'0';
+        if(i<len2) cur+=nums2[i]-'0';
         if(cur>9) carry=1;
         res += cur%10+'0';
     }

@@ -1961,6 +1961,79 @@ class StringRel
         }
         return res;
     }
+
+    vector<string> wordsAbbreviation(vector<string>& dict) {
+        int n = dict.size();
+        vector<string> res(n);
+        vector<int> pre(n, 1);
+        for (int i = 0; i < n; ++i) {
+            res[i] = abbreviate(dict[i], pre[i]);
+        }
+        for (int i = 0; i < n; ++i) {
+            while (true) {
+                set<int> s;
+                for (int j = i + 1; j < n; ++j) {
+                    if (res[j] == res[i]) s.insert(j);
+                }
+                if (s.empty()) break;
+                s.insert(i);
+                for (auto a : s) {
+                    res[a] = abbreviate(dict[a], ++pre[a]);
+                }
+            }
+        }
+        return res;
+    }
+    string abbreviate(string s, int k) {
+        return (k >= s.size() - 2) ? s : s.substr(0, k) + to_string(s.size() - k - 1) + s.back();
+    }
+
+    vector<string> shell(string s)
+    {
+        if(s.empty()) return {};
+        int pos=0;
+        return shell(s, pos);
+    }
+
+    vector<string> shell(string& s, int& pos)
+    {
+        vector<string> res;
+        vector<string> cur;
+        cur.push_back("");
+        while(pos<s.length())
+        {
+            char c=s[pos];
+            if(c==',')
+            {
+                res.insert(res.end(), cur.begin(), cur.end());
+                cur.clear();
+                cur.push_back("");
+                ++pos;
+            }
+            else if(c=='{')
+            {
+                vector<string> next=shell(s, ++pos);
+                vector<string> combine;
+                for(string& i: cur)
+                    for(string& n: next)
+                        combine.push_back(i+n);
+                cur.swap(combine);
+            }
+            else if(c=='}')
+            {
+                res.insert(res.end(), cur.begin(), cur.end());
+                ++pos;
+                return res;
+            }
+            else
+            {
+                for(string& i: cur) i+=c;
+                ++pos;
+            }
+        }
+        res.insert(res.end(), cur.begin(), cur.end());
+        return res;
+    }
 };
 
 #endif // STRINGREL_H

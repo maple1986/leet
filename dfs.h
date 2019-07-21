@@ -1436,6 +1436,55 @@ public:
             dfs2(i, root);
         }
     }
+
+    typedef vector<int> v1d;
+    typedef vector<v1d> v2d;
+    typedef vector<v2d> v3d;
+
+    int catMouseGame(vector<vector<int>>& graph) {
+        int n=graph.size();
+        mem=v3d(n, v2d(n, v1d(2, -1)));
+
+        return dfs(1, 2, 0, graph);
+    }
+    //turn 0-mouse, 1-cat
+    int dfs(int mouse, int cat, int turn, vector<vector<int>>& graph)
+    {
+        if(mouse==0||cat==0) return 1;
+        else if(mouse == cat) return 2;
+        if(mem[mouse][cat][turn]!=-1) return mem[mouse][cat][turn];
+        int nturn=turn^1;
+        mem[mouse][cat][turn]=0;
+        bool canDraw=false;
+        if(turn==0)
+        {
+            int best=2;
+            for(int nei: graph[mouse])
+            {
+                int res=dfs(nei, cat, nturn, graph);
+                if(res==1) return mem[mouse][cat][turn]=1;
+                else if(res==0) canDraw=true;
+            }
+            if(!canDraw)
+                return mem[mouse][cat][turn]=2;
+        }
+        else
+        {
+            int best=1;
+            for(int nei: graph[cat])
+            {
+                int res=dfs(mouse, nei, nturn, graph);
+                if(res==2) return mem[mouse][cat][turn]=2;
+                else if(res==0) canDraw=true;
+            }
+            if(!canDraw)
+                return mem[mouse][cat][turn]=1;
+        }
+        return mem[mouse][cat][turn];
+    }
+
+    v3d mem;
+
 };
 
 #endif // DFS_H

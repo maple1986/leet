@@ -10,6 +10,8 @@ void DFS::test()
 {
     DFS dfs;
     char* str = "[3,9,20,null,null,15,7]";
+    vector<vector<int>> g={{2,5},{3},{0,4,5},{1,4,5},{2,3},{0,2,3}};
+    dfs.catMouseGame(g);
     BalanceTree bt;
     TreeNode* tree = bt.generateTree(str);
     vector<string> res = dfs.binaryTreePaths(tree);
